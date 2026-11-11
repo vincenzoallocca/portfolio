@@ -18,6 +18,9 @@
 <meta property="og:image" content="https://enzoware.dpdns.org/assets/profilo.webp">
 <meta name="twitter:card" content="summary">
 <link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Space+Grotesk:wght@500;700&display=swap">
 <link rel="preload" as="image" href="assets/profilo.webp" type="image/webp">
 <style>
 :root{
@@ -32,6 +35,7 @@
   --accent2:#a99bff;
   --edge:rgba(255,255,255,.14);
   --radius:1.5rem;
+  --display:"Space Grotesk",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
   /* grana fine che "satina" il vetro */
   --grain:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='.16'/></svg>");
 }
@@ -40,7 +44,7 @@ html{background:var(--bg);-webkit-text-size-adjust:100%;-webkit-tap-highlight-co
 body{
   min-height:100vh;min-height:100dvh;
   color:var(--text);
-  font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+  font-family:"JetBrains Mono",ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
   line-height:1.6;
   -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;
   text-shadow:var(--ts);
@@ -153,7 +157,7 @@ html[data-lite] .glass{-webkit-backdrop-filter:blur(14px) saturate(170%);backdro
   box-shadow:0 0 0 4px rgba(255,255,255,.07),0 8px 28px rgba(124,183,255,.35);
 }
 .avatar img{display:block;width:6rem;height:6rem;border-radius:50%;object-fit:cover;border:3px solid rgba(5,8,22,.85)}
-.nick{font-size:1.05rem;font-weight:700;letter-spacing:.02em;text-shadow:0 0 1px rgba(2,4,16,.95),0 1px 3px rgba(2,4,16,.8),0 0 14px rgba(140,194,255,.7)}
+.nick{font-family:var(--display);font-size:1.25rem;font-weight:700;letter-spacing:-.01em;text-shadow:0 0 1px rgba(2,4,16,.95),0 1px 3px rgba(2,4,16,.8),0 0 14px rgba(140,194,255,.7)}
 .quote{font-size:.85rem;font-style:italic;color:var(--muted)}
 hr{width:100%;border:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.28),transparent)}
 nav{width:100%}
@@ -179,10 +183,12 @@ main{--tint:.62;width:26rem;max-width:100%;height:30rem;max-height:calc(100dvh -
   overflow-y:auto;overscroll-behavior:contain;
   scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.28) transparent;
 }
-h1{font-size:1.1rem;font-weight:700;text-align:center;letter-spacing:.04em;text-wrap:balance;text-shadow:none;
-  filter:drop-shadow(0 0 1px rgba(2,4,16,.9)) drop-shadow(0 0 9px rgba(140,194,255,.65));
-  background:linear-gradient(90deg,var(--accent-hi),#d2c9ff);-webkit-background-clip:text;background-clip:text;color:transparent}
-h2{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--accent-hi);margin-bottom:.6rem;text-shadow:var(--ts-hi)}
+.intro{display:grid;gap:.5rem;padding:.1rem .15rem .2rem}
+h1{font-family:var(--display);font-size:clamp(2.5rem,11vw,3.25rem);line-height:1.05;padding-bottom:.08em;font-weight:700;letter-spacing:-.035em;text-align:left;text-shadow:none;
+  filter:drop-shadow(0 0 1px rgba(2,4,16,.9)) drop-shadow(0 0 12px rgba(140,194,255,.55));
+  background:linear-gradient(90deg,var(--accent-hi),#d2c9ff 70%,#ffc2ea);-webkit-background-clip:text;background-clip:text;color:transparent}
+.lead{font-size:.9rem;line-height:1.55;color:var(--muted);max-width:30ch}
+h2{font-family:var(--display);font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--accent-hi);margin-bottom:.6rem;text-shadow:var(--ts-hi)}
 /* le card interne NON usano backdrop-filter (annidato non funzionerebbe): vetro "leggero" a sola trasparenza */
 .card{
   background:linear-gradient(160deg,rgba(255,255,255,.09),rgba(255,255,255,.03)),rgba(5,8,28,.34);
@@ -192,15 +198,16 @@ h2{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.12e
 .projects{display:flex;flex-direction:column;gap:.4rem}
 .projects a{
   display:block;min-height:2.75rem;padding:.55rem .7rem;border-radius:.8rem;
-  background:rgba(255,255,255,.04);border:1px solid transparent;
-  transition:background .25s,border-color .25s,transform .25s,box-shadow .25s;
+  background-color:rgba(255,255,255,.04);border:1px solid transparent;
+  background-image:radial-gradient(9rem 6rem at var(--gx,50%) var(--gy,0%),rgba(255,255,255,var(--ga,0)),transparent 70%);
+  transform:perspective(600px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));
+  transition:background-color .25s,border-color .25s,transform .18s ease-out,box-shadow .25s;
 }
 .projects a:hover,.projects a:active{
-  background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.2);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.25);
+  background-color:rgba(255,255,255,.12);border-color:rgba(255,255,255,.2);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 10px 22px -10px rgba(0,0,0,.5);
 }
-.projects a:hover{transform:translateY(-1px)}
-.projects a:active{transform:scale(.985)}
+.projects a:active{transform:perspective(600px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) scale(.985)}
 .projects b{color:var(--accent-hi);font-weight:700;text-shadow:var(--ts-hi)}
 .projects b::after{content:" ↗";opacity:.8}
 .projects span{color:var(--muted)}
@@ -239,8 +246,9 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
 /* entrata morbida */
 @media (prefers-reduced-motion:no-preference){
   html{scroll-behavior:smooth}
-  .panel:not([hidden]){animation:pin .35s cubic-bezier(.2,.7,.2,1) both}
-  @keyframes pin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .panel:not([hidden]){animation:pin .6s cubic-bezier(.2,.7,.2,1) both}
+  .panel[data-dir="1"]{--d:1}.panel[data-dir="-1"]{--d:-1}
+  @keyframes pin{from{opacity:0;filter:blur(5px);transform:perspective(900px) translate3d(calc(var(--d,0)*34px),12px,-90px) rotateY(calc(var(--d,0)*-9deg))}to{opacity:1;filter:none;transform:none}}
   .glass{animation:in .6s cubic-bezier(.2,.7,.2,1) both}
   main{animation-delay:.08s}aside .glass:first-child{animation-delay:.16s}aside .glass:last-child{animation-delay:.24s}
   @keyframes in{from{opacity:0;transform:translateY(14px) scale(.985)}to{opacity:1;transform:none}}
@@ -304,9 +312,8 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
 
   <main class="glass" id="contenuto" tabindex="-1">
     <div class="scroll">
-      <h1>★ My Portfolio ★</h1>
-
       <div class="panel" id="home" data-title="Home">
+        <div class="intro"><h1>Vincenzo</h1><p class="lead">Studente e sviluppatore. Costruisco piccoli progetti e imparo facendo.</p></div>
         <section class="card" aria-labelledby="prj">
           <h2 id="prj">Progetti</h2>
           <ul class="projects">
@@ -379,6 +386,9 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
       if(a.closest('nav')){on?a.setAttribute('aria-current','page'):a.removeAttribute('aria-current')}
     });
     var cur=document.getElementById(name);
+    var ni=names.indexOf(name),pi=show.i==null?ni:show.i;show.i=ni;
+    cur.setAttribute('data-dir',ni>pi?'1':ni<pi?'-1':'0');
+    dispatchEvent(new CustomEvent('sectionchange',{detail:ni}));
     document.title=name==='home'?base:cur.getAttribute('data-title')+' | '+base;
     scroller.scrollTop=0;
     if(user&&matchMedia('(max-width:820px)').matches){
@@ -445,8 +455,21 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
 
   var VS='attribute vec3 aP;attribute vec3 aN;uniform mat4 uMVP,uM;uniform mat3 uR;varying vec3 vN,vW;'+
     'void main(){vN=uR*aN;vW=(uM*vec4(aP,1.)).xyz;gl_Position=uMVP*vec4(aP,1.);}';
-  var FS='precision mediump float;varying vec3 vN,vW;uniform vec3 uD,uMd,uL,uCam,uFogC;uniform float uFog;'+
+  var FS='#ifdef GL_FRAGMENT_PRECISION_HIGH\nprecision highp float;\n#else\nprecision mediump float;\n#endif\n'+
+    'varying vec3 vN,vW;uniform vec3 uD,uMd,uL,uCam,uFogC;uniform float uFog,uGlass,uPass;'+
+    /* ambiente procedurale per il vetro: colori della scena + una luce morbida */
+    'vec3 env(vec3 d){vec3 a=mix(vec3(.13,.83,.93),vec3(.55,.36,.96),smoothstep(-.6,.6,d.x));'+
+    'a=mix(a,vec3(.96,.45,.71),smoothstep(-.1,.9,d.y));'+
+    'a+=pow(max(dot(d,normalize(vec3(-.55,.7,.62))),0.),10.)*.9;return a*.8+.1;}'+
     'void main(){vec3 N=normalize(vN),V=normalize(uCam-vW),Ld=normalize(vec3(-.55,.7,.62));'+
+    'if(uGlass>.5){float d=dot(N,V);'+
+      'if(uPass<.5&&d>0.)discard;if(uPass>.5&&d<=0.)discard;if(d<0.)N=-N;'+
+      'float fr=pow(1.-max(dot(N,V),0.),2.5);vec3 I=-V;'+
+      /* rifrazione con dispersione cromatica: un indice diverso per canale */
+      'vec3 t=vec3(env(refract(I,N,.70)).r,env(refract(I,N,.685)).g,env(refract(I,N,.67)).b);'+
+      'vec3 rf=env(reflect(I,N));float sp=pow(max(dot(reflect(-Ld,N),V),0.),90.);'+
+      'vec3 c=mix(t*.85,rf,fr*.8)+sp*1.2;float a=clamp(.45+fr*.5+sp,0.,1.);'+
+      'gl_FragColor=vec4(c*a,a);return;}'+
     'float t=dot(N,Ld);'+
     'vec3 c=mix(uD,uMd,smoothstep(-.7,.45,t));c=mix(c,uL,smoothstep(.5,1.,t));'+
     'float sp=pow(max(dot(reflect(-Ld,N),V),0.),60.);'+
@@ -459,7 +482,7 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
   if(!gl.getProgramParameter(pr,gl.LINK_STATUS))return;
   gl.useProgram(pr);
   var aP=gl.getAttribLocation(pr,'aP'),aN=gl.getAttribLocation(pr,'aN');
-  var U={};['uMVP','uM','uR','uD','uMd','uL','uCam','uFogC','uFog'].forEach(function(n){U[n]=gl.getUniformLocation(pr,n)});
+  var U={};['uMVP','uM','uR','uD','uMd','uL','uCam','uFogC','uFog','uGlass','uPass'].forEach(function(n){U[n]=gl.getUniformLocation(pr,n)});
 
   /* geometrie: {p,n,i} */
   function sphere(a,b){
@@ -504,6 +527,22 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
     })})});
     return flat(f);
   }
+  /* torus-knot (2,3): tubo che segue la curva, con frame calcolato per differenze finite */
+  function knot(a,b,P,Q,r){
+    var p=[],n=[],i=[],u,v,e=.002;
+    function pt(t){var c=2+Math.cos(Q*t);return [c*Math.cos(P*t)/3,c*Math.sin(P*t)/3,Math.sin(Q*t)/3]}
+    function nz(x){var l=Math.hypot(x[0],x[1],x[2])||1;return [x[0]/l,x[1]/l,x[2]/l]}
+    function cr(x,y){return [x[1]*y[2]-x[2]*y[1],x[2]*y[0]-x[0]*y[2],x[0]*y[1]-x[1]*y[0]]}
+    for(u=0;u<=a;u++){
+      var t=u/a*2*Math.PI,c=pt(t),f=pt(t+e),k=pt(t-e),T=nz([f[0]-k[0],f[1]-k[1],f[2]-k[2]]),
+          A=[f[0]+k[0]-2*c[0],f[1]+k[1]-2*c[1],f[2]+k[2]-2*c[2]],B=nz(cr(T,A)),N=cr(B,T);
+      for(v=0;v<=b;v++){var w=v/b*2*Math.PI,cw=Math.cos(w),sw=Math.sin(w),
+          nx=cw*N[0]+sw*B[0],ny=cw*N[1]+sw*B[1],nzz=cw*N[2]+sw*B[2];
+        p.push(c[0]+r*nx,c[1]+r*ny,c[2]+r*nzz);n.push(nx,ny,nzz)}
+    }
+    for(u=0;u<a;u++)for(v=0;v<b;v++){var q=u*(b+1)+v;i.push(q,q+b+1,q+1,q+1,q+b+1,q+b+2)}
+    return {p:p,n:n,i:i};
+  }
   function upload(g){
     var vb=gl.createBuffer(),nb=gl.createBuffer(),ib=gl.createBuffer();
     gl.bindBuffer(gl.ARRAY_BUFFER,vb);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(g.p),gl.STATIC_DRAW);
@@ -511,7 +550,7 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,ib);gl.bufferData(gl.ELEMENT_ARRAY_BUFFER,new Uint16Array(g.i),gl.STATIC_DRAW);
     return {vb:vb,nb:nb,ib:ib,n:g.i.length};
   }
-  var G={sphere:upload(sphere(40,56)),torus:upload(torus(80,28,.05)),cube:upload(cube()),octa:upload(octa())};
+  var G={sphere:upload(sphere(40,56)),torus:upload(torus(80,28,.05)),cube:upload(cube()),octa:upload(octa()),knot:upload(knot(240,22,2,3,.15))};
 
   /* matrici 4x4 column-major */
   function mul(a,b){var o=new Float32Array(16);for(var c=0;c<4;c++)for(var r=0;r<4;r++){var s=0;for(var k=0;k<4;k++)s+=a[k*4+r]*b[c*4+k];o[c*4+r]=s}return o}
@@ -529,7 +568,7 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
     {g:'sphere',c:['#2b3fd8','#4f8dff','#9ad0ff'],z:0,  a:[[62,.24,0],[31,.55,1.7]],b:[[47,.20,2.2],[23,.61,.6]],rot:[0,0,0]},
     {g:'sphere',c:['#4c1fb8','#8b5cf6','#d3a8ff'],z:-160,a:[[70,.18,3.1],[29,.49,.4]],b:[[52,.22,1.1],[26,.58,2.8]],rot:[0,0,0]},
     {g:'sphere',c:['#0a6c94','#22d3ee','#8ff4ff'],z:-260,a:[[57,.21,5.2],[34,.46,2.4]],b:[[39,.27,.3],[21,.65,4.1]],rot:[0,0,0]},
-    {g:'sphere',c:['#9d2a73','#f472b6','#ffc2ea'],z:140, a:[[39,.32,1.4],[21,.70,3.3]],b:[[34,.29,4.6],[16,.78,.9]],rot:[0,0,0]},
+    {g:'knot',glass:1,c:['#9d2a73','#f472b6','#ffc2ea'],z:140,a:[[18,.20,1.4],[9,.50,3.3]],b:[[16,.23,4.6],[8,.60,.9]],rot:[.10,.16,.05],tilt:[.5,.3,0]},
     {g:'torus', c:['#5a3fd0','#a99bff','#e6e0ff'],z:70,  a:[[49,.17,2.7],[26,.43,5.5]],b:[[42,.21,.8],[18,.54,3.7]],rot:[.23,.17,.11],tilt:[1.1,.4,0]},
     {g:'cube',  c:['#0a6c94','#22d3ee','#c8fbff'],z:40,  a:[[30,.30,.9],[14,.74,2.1]],b:[[28,.26,3.9],[12,.69,1.3]],rot:[.31,.22,.14]},
     {g:'octa',  c:['#2b3fd8','#6fa8ff','#d6ebff'],z:-60, a:[[26,.28,4.4],[12,.81,.2]],b:[[30,.24,2.6],[14,.72,5.1]],rot:[.19,.34,.09]}
@@ -540,12 +579,13 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
   function layout(){
     var w=W,h=H,m=w<=820,R=function(rem,vw){return Math.min(rem*16,vw*w)/2},
         y=function(top,r){return h/2-(top+r)};
+    var hr=Math.min(150,Math.max(70,Math.min(w,h)*.19));
     var r1=R(24,.58),r2=R(26,.62),r3=R(20,.5),r4=R(8,.26),r5=R(15,.46);
     if(!m){
       obj[0].p=[-33*16+r1,y(.06*h,r1),r1];
       obj[1].p=[34*16-r2,y(.46*h,r2),r2];
       obj[2].p=[-6*16+r3,h/2-(h+7*16-r3),r3];
-      obj[3].p=[7*16+r4,y(.03*h,r4),r4];
+      obj[3].p=[.27*w,.2*h,hr];
       obj[4].p=[-11*16+r5,y(.22*h,r5),r5];
       obj[5].p=[-.40*w,-.30*h,34];
       obj[6].p=[.38*w,.28*h,40];
@@ -553,7 +593,7 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
       obj[0].p=[-64+r1-w/2,y(.03*h,r1),r1];
       obj[1].p=[w/2+96-r2,y(.44*h,r2),r2];
       obj[2].p=[.28*w+r3-w/2,h/2-(h+6*16-r3),r3];
-      obj[3].p=[w/2-.08*w-r4,y(.01*h,r4),r4];
+      obj[3].p=[.25*w,.3*h,hr*.85];
       obj[4].p=[w/2+3*16-r5,y(.18*h,r5),r5];
       obj[5].p=[-.30*w,-.12*h,28];
       obj[6].p=[.30*w,.20*h,32];
@@ -571,41 +611,56 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
   }
   var quality=1.5;
 
-  gl.enable(gl.DEPTH_TEST);gl.clearColor(0,0,0,0);
+  gl.enable(gl.DEPTH_TEST);gl.enable(gl.BLEND);gl.blendFunc(gl.ONE,gl.ONE_MINUS_SRC_ALPHA);gl.clearColor(0,0,0,0);
   gl.uniform3fv(U.uFogC,BG);
   gl.uniform3f(U.uCam,0,0,0); /* sostituito per frame */
 
+  /* stato reattivo: sezione corrente (molla) e puntatore/giroscopio (smussato) */
+  var NAMES=['home','about','friends','messages'],ix=NAMES.indexOf(location.hash.replace('#',''));
+  var secT=Math.max(ix,0),secTarget=secT,secV=0,IN=window.__in=window.__in||{x:0,y:0},pX=0,pY=0;
+  addEventListener('sectionchange',function(e){secTarget=e.detail;if(reduce){secT=secTarget;draw(6)}});
+  function step(dt){
+    secV+=((secTarget-secT)*38-secV*7)*dt;secT+=secV*dt;   /* leggero rimbalzo */
+    var k=1-Math.exp(-dt*4);pX+=(IN.x-pX)*k;pY+=(IN.y-pY)*k;
+  }
+  function drawObj(o,i,t){
+    var x=0,y=0,k,ph=i*1.9,hero=o.glass?1:0;
+    for(k=0;k<o.a.length;k++)x+=o.a[k][0]*Math.sin(t*o.a[k][1]+o.a[k][2]);
+    for(k=0;k<o.b.length;k++)y+=o.b[k][0]*Math.sin(t*o.b[k][1]+o.b[k][2]);
+    /* cambio sezione: ogni oggetto scivola, ruota e cambia profondità */
+    x+=Math.sin(secT*1.6+ph)*(hero?60:34);y+=Math.cos(secT*1.2+ph*1.3)*(hero?40:24);
+    var z=o.z+Math.sin(secT*.9+ph)*45,k2=(D-z)/D;
+    /* parallax: più vicino = si sposta di più */
+    var dp=(o.z+300)*.1+14;x-=pX*dp;y-=pY*dp;
+    var spin=secT*(.7+.12*i),tl=o.tilt||[0,0,0];
+    var R_=mul(rz(tl[2]+o.rot[2]*t),mul(ry(tl[1]+o.rot[1]*t+spin+pX*(hero?.6:.2)),rx(tl[0]+o.rot[0]*t+spin*.6+pY*(hero?.45:.15))));
+    var M=mul(tr((o.p[0]+x)*k2,(o.p[1]+y)*k2,z),mul(R_,sc(o.p[2]*k2)));
+    gl.uniformMatrix4fv(U.uM,false,M);
+    gl.uniformMatrix4fv(U.uMVP,false,mul(proj,mul(tr(0,0,-D),M)));
+    gl.uniformMatrix3fv(U.uR,false,new Float32Array([R_[0],R_[1],R_[2],R_[4],R_[5],R_[6],R_[8],R_[9],R_[10]]));
+    gl.uniform3fv(U.uD,o.c[0]);gl.uniform3fv(U.uMd,o.c[1]);gl.uniform3fv(U.uL,o.c[2]);
+    gl.uniform1f(U.uFog,Math.max(0,Math.min(.4,-z/700)));gl.uniform1f(U.uGlass,hero);
+    var g=G[o.g];
+    gl.bindBuffer(gl.ARRAY_BUFFER,g.vb);gl.enableVertexAttribArray(aP);gl.vertexAttribPointer(aP,3,gl.FLOAT,false,0,0);
+    gl.bindBuffer(gl.ARRAY_BUFFER,g.nb);gl.enableVertexAttribArray(aN);gl.vertexAttribPointer(aN,3,gl.FLOAT,false,0,0);
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,g.ib);gl.drawElements(gl.TRIANGLES,g.n,gl.UNSIGNED_SHORT,0);
+  }
   function draw(t){
     gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
     gl.uniform3f(U.uCam,0,0,D);
-    var view=tr(0,0,-D);
-    for(var i=0;i<obj.length;i++){
-      var o=obj[i],x=0,y=0,k;
-      for(k=0;k<o.a.length;k++)x+=o.a[k][0]*Math.sin(t*o.a[k][1]+o.a[k][2]);
-      for(k=0;k<o.b.length;k++)y+=o.b[k][0]*Math.sin(t*o.b[k][1]+o.b[k][2]);
-      var z=o.z,k2=(D-z)/D;                 /* compensa la prospettiva: la posizione a schermo resta quella del layout */
-      var px=(o.p[0]+x)*k2,py=(o.p[1]+y)*k2;
-      var size=(o.g==='sphere'||o.g==='torus')?o.p[2]:o.p[2];
-      var s=size*k2;
-      var R_=mul(rz((o.tilt?o.tilt[2]:0)+o.rot[2]*t),mul(ry((o.tilt?o.tilt[1]:0)+o.rot[1]*t),rx((o.tilt?o.tilt[0]:0)+o.rot[0]*t)));
-      var M=mul(tr(px,py,z),mul(R_,sc(s)));
-      gl.uniformMatrix4fv(U.uM,false,M);
-      gl.uniformMatrix4fv(U.uMVP,false,mul(proj,mul(view,M)));
-      gl.uniformMatrix3fv(U.uR,false,new Float32Array([R_[0],R_[1],R_[2],R_[4],R_[5],R_[6],R_[8],R_[9],R_[10]]));
-      gl.uniform3fv(U.uD,o.c[0]);gl.uniform3fv(U.uMd,o.c[1]);gl.uniform3fv(U.uL,o.c[2]);
-      gl.uniform1f(U.uFog,Math.max(0,Math.min(.4,-z/700)));
-      var g=G[o.g];
-      gl.bindBuffer(gl.ARRAY_BUFFER,g.vb);gl.enableVertexAttribArray(aP);gl.vertexAttribPointer(aP,3,gl.FLOAT,false,0,0);
-      gl.bindBuffer(gl.ARRAY_BUFFER,g.nb);gl.enableVertexAttribArray(aN);gl.vertexAttribPointer(aN,3,gl.FLOAT,false,0,0);
-      gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,g.ib);gl.drawElements(gl.TRIANGLES,g.n,gl.UNSIGNED_SHORT,0);
-    }
+    var i;
+    for(i=0;i<obj.length;i++)if(!obj[i].glass){gl.uniform1f(U.uPass,0);drawObj(obj[i],i,t)}
+    /* oggetto di vetro per ultimo, senza scrivere la profondità: prima la faccia interna, poi quella esterna */
+    gl.depthMask(false);
+    for(i=0;i<obj.length;i++)if(obj[i].glass){gl.uniform1f(U.uPass,0);drawObj(obj[i],i,t);gl.uniform1f(U.uPass,1);drawObj(obj[i],i,t)}
+    gl.depthMask(true);
   }
 
   var raf=0,t0=performance.now(),last=t0,ema=.016,slow=0,rs=0;
   function frame(now){
     raf=requestAnimationFrame(frame);
     var dt=Math.min((now-last)/1000,.05);last=now;if(dt<=0)return;
-    draw((now-t0)/1000);
+    step(dt);draw((now-t0)/1000);
     /* qualità adattiva: sotto ~38fps costanti riduce la risoluzione del canvas */
     ema=ema*.95+dt*.05;
     if(quality>1){slow=ema>.026?slow+1:0;if(slow>120){quality=1;resize()}}
@@ -628,7 +683,7 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
   var fine=matchMedia('(hover:hover) and (pointer:fine)').matches;
   var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
   var glass=[].slice.call(document.querySelectorAll('.glass'));
-  var sx=0,sy=0,raf=0;
+  var sx=0,sy=0,raf=0,IN=window.__in=window.__in||{x:0,y:0};
 
   /* riflesso speculare sul vetro (aggiornato in rAF, solo mouse/trackpad) */
   var sheenRaf=0;
@@ -643,8 +698,33 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
   if(fine){
     addEventListener('pointermove',function(e){
       sx=e.clientX;sy=e.clientY;
+      if(!reduce){IN.x=sx/innerWidth*2-1;IN.y=-(sy/innerHeight*2-1)}
       if(!sheenRaf)sheenRaf=requestAnimationFrame(sheen);
     },{passive:true});
+  }
+  /* tilt 3D sulle card dei progetti (solo mouse/trackpad) */
+  if(fine&&!reduce)[].forEach.call(document.querySelectorAll('.projects a'),function(a){
+    var set=function(k,v){a.style.setProperty(k,v)};
+    a.addEventListener('pointermove',function(e){
+      var r=a.getBoundingClientRect(),x=(e.clientX-r.left)/r.width,y=(e.clientY-r.top)/r.height;
+      set('--ry',((x-.5)*10).toFixed(2)+'deg');set('--rx',((.5-y)*8).toFixed(2)+'deg');
+      set('--gx',(x*100).toFixed(1)+'%');set('--gy',(y*100).toFixed(1)+'%');set('--ga','.2');
+    });
+    a.addEventListener('pointerleave',function(){set('--rx','0deg');set('--ry','0deg');set('--ga','0')});
+  });
+  /* giroscopio su mobile: muove il 3D e il riflesso sul vetro. iOS chiede il permesso al primo tocco */
+  if(!fine&&!reduce&&window.DeviceOrientationEvent){
+    var cl=function(v){return Math.max(-1,Math.min(1,v))},on=false;
+    var onO=function(e){
+      if(e.gamma==null||e.beta==null)return;
+      IN.x=cl(e.gamma/25);IN.y=cl(-(e.beta-50)/25);
+      sx=innerWidth*(.5+IN.x*.5);sy=innerHeight*(.5-IN.y*.5);
+      if(!sheenRaf)sheenRaf=requestAnimationFrame(sheen);
+    };
+    var start=function(){if(!on){on=true;addEventListener('deviceorientation',onO,{passive:true})}};
+    if(typeof DeviceOrientationEvent.requestPermission==='function'){
+      addEventListener('click',function(){DeviceOrientationEvent.requestPermission().then(function(r){if(r==='granted')start()}).catch(function(){})},{once:true});
+    }else start();
   }
   if(reduce)return;
   if(root.classList.contains('gl'))return; /* la scena 3D ha già il suo loop */
