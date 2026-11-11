@@ -39,6 +39,13 @@
   /* grana fine che "satina" il vetro */
   --grain:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='.16'/></svg>");
 }
+/* telefono / touch: ombre del testo più leggere (meno da disegnare a ogni ridisegno) */
+@media (max-width:820px),(pointer:coarse){
+  :root{
+    --ts:0 0 1px rgba(2,4,16,.95),0 1px 3px rgba(2,4,16,.8);
+    --ts-hi:0 0 1px rgba(2,4,16,.95),0 1px 3px rgba(2,4,16,.8),0 0 10px rgba(169,210,255,.7);
+  }
+}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{background:var(--bg);-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
 body{
@@ -56,6 +63,7 @@ a:focus-visible{outline:2px solid var(--accent-hi);outline-offset:3px;border-rad
 ul{list-style:none}
 ::selection{background:rgba(140,194,255,.4);color:#fff}
 button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+a,button{touch-action:manipulation}
 button:focus-visible{outline:2px solid var(--accent-hi);outline-offset:3px;border-radius:.6rem;box-shadow:0 0 0 5px rgba(140,194,255,.22)}
 .ic{width:1.1em;height:1.1em;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 5px currentColor)}
 .skip{position:absolute;left:.75rem;top:-5rem;z-index:10;padding:.6rem .9rem;border-radius:.8rem;background:#0e1432;color:#fff;border:1px solid var(--edge);font-size:.8rem}
@@ -96,7 +104,7 @@ button:focus-visible{outline:2px solid var(--accent-hi);outline-offset:3px;borde
 .ring{width:min(15rem,46vw);left:calc(50% - 11rem);top:22%;border:3px solid rgba(169,155,255,.9);
   box-shadow:0 0 40px rgba(169,155,255,.35);animation:f3 34s ease-in-out infinite alternate-reverse}
 /* canvas 3D (WebGL): sostituisce le sfere CSS quando disponibile */
-.bg canvas{position:absolute;inset:0;width:100%;height:100%;display:block;opacity:0;transition:opacity 1.2s ease}
+.bg canvas{position:absolute;inset:0;width:100%;height:100%;height:100lvh;display:block;opacity:0;transition:opacity 1.2s ease}
 .gl .bg canvas{opacity:1}
 .gl .orb{display:none}
 /* fallback senza JS: traiettorie a più tappe, ogni tratto con easing */
@@ -105,7 +113,11 @@ button:focus-visible{outline:2px solid var(--accent-hi);outline-offset:3px;borde
 @keyframes f3{0%{transform:translate3d(0,0,0)}33%{transform:translate3d(2rem,-2rem,0)}66%{transform:translate3d(3rem,-.5rem,0)}100%{transform:translate3d(.5rem,-3rem,0)}}
 .js-motion .orb{animation:none}
 /* modalità lite: se il dispositivo fatica, meno blur ma stessa scena */
-html[data-lite] .glass{-webkit-backdrop-filter:blur(14px) saturate(170%);backdrop-filter:blur(14px) saturate(170%)}
+html[data-lite]{--ts:none;--ts-hi:none}
+html[data-lite] .glass{-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);animation:none}
+html[data-lite] .panel{animation:none}
+html[data-lite] .ic,html[data-lite] h1{filter:none}
+html[data-lite] .nick{text-shadow:none}
 
 /* ───────── VETRO ─────────
    1. tinta scura + gradiente chiaro (corpo del vetro)
@@ -203,9 +215,12 @@ h2{font-family:var(--display);font-size:.8rem;font-weight:700;text-transform:upp
   transform:perspective(600px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg));
   transition:background-color .25s,border-color .25s,transform .18s ease-out,box-shadow .25s;
 }
-.projects a:hover,.projects a:active{
-  background-color:rgba(255,255,255,.12);border-color:rgba(255,255,255,.2);
-  box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 10px 22px -10px rgba(0,0,0,.5);
+.projects a:active{background-color:rgba(255,255,255,.12);border-color:rgba(255,255,255,.2)}
+@media (hover:hover){
+  .projects a:hover{
+    background-color:rgba(255,255,255,.12);border-color:rgba(255,255,255,.2);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.25),0 10px 22px -10px rgba(0,0,0,.5);
+  }
 }
 .projects a:active{transform:perspective(600px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) scale(.985)}
 .projects b{color:var(--accent-hi);font-weight:700;text-shadow:var(--ts-hi)}
@@ -240,16 +255,23 @@ aside{display:flex;flex-direction:column;gap:1.25rem}
 .tile{display:flex;justify-content:center;align-items:center;width:10rem;font-size:.92rem;font-weight:600;color:var(--accent-hi);text-shadow:var(--ts-hi)}
 .t1{height:9rem}.t2{height:12rem}
 a.tile{transition:box-shadow .25s,background-color .25s}
-a.tile:hover,a.tile:focus-visible{background-color:rgba(60,80,170,.4);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 0 1px rgba(140,194,255,.5),0 24px 60px -12px rgba(0,0,0,.55)}
+a.tile:focus-visible{background-color:rgba(60,80,170,.4);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 0 1px rgba(140,194,255,.5),0 24px 60px -12px rgba(0,0,0,.55)}
+@media (hover:hover){
+  a.tile:hover{background-color:rgba(60,80,170,.4);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 0 1px rgba(140,194,255,.5),0 24px 60px -12px rgba(0,0,0,.55)}
+}
 a.tile:active{background-color:rgba(60,80,170,.55)}
 
 /* entrata morbida */
 @media (prefers-reduced-motion:no-preference){
   html{scroll-behavior:smooth}
-  .panel:not([hidden]){animation:pin .6s cubic-bezier(.2,.7,.2,1) both}
+  .panel:not([hidden]){animation:pin .35s cubic-bezier(.2,.7,.2,1) backwards}
   .panel[data-dir="1"]{--d:1}.panel[data-dir="-1"]{--d:-1}
-  @keyframes pin{from{opacity:0;filter:blur(5px);transform:perspective(900px) translate3d(calc(var(--d,0)*34px),12px,-90px) rotateY(calc(var(--d,0)*-9deg))}to{opacity:1;filter:none;transform:none}}
-  .glass{animation:in .6s cubic-bezier(.2,.7,.2,1) both}
+  @keyframes pin{from{opacity:0;transform:translate3d(calc(var(--d,0)*22px),8px,0)}to{opacity:1;transform:none}}
+  @media (hover:hover) and (pointer:fine){
+    .panel:not([hidden]){animation-duration:.6s}
+    @keyframes pin{from{opacity:0;filter:blur(5px);transform:perspective(900px) translate3d(calc(var(--d,0)*34px),12px,-90px) rotateY(calc(var(--d,0)*-9deg))}to{opacity:1;filter:none;transform:none}}
+  }
+  .glass{animation:in .6s cubic-bezier(.2,.7,.2,1) backwards}
   main{animation-delay:.08s}aside .glass:first-child{animation-delay:.16s}aside .glass:last-child{animation-delay:.24s}
   @keyframes in{from{opacity:0;transform:translateY(14px) scale(.985)}to{opacity:1;transform:none}}
 }
@@ -284,6 +306,21 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
 @media (max-width:360px){
   .wrap{padding:.75rem}
   nav li{flex-basis:100%}
+}
+/* telefono / touch: stessa scena, ma molto meno lavoro per la GPU */
+@media (max-width:820px),(pointer:coarse){
+  .glass{
+    -webkit-backdrop-filter:blur(12px) saturate(150%);backdrop-filter:blur(12px) saturate(150%);
+    box-shadow:inset 0 1px 0 rgba(255,255,255,.4),inset 0 -1px 0 rgba(255,255,255,.06),0 10px 28px -12px rgba(0,0,0,.5);
+  }
+  .ic{filter:none}
+  h1{filter:drop-shadow(0 0 10px rgba(140,194,255,.45))}
+  .nick{text-shadow:0 0 1px rgba(2,4,16,.95),0 1px 3px rgba(2,4,16,.8),0 0 8px rgba(140,194,255,.6)}
+  .projects a{transform:none;transition:background-color .2s,border-color .2s}
+  .projects a:active{transform:scale(.985)}
+}
+@media (prefers-reduced-transparency:reduce),(prefers-contrast:more){
+  .glass{-webkit-backdrop-filter:none;backdrop-filter:none;background-color:rgba(18,26,58,.94)}
 }
 </style>
 </head>
@@ -450,6 +487,7 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
   var cv=document.getElementById('scene3d');if(!cv)return;
   var root=document.documentElement;
   var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var mobile=matchMedia('(pointer:coarse)').matches||innerWidth<=820;
   var gl=cv.getContext('webgl',{antialias:true,alpha:true,premultipliedAlpha:true,powerPreference:'low-power'});
   if(!gl)return;
 
@@ -552,13 +590,15 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
   }
   var G={sphere:upload(sphere(40,56)),torus:upload(torus(80,28,.05)),cube:upload(cube()),octa:upload(octa()),knot:upload(knot(240,22,2,3,.15))};
 
-  /* matrici 4x4 column-major */
-  function mul(a,b){var o=new Float32Array(16);for(var c=0;c<4;c++)for(var r=0;r<4;r++){var s=0;for(var k=0;k<4;k++)s+=a[k*4+r]*b[c*4+k];o[c*4+r]=s}return o}
-  function rx(a){var c=Math.cos(a),s=Math.sin(a);return new Float32Array([1,0,0,0,0,c,s,0,0,-s,c,0,0,0,0,1])}
-  function ry(a){var c=Math.cos(a),s=Math.sin(a);return new Float32Array([c,0,-s,0,0,1,0,0,s,0,c,0,0,0,0,1])}
-  function rz(a){var c=Math.cos(a),s=Math.sin(a);return new Float32Array([c,s,0,0,-s,c,0,0,0,0,1,0,0,0,0,1])}
-  function tr(x,y,z){return new Float32Array([1,0,0,0,0,1,0,0,0,0,1,0,x,y,z,1])}
-  function sc(k){return new Float32Array([k,0,0,0,0,k,0,0,0,0,k,0,0,0,0,1])}
+  /* matrici 4x4 column-major, scritte in buffer preallocati: zero allocazioni per frame = niente scatti da garbage collector */
+  function mul(a,b,o){for(var c=0;c<4;c++)for(var r=0;r<4;r++){var q=0;for(var k=0;k<4;k++)q+=a[k*4+r]*b[c*4+k];o[c*4+r]=q}return o}
+  function setRx(o,a){var c=Math.cos(a),q=Math.sin(a);o[0]=1;o[1]=0;o[2]=0;o[3]=0;o[4]=0;o[5]=c;o[6]=q;o[7]=0;o[8]=0;o[9]=-q;o[10]=c;o[11]=0;o[12]=0;o[13]=0;o[14]=0;o[15]=1;return o}
+  function setRy(o,a){var c=Math.cos(a),q=Math.sin(a);o[0]=c;o[1]=0;o[2]=-q;o[3]=0;o[4]=0;o[5]=1;o[6]=0;o[7]=0;o[8]=q;o[9]=0;o[10]=c;o[11]=0;o[12]=0;o[13]=0;o[14]=0;o[15]=1;return o}
+  function setRz(o,a){var c=Math.cos(a),q=Math.sin(a);o[0]=c;o[1]=q;o[2]=0;o[3]=0;o[4]=-q;o[5]=c;o[6]=0;o[7]=0;o[8]=0;o[9]=0;o[10]=1;o[11]=0;o[12]=0;o[13]=0;o[14]=0;o[15]=1;return o}
+  function setT(o,x,y,z){o[0]=1;o[1]=0;o[2]=0;o[3]=0;o[4]=0;o[5]=1;o[6]=0;o[7]=0;o[8]=0;o[9]=0;o[10]=1;o[11]=0;o[12]=x;o[13]=y;o[14]=z;o[15]=1;return o}
+  function setS(o,k){o[0]=k;o[1]=0;o[2]=0;o[3]=0;o[4]=0;o[5]=k;o[6]=0;o[7]=0;o[8]=0;o[9]=0;o[10]=k;o[11]=0;o[12]=0;o[13]=0;o[14]=0;o[15]=1;return o}
+  function F16(){return new Float32Array(16)}
+  var mRx=F16(),mRy=F16(),mRz=F16(),mT=F16(),mS=F16(),mV=F16(),mA=F16(),mR=F16(),mM=F16(),mMVP=F16(),R3=new Float32Array(9);
   function hex(h){return [parseInt(h.substr(1,2),16)/255,parseInt(h.substr(3,2),16)/255,parseInt(h.substr(5,2),16)/255]}
 
   var FOV=40*Math.PI/180,W=0,H=0,D=0,dpr=1,proj;
@@ -599,17 +639,21 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
       obj[6].p=[.30*w,.20*h,32];
     }
   }
-  function resize(){
-    var w=innerWidth,h=innerHeight;
+  function resize(force){
+    var w=innerWidth,h=cv.clientHeight||innerHeight;
+    /* su mobile la barra del browser cambia l'altezza mentre scorri: ricreare il canvas a ogni scroll = scatti */
+    if(!force&&W&&w===W&&(h===H||(mobile&&Math.abs(h-H)<160)))return false;
     dpr=Math.min(devicePixelRatio||1,quality);
     W=w;H=h;cv.width=Math.round(w*dpr);cv.height=Math.round(h*dpr);
     gl.viewport(0,0,cv.width,cv.height);
     D=(h/2)/Math.tan(FOV/2);
     var f=1/Math.tan(FOV/2),n=D*.2,fa=D*4,asp=w/h;
     proj=new Float32Array([f/asp,0,0,0,0,f,0,0,0,0,(fa+n)/(n-fa),-1,0,0,2*fa*n/(n-fa),0]);
+    setT(mV,0,0,-D);
     layout();
+    return true;
   }
-  var quality=1.5;
+  var quality=mobile?1:1.5; /* telefono: 1 pixel per pixel CSS, non 2-3x */
 
   gl.enable(gl.DEPTH_TEST);gl.enable(gl.BLEND);gl.blendFunc(gl.ONE,gl.ONE_MINUS_SRC_ALPHA);gl.clearColor(0,0,0,0);
   gl.uniform3fv(U.uFogC,BG);
@@ -633,11 +677,17 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
     /* parallax: più vicino = si sposta di più */
     var dp=(o.z+300)*.1+14;x-=pX*dp;y-=pY*dp;
     var spin=secT*(.7+.12*i),tl=o.tilt||[0,0,0];
-    var R_=mul(rz(tl[2]+o.rot[2]*t),mul(ry(tl[1]+o.rot[1]*t+spin+pX*(hero?.6:.2)),rx(tl[0]+o.rot[0]*t+spin*.6+pY*(hero?.45:.15))));
-    var M=mul(tr((o.p[0]+x)*k2,(o.p[1]+y)*k2,z),mul(R_,sc(o.p[2]*k2)));
-    gl.uniformMatrix4fv(U.uM,false,M);
-    gl.uniformMatrix4fv(U.uMVP,false,mul(proj,mul(tr(0,0,-D),M)));
-    gl.uniformMatrix3fv(U.uR,false,new Float32Array([R_[0],R_[1],R_[2],R_[4],R_[5],R_[6],R_[8],R_[9],R_[10]]));
+    setRz(mRz,tl[2]+o.rot[2]*t);
+    setRy(mRy,tl[1]+o.rot[1]*t+spin+pX*(hero?.6:.2));
+    setRx(mRx,tl[0]+o.rot[0]*t+spin*.6+pY*(hero?.45:.15));
+    mul(mRy,mRx,mA);mul(mRz,mA,mR);                      /* mR = Rz·Ry·Rx */
+    setT(mT,(o.p[0]+x)*k2,(o.p[1]+y)*k2,z);setS(mS,o.p[2]*k2);
+    mul(mR,mS,mA);mul(mT,mA,mM);                         /* mM = T·R·S */
+    gl.uniformMatrix4fv(U.uM,false,mM);
+    mul(mV,mM,mA);mul(proj,mA,mMVP);                     /* MVP = P·V·M */
+    gl.uniformMatrix4fv(U.uMVP,false,mMVP);
+    R3[0]=mR[0];R3[1]=mR[1];R3[2]=mR[2];R3[3]=mR[4];R3[4]=mR[5];R3[5]=mR[6];R3[6]=mR[8];R3[7]=mR[9];R3[8]=mR[10];
+    gl.uniformMatrix3fv(U.uR,false,R3);
     gl.uniform3fv(U.uD,o.c[0]);gl.uniform3fv(U.uMd,o.c[1]);gl.uniform3fv(U.uL,o.c[2]);
     gl.uniform1f(U.uFog,Math.max(0,Math.min(.4,-z/700)));gl.uniform1f(U.uGlass,hero);
     var g=G[o.g];
@@ -656,23 +706,32 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
     gl.depthMask(true);
   }
 
-  var raf=0,t0=performance.now(),last=t0,ema=.016,slow=0,rs=0;
+  var raf=0,t0=performance.now(),lastDraw=t0,lastRaf=t0,ema=.016,slow=0,rs=0,scrolling=false,st=0,minGap=mobile?29:0,lite=false;
+  /* dispositivo che fatica: meno risoluzione, 20fps, blur più piccolo e niente ombre sul testo (vedi html[data-lite]) */
+  function goLite(){lite=true;root.setAttribute('data-lite','');quality=.75;minGap=45;resize(true)}
   function frame(now){
     raf=requestAnimationFrame(frame);
-    var dt=Math.min((now-last)/1000,.05);last=now;if(dt<=0)return;
+    var rd=(now-lastRaf)/1000;lastRaf=now;
+    /* misura la fluidità reale del browser (intervallo fra frame veri, non solo i nostri) */
+    if(rd>0&&rd<.5){ema=ema*.95+rd*.05;if(!lite){slow=ema>.028?slow+1:0;if(slow>90)goLite()}}
+    if(scrolling&&mobile)return;          /* mentre scorri sul telefono il 3D si ferma: la GPU serve allo scroll e al blur */
+    if(now-lastDraw<minGap)return;        /* mobile: 30fps bastano, la scena è sfocata dal vetro */
+    var dt=Math.min((now-lastDraw)/1000,.05);lastDraw=now;if(dt<=0)return;
     step(dt);draw((now-t0)/1000);
-    /* qualità adattiva: sotto ~38fps costanti riduce la risoluzione del canvas */
-    ema=ema*.95+dt*.05;
-    if(quality>1){slow=ema>.026?slow+1:0;if(slow>120){quality=1;resize()}}
   }
+  addEventListener('scroll',function(){
+    if(!mobile)return;
+    scrolling=true;clearTimeout(st);
+    st=setTimeout(function(){scrolling=false;lastDraw=performance.now()},140);
+  },{passive:true,capture:true});
   resize();
-  addEventListener('resize',function(){cancelAnimationFrame(rs);rs=requestAnimationFrame(function(){resize();if(reduce)draw(6)})},{passive:true});
+  addEventListener('resize',function(){cancelAnimationFrame(rs);rs=requestAnimationFrame(function(){if(resize()&&reduce)draw(6)})},{passive:true});
   cv.addEventListener('webglcontextlost',function(e){e.preventDefault();cancelAnimationFrame(raf);root.classList.remove('gl')});
   root.classList.add('gl');
   if(reduce){draw(6)}else{
     raf=requestAnimationFrame(frame);
     document.addEventListener('visibilitychange',function(){
-      if(document.hidden)cancelAnimationFrame(raf);else{last=performance.now();raf=requestAnimationFrame(frame)}
+      if(document.hidden)cancelAnimationFrame(raf);else{lastDraw=lastRaf=performance.now();raf=requestAnimationFrame(frame)}
     });
   }
 })();
@@ -689,10 +748,11 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
   var sheenRaf=0;
   function sheen(){
     sheenRaf=0;
-    for(var i=0;i<glass.length;i++){
-      var r=glass[i].getBoundingClientRect();
-      glass[i].style.setProperty('--mx',(sx-r.left)+'px');
-      glass[i].style.setProperty('--my',(sy-r.top)+'px');
+    var i,r=[];
+    for(i=0;i<glass.length;i++)r[i]=glass[i].getBoundingClientRect();   /* prima tutte le letture… */
+    for(i=0;i<glass.length;i++){                                         /* …poi tutte le scritture: niente layout thrashing */
+      glass[i].style.setProperty('--mx',(sx-r[i].left)+'px');
+      glass[i].style.setProperty('--my',(sy-r[i].top)+'px');
     }
   }
   if(fine){
@@ -717,9 +777,9 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
     var cl=function(v){return Math.max(-1,Math.min(1,v))},on=false;
     var onO=function(e){
       if(e.gamma==null||e.beta==null)return;
+      /* solo parallax 3D (costo quasi zero). Il riflesso sul vetro NON segue più il giroscopio:
+         riscrivere le variabili CSS di 4 pannelli con blur a ogni evento (60+/s) faceva laggare il telefono */
       IN.x=cl(e.gamma/25);IN.y=cl(-(e.beta-50)/25);
-      sx=innerWidth*(.5+IN.x*.5);sy=innerHeight*(.5-IN.y*.5);
-      if(!sheenRaf)sheenRaf=requestAnimationFrame(sheen);
     };
     var start=function(){if(!on){on=true;addEventListener('deviceorientation',onO,{passive:true})}};
     if(typeof DeviceOrientationEvent.requestPermission==='function'){
