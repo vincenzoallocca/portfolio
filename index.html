@@ -91,6 +91,10 @@ button:focus-visible{outline:2px solid var(--accent-hi);outline-offset:3px;borde
   animation:f2 22s ease-in-out infinite alternate-reverse}
 .ring{width:min(15rem,46vw);left:calc(50% - 11rem);top:22%;border:3px solid rgba(169,155,255,.9);
   box-shadow:0 0 40px rgba(169,155,255,.35);animation:f3 34s ease-in-out infinite alternate-reverse}
+/* canvas 3D (WebGL): sostituisce le sfere CSS quando disponibile */
+.bg canvas{position:absolute;inset:0;width:100%;height:100%;display:block;opacity:0;transition:opacity 1.2s ease}
+.gl .bg canvas{opacity:1}
+.gl .orb{display:none}
 /* fallback senza JS: traiettorie a più tappe, ogni tratto con easing */
 @keyframes f1{0%{transform:translate3d(0,0,0)}33%{transform:translate3d(3rem,-1.5rem,0)}66%{transform:translate3d(1rem,-3rem,0)}100%{transform:translate3d(-1.5rem,-1rem,0)}}
 @keyframes f2{0%{transform:translate3d(0,0,0)}33%{transform:translate3d(-2.5rem,1.5rem,0)}66%{transform:translate3d(-1rem,3rem,0)}100%{transform:translate3d(1.5rem,1rem,0)}}
@@ -278,6 +282,7 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
 <body>
 <a class="skip" href="#contenuto">Vai al contenuto</a>
 <div class="bg" aria-hidden="true">
+  <canvas id="scene3d"></canvas>
   <span class="orb o1"></span><span class="orb o2"></span><span class="orb o3"></span><span class="orb o4"></span><span class="orb ring"></span>
 </div>
 
@@ -428,6 +433,196 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
 })();
 </script>
 <script>
+/* ───────── SCENA 3D (WebGL puro, nessuna libreria) ─────────
+   Sfere, anello, cubo e ottaedro con luce, speculare e bordo fresnel, in prospettiva reale.
+   Dietro il vetro vengono sfocati dal backdrop-filter. Se WebGL manca, restano le sfere CSS. */
+(function(){
+  var cv=document.getElementById('scene3d');if(!cv)return;
+  var root=document.documentElement;
+  var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var gl=cv.getContext('webgl',{antialias:true,alpha:true,premultipliedAlpha:true,powerPreference:'low-power'});
+  if(!gl)return;
+
+  var VS='attribute vec3 aP;attribute vec3 aN;uniform mat4 uMVP,uM;uniform mat3 uR;varying vec3 vN,vW;'+
+    'void main(){vN=uR*aN;vW=(uM*vec4(aP,1.)).xyz;gl_Position=uMVP*vec4(aP,1.);}';
+  var FS='precision mediump float;varying vec3 vN,vW;uniform vec3 uD,uMd,uL,uCam,uFogC;uniform float uFog;'+
+    'void main(){vec3 N=normalize(vN),V=normalize(uCam-vW),Ld=normalize(vec3(-.55,.7,.62));'+
+    'float t=dot(N,Ld);'+
+    'vec3 c=mix(uD,uMd,smoothstep(-.7,.45,t));c=mix(c,uL,smoothstep(.5,1.,t));'+
+    'float sp=pow(max(dot(reflect(-Ld,N),V),0.),60.);'+
+    'float fr=pow(1.-max(dot(N,V),0.),3.);'+
+    'c+=sp*.75+fr*uL*.35;'+
+    'c=mix(c,uFogC,uFog);gl_FragColor=vec4(c,1.);}';
+  function sh(t,src){var o=gl.createShader(t);gl.shaderSource(o,src);gl.compileShader(o);return gl.getShaderParameter(o,gl.COMPILE_STATUS)?o:null}
+  var vs=sh(gl.VERTEX_SHADER,VS),fs=sh(gl.FRAGMENT_SHADER,FS);if(!vs||!fs)return;
+  var pr=gl.createProgram();gl.attachShader(pr,vs);gl.attachShader(pr,fs);gl.linkProgram(pr);
+  if(!gl.getProgramParameter(pr,gl.LINK_STATUS))return;
+  gl.useProgram(pr);
+  var aP=gl.getAttribLocation(pr,'aP'),aN=gl.getAttribLocation(pr,'aN');
+  var U={};['uMVP','uM','uR','uD','uMd','uL','uCam','uFogC','uFog'].forEach(function(n){U[n]=gl.getUniformLocation(pr,n)});
+
+  /* geometrie: {p,n,i} */
+  function sphere(a,b){
+    var p=[],i=[],x,y;
+    for(y=0;y<=a;y++){var th=y/a*Math.PI;for(x=0;x<=b;x++){var ph=x/b*2*Math.PI;
+      p.push(Math.sin(th)*Math.cos(ph),Math.cos(th),Math.sin(th)*Math.sin(ph))}}
+    for(y=0;y<a;y++)for(x=0;x<b;x++){var q=y*(b+1)+x;i.push(q,q+b+1,q+1,q+1,q+b+1,q+b+2)}
+    return {p:p,n:p.slice(),i:i};
+  }
+  function torus(a,b,r){
+    var p=[],n=[],i=[],u,v;
+    for(u=0;u<=a;u++){var U_=u/a*2*Math.PI;for(v=0;v<=b;v++){var V_=v/b*2*Math.PI;
+      var cx=Math.cos(U_),cz=Math.sin(U_),ct=Math.cos(V_),st=Math.sin(V_);
+      p.push((1+r*ct)*cx,r*st,(1+r*ct)*cz);n.push(ct*cx,st,ct*cz)}}
+    for(u=0;u<a;u++)for(v=0;v<b;v++){var q=u*(b+1)+v;i.push(q,q+b+1,q+1,q+1,q+b+1,q+b+2)}
+    return {p:p,n:n,i:i};
+  }
+  function flat(faces){ /* faces: array di [normale, v0, v1, v2, (v3)] */
+    var p=[],n=[],i=[];
+    faces.forEach(function(f){
+      var base=p.length/3,nm=f[0],k;
+      for(k=1;k<f.length;k++){p.push.apply(p,f[k]);n.push.apply(n,nm)}
+      i.push(base,base+1,base+2);if(f.length===5)i.push(base,base+2,base+3);
+    });
+    return {p:p,n:n,i:i};
+  }
+  function cube(){
+    var s=.62,f=[];
+    [[1,0,0],[-1,0,0],[0,1,0],[0,-1,0],[0,0,1],[0,0,-1]].forEach(function(nm){
+      var ax=nm[0]?0:nm[1]?1:2,u=(ax+1)%3,v=(ax+2)%3,sg=nm[ax],c=[[-1,-1],[1,-1],[1,1],[-1,1]].map(function(q){
+        var w=[0,0,0];w[ax]=sg*s;w[u]=q[0]*s;w[v]=q[1]*s;return w});
+      if(sg<0)c.reverse();f.push([nm,c[0],c[1],c[2],c[3]]);
+    });
+    return flat(f);
+  }
+  function octa(){
+    var f=[];
+    [-1,1].forEach(function(sx){[-1,1].forEach(function(sy){[-1,1].forEach(function(sz){
+      var l=Math.sqrt(3),nm=[sx/l,sy/l,sz/l],A=[sx,0,0],B=[0,sy,0],C=[0,0,sz];
+      f.push([nm,A,B,C].concat([]));
+      if(sx*sy*sz<0){var t=f[f.length-1];var tmp=t[2];t[2]=t[3];t[3]=tmp}
+    })})});
+    return flat(f);
+  }
+  function upload(g){
+    var vb=gl.createBuffer(),nb=gl.createBuffer(),ib=gl.createBuffer();
+    gl.bindBuffer(gl.ARRAY_BUFFER,vb);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(g.p),gl.STATIC_DRAW);
+    gl.bindBuffer(gl.ARRAY_BUFFER,nb);gl.bufferData(gl.ARRAY_BUFFER,new Float32Array(g.n),gl.STATIC_DRAW);
+    gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,ib);gl.bufferData(gl.ELEMENT_ARRAY_BUFFER,new Uint16Array(g.i),gl.STATIC_DRAW);
+    return {vb:vb,nb:nb,ib:ib,n:g.i.length};
+  }
+  var G={sphere:upload(sphere(40,56)),torus:upload(torus(80,28,.05)),cube:upload(cube()),octa:upload(octa())};
+
+  /* matrici 4x4 column-major */
+  function mul(a,b){var o=new Float32Array(16);for(var c=0;c<4;c++)for(var r=0;r<4;r++){var s=0;for(var k=0;k<4;k++)s+=a[k*4+r]*b[c*4+k];o[c*4+r]=s}return o}
+  function rx(a){var c=Math.cos(a),s=Math.sin(a);return new Float32Array([1,0,0,0,0,c,s,0,0,-s,c,0,0,0,0,1])}
+  function ry(a){var c=Math.cos(a),s=Math.sin(a);return new Float32Array([c,0,-s,0,0,1,0,0,s,0,c,0,0,0,0,1])}
+  function rz(a){var c=Math.cos(a),s=Math.sin(a);return new Float32Array([c,s,0,0,-s,c,0,0,0,0,1,0,0,0,0,1])}
+  function tr(x,y,z){return new Float32Array([1,0,0,0,0,1,0,0,0,0,1,0,x,y,z,1])}
+  function sc(k){return new Float32Array([k,0,0,0,0,k,0,0,0,0,k,0,0,0,0,1])}
+  function hex(h){return [parseInt(h.substr(1,2),16)/255,parseInt(h.substr(3,2),16)/255,parseInt(h.substr(5,2),16)/255]}
+
+  var FOV=40*Math.PI/180,W=0,H=0,D=0,dpr=1,proj;
+  var BG=[.02,.031,.086];
+  /* amp/freq/fase come nel moto originale; z = profondità (px) */
+  var obj=[
+    {g:'sphere',c:['#2b3fd8','#4f8dff','#9ad0ff'],z:0,  a:[[62,.24,0],[31,.55,1.7]],b:[[47,.20,2.2],[23,.61,.6]],rot:[0,0,0]},
+    {g:'sphere',c:['#4c1fb8','#8b5cf6','#d3a8ff'],z:-160,a:[[70,.18,3.1],[29,.49,.4]],b:[[52,.22,1.1],[26,.58,2.8]],rot:[0,0,0]},
+    {g:'sphere',c:['#0a6c94','#22d3ee','#8ff4ff'],z:-260,a:[[57,.21,5.2],[34,.46,2.4]],b:[[39,.27,.3],[21,.65,4.1]],rot:[0,0,0]},
+    {g:'sphere',c:['#9d2a73','#f472b6','#ffc2ea'],z:140, a:[[39,.32,1.4],[21,.70,3.3]],b:[[34,.29,4.6],[16,.78,.9]],rot:[0,0,0]},
+    {g:'torus', c:['#5a3fd0','#a99bff','#e6e0ff'],z:70,  a:[[49,.17,2.7],[26,.43,5.5]],b:[[42,.21,.8],[18,.54,3.7]],rot:[.23,.17,.11],tilt:[1.1,.4,0]},
+    {g:'cube',  c:['#0a6c94','#22d3ee','#c8fbff'],z:40,  a:[[30,.30,.9],[14,.74,2.1]],b:[[28,.26,3.9],[12,.69,1.3]],rot:[.31,.22,.14]},
+    {g:'octa',  c:['#2b3fd8','#6fa8ff','#d6ebff'],z:-60, a:[[26,.28,4.4],[12,.81,.2]],b:[[30,.24,2.6],[14,.72,5.1]],rot:[.19,.34,.09]}
+  ];
+  obj.forEach(function(o){o.c=o.c.map(hex);o.p=[0,0,0]});
+
+  /* posizioni/misure (px, origine al centro, y verso l'alto) che ricalcano il layout CSS delle sfere */
+  function layout(){
+    var w=W,h=H,m=w<=820,R=function(rem,vw){return Math.min(rem*16,vw*w)/2},
+        y=function(top,r){return h/2-(top+r)};
+    var r1=R(24,.58),r2=R(26,.62),r3=R(20,.5),r4=R(8,.26),r5=R(15,.46);
+    if(!m){
+      obj[0].p=[-33*16+r1,y(.06*h,r1),r1];
+      obj[1].p=[34*16-r2,y(.46*h,r2),r2];
+      obj[2].p=[-6*16+r3,h/2-(h+7*16-r3),r3];
+      obj[3].p=[7*16+r4,y(.03*h,r4),r4];
+      obj[4].p=[-11*16+r5,y(.22*h,r5),r5];
+      obj[5].p=[-.40*w,-.30*h,34];
+      obj[6].p=[.38*w,.28*h,40];
+    }else{
+      obj[0].p=[-64+r1-w/2,y(.03*h,r1),r1];
+      obj[1].p=[w/2+96-r2,y(.44*h,r2),r2];
+      obj[2].p=[.28*w+r3-w/2,h/2-(h+6*16-r3),r3];
+      obj[3].p=[w/2-.08*w-r4,y(.01*h,r4),r4];
+      obj[4].p=[w/2+3*16-r5,y(.18*h,r5),r5];
+      obj[5].p=[-.30*w,-.12*h,28];
+      obj[6].p=[.30*w,.20*h,32];
+    }
+  }
+  function resize(){
+    var w=innerWidth,h=innerHeight;
+    dpr=Math.min(devicePixelRatio||1,quality);
+    W=w;H=h;cv.width=Math.round(w*dpr);cv.height=Math.round(h*dpr);
+    gl.viewport(0,0,cv.width,cv.height);
+    D=(h/2)/Math.tan(FOV/2);
+    var f=1/Math.tan(FOV/2),n=D*.2,fa=D*4,asp=w/h;
+    proj=new Float32Array([f/asp,0,0,0,0,f,0,0,0,0,(fa+n)/(n-fa),-1,0,0,2*fa*n/(n-fa),0]);
+    layout();
+  }
+  var quality=1.5;
+
+  gl.enable(gl.DEPTH_TEST);gl.clearColor(0,0,0,0);
+  gl.uniform3fv(U.uFogC,BG);
+  gl.uniform3f(U.uCam,0,0,0); /* sostituito per frame */
+
+  function draw(t){
+    gl.clear(gl.COLOR_BUFFER_BIT|gl.DEPTH_BUFFER_BIT);
+    gl.uniform3f(U.uCam,0,0,D);
+    var view=tr(0,0,-D);
+    for(var i=0;i<obj.length;i++){
+      var o=obj[i],x=0,y=0,k;
+      for(k=0;k<o.a.length;k++)x+=o.a[k][0]*Math.sin(t*o.a[k][1]+o.a[k][2]);
+      for(k=0;k<o.b.length;k++)y+=o.b[k][0]*Math.sin(t*o.b[k][1]+o.b[k][2]);
+      var z=o.z,k2=(D-z)/D;                 /* compensa la prospettiva: la posizione a schermo resta quella del layout */
+      var px=(o.p[0]+x)*k2,py=(o.p[1]+y)*k2;
+      var size=(o.g==='sphere'||o.g==='torus')?o.p[2]:o.p[2];
+      var s=size*k2;
+      var R_=mul(rz((o.tilt?o.tilt[2]:0)+o.rot[2]*t),mul(ry((o.tilt?o.tilt[1]:0)+o.rot[1]*t),rx((o.tilt?o.tilt[0]:0)+o.rot[0]*t)));
+      var M=mul(tr(px,py,z),mul(R_,sc(s)));
+      gl.uniformMatrix4fv(U.uM,false,M);
+      gl.uniformMatrix4fv(U.uMVP,false,mul(proj,mul(view,M)));
+      gl.uniformMatrix3fv(U.uR,false,new Float32Array([R_[0],R_[1],R_[2],R_[4],R_[5],R_[6],R_[8],R_[9],R_[10]]));
+      gl.uniform3fv(U.uD,o.c[0]);gl.uniform3fv(U.uMd,o.c[1]);gl.uniform3fv(U.uL,o.c[2]);
+      gl.uniform1f(U.uFog,Math.max(0,Math.min(.4,-z/700)));
+      var g=G[o.g];
+      gl.bindBuffer(gl.ARRAY_BUFFER,g.vb);gl.enableVertexAttribArray(aP);gl.vertexAttribPointer(aP,3,gl.FLOAT,false,0,0);
+      gl.bindBuffer(gl.ARRAY_BUFFER,g.nb);gl.enableVertexAttribArray(aN);gl.vertexAttribPointer(aN,3,gl.FLOAT,false,0,0);
+      gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,g.ib);gl.drawElements(gl.TRIANGLES,g.n,gl.UNSIGNED_SHORT,0);
+    }
+  }
+
+  var raf=0,t0=performance.now(),last=t0,ema=.016,slow=0,rs=0;
+  function frame(now){
+    raf=requestAnimationFrame(frame);
+    var dt=Math.min((now-last)/1000,.05);last=now;if(dt<=0)return;
+    draw((now-t0)/1000);
+    /* qualità adattiva: sotto ~38fps costanti riduce la risoluzione del canvas */
+    ema=ema*.95+dt*.05;
+    if(quality>1){slow=ema>.026?slow+1:0;if(slow>120){quality=1;resize()}}
+  }
+  resize();
+  addEventListener('resize',function(){cancelAnimationFrame(rs);rs=requestAnimationFrame(function(){resize();if(reduce)draw(6)})},{passive:true});
+  cv.addEventListener('webglcontextlost',function(e){e.preventDefault();cancelAnimationFrame(raf);root.classList.remove('gl')});
+  root.classList.add('gl');
+  if(reduce){draw(6)}else{
+    raf=requestAnimationFrame(frame);
+    document.addEventListener('visibilitychange',function(){
+      if(document.hidden)cancelAnimationFrame(raf);else{last=performance.now();raf=requestAnimationFrame(frame)}
+    });
+  }
+})();
+</script>
+<script>
 (function(){
   var root=document.documentElement;
   var fine=matchMedia('(hover:hover) and (pointer:fine)').matches;
@@ -452,6 +647,7 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
     },{passive:true});
   }
   if(reduce)return;
+  if(root.classList.contains('gl'))return; /* la scena 3D ha già il suo loop */
 
   /* ───────── motore di movimento ─────────
      • posizione = somma di onde sinusoidali incommensurabili → moto organico che non si ripete
