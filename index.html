@@ -1,56 +1,517 @@
 <!doctype html>
 <html lang="it">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <link href="./src/output.css" rel="stylesheet">
-  <title>Portfolio | Vincenzo</title>
-  <link rel="icon" type="image/ico" href="assets/favicon.ico">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Portfolio | Vincenzo</title>
+<meta name="description" content="Portfolio di Vincenzo (enzoware): progetti e contatti.">
+<meta name="theme-color" content="#050816">
+<meta name="color-scheme" content="dark">
+<link rel="canonical" href="https://enzoware.dpdns.org/">
+<meta name="author" content="Vincenzo (enzoware)">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="it_IT">
+<meta property="og:site_name" content="Portfolio | Vincenzo">
+<meta property="og:title" content="Portfolio | Vincenzo">
+<meta property="og:description" content="Portfolio di Vincenzo (enzoware): progetti e contatti.">
+<meta property="og:url" content="https://enzoware.dpdns.org/">
+<meta property="og:image" content="https://enzoware.dpdns.org/assets/profilo.webp">
+<meta name="twitter:card" content="summary">
+<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="preload" as="image" href="assets/profilo.webp" type="image/webp">
+<style>
+:root{
+  --bg:#050816;
+  --text:#f4f7ff;
+  --muted:#d0dbf4;
+  --accent-hi:#bfe0ff;
+  /* alone: 1) contorno scuro stretto = nitidezza su qualunque sfondo, 2) bagliore morbido = glow */
+  --ts:0 0 1px rgba(2,4,16,.95),0 1px 3px rgba(2,4,16,.8),0 0 14px rgba(140,194,255,.3);
+  --ts-hi:0 0 1px rgba(2,4,16,.95),0 1px 3px rgba(2,4,16,.8),0 0 12px rgba(169,210,255,.85),0 0 26px rgba(140,194,255,.45);
+  --accent:#8cc2ff;
+  --accent2:#a99bff;
+  --edge:rgba(255,255,255,.14);
+  --radius:1.5rem;
+  /* grana fine che "satina" il vetro */
+  --grain:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='.16'/></svg>");
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{background:var(--bg);-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
+body{
+  min-height:100vh;min-height:100dvh;
+  color:var(--text);
+  font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono","Courier New",monospace;
+  line-height:1.6;
+  -webkit-font-smoothing:antialiased;-moz-osx-font-smoothing:grayscale;text-rendering:optimizeLegibility;
+  text-shadow:var(--ts);
+  padding:env(safe-area-inset-top) env(safe-area-inset-right) env(safe-area-inset-bottom) env(safe-area-inset-left);
+  overflow-x:hidden;
+}
+a{color:inherit;text-decoration:none;-webkit-touch-callout:none}
+a:focus-visible{outline:2px solid var(--accent-hi);outline-offset:3px;border-radius:.6rem;box-shadow:0 0 0 5px rgba(140,194,255,.22)}
+ul{list-style:none}
+::selection{background:rgba(140,194,255,.4);color:#fff}
+button{font:inherit;color:inherit;background:none;border:0;cursor:pointer}
+button:focus-visible{outline:2px solid var(--accent-hi);outline-offset:3px;border-radius:.6rem;box-shadow:0 0 0 5px rgba(140,194,255,.22)}
+.ic{width:1.1em;height:1.1em;flex:none;fill:none;stroke:currentColor;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;filter:drop-shadow(0 0 5px currentColor)}
+.skip{position:absolute;left:.75rem;top:-5rem;z-index:10;padding:.6rem .9rem;border-radius:.8rem;background:#0e1432;color:#fff;border:1px solid var(--edge);font-size:.8rem}
+.skip:focus{top:max(.75rem,env(safe-area-inset-top))}
+
+/* ───────── SCENA DIETRO IL VETRO ─────────
+   Il glassmorphism si vede solo se dietro c'è qualcosa di nitido da sfocare:
+   sfere colorate, un anello, una griglia. Si muovono solo con transform (GPU). */
+.bg{position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none;background:var(--bg);contain:layout paint}
+.bg::before{ /* alone ambientale */
+  content:"";position:absolute;inset:0;
+  background:
+    radial-gradient(60rem 40rem at 50% -10%,rgba(76,110,255,.28),transparent 70%),
+    radial-gradient(50rem 40rem at 50% 115%,rgba(34,211,238,.18),transparent 70%);
+}
+.bg::after{ /* griglia tenue: le linee diventano morbide dove passa il vetro */
+  content:"";position:absolute;inset:0;opacity:.5;
+  background-image:
+    linear-gradient(rgba(255,255,255,.05) 1px,transparent 1px),
+    linear-gradient(90deg,rgba(255,255,255,.05) 1px,transparent 1px);
+  background-size:3rem 3rem;
+  -webkit-mask-image:radial-gradient(ellipse at center,#000 20%,transparent 75%);
+  mask-image:radial-gradient(ellipse at center,#000 20%,transparent 75%);
+}
+.orb{position:absolute;border-radius:50%;aspect-ratio:1;will-change:transform;backface-visibility:hidden;transform:translate3d(0,0,0)}
+.o1{width:min(24rem,58vw);left:calc(50% - 33rem);top:6%;
+  background:radial-gradient(circle at 30% 28%,#9ad0ff 0,#4f8dff 38%,#2b3fd8 100%);
+  animation:f1 26s ease-in-out infinite alternate}
+.o2{width:min(26rem,62vw);right:calc(50% - 34rem);top:46%;
+  background:radial-gradient(circle at 32% 30%,#d3a8ff 0,#8b5cf6 42%,#4c1fb8 100%);
+  animation:f2 31s ease-in-out infinite alternate}
+.o3{width:min(20rem,50vw);left:calc(50% - 6rem);bottom:-7rem;
+  background:radial-gradient(circle at 35% 30%,#8ff4ff 0,#22d3ee 42%,#0a6c94 100%);
+  animation:f3 28s ease-in-out infinite alternate}
+.o4{width:min(8rem,26vw);left:calc(50% + 7rem);top:3%;
+  background:radial-gradient(circle at 35% 30%,#ffc2ea 0,#f472b6 50%,#9d2a73 100%);
+  animation:f2 22s ease-in-out infinite alternate-reverse}
+.ring{width:min(15rem,46vw);left:calc(50% - 11rem);top:22%;border:3px solid rgba(169,155,255,.9);
+  box-shadow:0 0 40px rgba(169,155,255,.35);animation:f3 34s ease-in-out infinite alternate-reverse}
+/* fallback senza JS: traiettorie a più tappe, ogni tratto con easing */
+@keyframes f1{0%{transform:translate3d(0,0,0)}33%{transform:translate3d(3rem,-1.5rem,0)}66%{transform:translate3d(1rem,-3rem,0)}100%{transform:translate3d(-1.5rem,-1rem,0)}}
+@keyframes f2{0%{transform:translate3d(0,0,0)}33%{transform:translate3d(-2.5rem,1.5rem,0)}66%{transform:translate3d(-1rem,3rem,0)}100%{transform:translate3d(1.5rem,1rem,0)}}
+@keyframes f3{0%{transform:translate3d(0,0,0)}33%{transform:translate3d(2rem,-2rem,0)}66%{transform:translate3d(3rem,-.5rem,0)}100%{transform:translate3d(.5rem,-3rem,0)}}
+.js-motion .orb{animation:none}
+/* modalità lite: se il dispositivo fatica, meno blur ma stessa scena */
+html[data-lite] .glass{-webkit-backdrop-filter:blur(14px) saturate(170%);backdrop-filter:blur(14px) saturate(170%)}
+
+/* ───────── VETRO ─────────
+   1. tinta scura + gradiente chiaro (corpo del vetro)
+   2. grana (satinatura)
+   3. riflesso speculare che segue il puntatore (--mx/--my)
+   4. bordo a gradiente (luce sul bordo) via mask
+   5. ombre interne: spessore del bordo + profondità */
+.glass{
+  position:relative;isolation:isolate;
+  border-radius:var(--radius);
+  background-color:rgba(10,15,42,var(--tint,.5));
+  background-image:
+    radial-gradient(22rem 16rem at var(--mx,25%) var(--my,0%),rgba(255,255,255,.16),transparent 70%),
+    linear-gradient(135deg,rgba(255,255,255,.17) 0%,rgba(255,255,255,.05) 42%,rgba(255,255,255,.03) 62%,rgba(255,255,255,.1) 100%),
+    var(--grain);
+  -webkit-backdrop-filter:blur(26px) saturate(185%) brightness(1.06);
+  backdrop-filter:blur(26px) saturate(185%) brightness(1.06);
+  box-shadow:
+    inset 0 1px 0 rgba(255,255,255,.4),
+    inset 0 -1px 0 rgba(255,255,255,.06),
+    inset 0 0 28px rgba(255,255,255,.05),
+    0 1px 2px rgba(0,0,0,.25),
+    0 24px 60px -12px rgba(0,0,0,.55);
+}
+.glass::before{
+  content:"";position:absolute;inset:0;z-index:2;border-radius:inherit;padding:1px;pointer-events:none;
+  background:linear-gradient(140deg,rgba(255,255,255,.65) 0%,rgba(255,255,255,.1) 30%,rgba(255,255,255,.03) 60%,rgba(255,255,255,.35) 100%);
+  -webkit-mask:linear-gradient(#000 0 0) content-box,linear-gradient(#000 0 0);
+  -webkit-mask-composite:xor;
+  mask:linear-gradient(#000 0 0) content-box exclude,linear-gradient(#000 0 0);
+}
+@supports not ((backdrop-filter:blur(1px)) or (-webkit-backdrop-filter:blur(1px))){
+  .glass{background-color:rgba(22,30,66,.9)}
+}
+@media (prefers-reduced-transparency:reduce),(prefers-contrast:more){
+  .glass{-webkit-backdrop-filter:none;backdrop-filter:none;background-color:rgba(18,26,58,.94)}
+}
+
+.wrap{
+  display:flex;justify-content:center;align-items:center;gap:1.25rem;
+  min-height:100vh;min-height:100dvh;padding:1.25rem;
+}
+
+/* profilo */
+.side{display:flex;flex-direction:column;align-items:center;gap:.8rem;width:11.5rem;padding:1.2rem .9rem}
+.avatar{
+  padding:3px;border-radius:50%;
+  background:conic-gradient(from 200deg,var(--accent),var(--accent2),#22d3ee,var(--accent));
+  box-shadow:0 0 0 4px rgba(255,255,255,.07),0 8px 28px rgba(124,183,255,.35);
+}
+.avatar img{display:block;width:6rem;height:6rem;border-radius:50%;object-fit:cover;border:3px solid rgba(5,8,22,.85)}
+.nick{font-size:1.05rem;font-weight:700;letter-spacing:.02em;text-shadow:0 0 1px rgba(2,4,16,.95),0 1px 3px rgba(2,4,16,.8),0 0 14px rgba(140,194,255,.7)}
+.quote{font-size:.85rem;font-style:italic;color:var(--muted)}
+hr{width:100%;border:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.28),transparent)}
+nav{width:100%}
+nav ul{display:flex;flex-direction:column;gap:.35rem}
+nav a{
+  display:flex;align-items:center;justify-content:center;
+  min-height:2.75rem;padding:.4rem .75rem;border-radius:.8rem;
+  font-size:.92rem;font-weight:600;color:var(--accent-hi);gap:.55rem;border:1px solid transparent;
+  transition:background .25s,color .25s,border-color .25s,transform .25s,box-shadow .25s;
+}
+nav a:hover,nav a:active,nav a[aria-current]{
+  background:linear-gradient(135deg,rgba(255,255,255,.17),rgba(255,255,255,.06));
+  border-color:rgba(255,255,255,.28);color:#fff;text-shadow:var(--ts-hi);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 6px 16px rgba(0,0,0,.25);
+}
+nav a:active{transform:scale(.97)}
+
+/* contenuto: .glass fisso, lo scroll avviene dentro così bordo e riflessi restano fermi */
+main{--tint:.62;width:26rem;max-width:100%;height:30rem;max-height:calc(100dvh - 2.5rem)}
+.scroll{
+  position:relative;z-index:1;height:100%;border-radius:inherit;
+  display:flex;flex-direction:column;gap:.85rem;padding:1.25rem;
+  overflow-y:auto;overscroll-behavior:contain;
+  scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.28) transparent;
+}
+h1{font-size:1.1rem;font-weight:700;text-align:center;letter-spacing:.04em;text-wrap:balance;text-shadow:none;
+  filter:drop-shadow(0 0 1px rgba(2,4,16,.9)) drop-shadow(0 0 9px rgba(140,194,255,.65));
+  background:linear-gradient(90deg,var(--accent-hi),#d2c9ff);-webkit-background-clip:text;background-clip:text;color:transparent}
+h2{font-size:.78rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--accent-hi);margin-bottom:.6rem;text-shadow:var(--ts-hi)}
+/* le card interne NON usano backdrop-filter (annidato non funzionerebbe): vetro "leggero" a sola trasparenza */
+.card{
+  background:linear-gradient(160deg,rgba(255,255,255,.09),rgba(255,255,255,.03)),rgba(5,8,28,.34);
+  border:1px solid rgba(255,255,255,.14);border-radius:1.1rem;padding:.95rem;font-size:.92rem;
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.18),0 8px 20px -8px rgba(0,0,0,.4);
+}
+.projects{display:flex;flex-direction:column;gap:.4rem}
+.projects a{
+  display:block;min-height:2.75rem;padding:.55rem .7rem;border-radius:.8rem;
+  background:rgba(255,255,255,.04);border:1px solid transparent;
+  transition:background .25s,border-color .25s,transform .25s,box-shadow .25s;
+}
+.projects a:hover,.projects a:active{
+  background:rgba(255,255,255,.12);border-color:rgba(255,255,255,.2);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.25);
+}
+.projects a:hover{transform:translateY(-1px)}
+.projects a:active{transform:scale(.985)}
+.projects b{color:var(--accent-hi);font-weight:700;text-shadow:var(--ts-hi)}
+.projects b::after{content:" ↗";opacity:.8}
+.projects span{color:var(--muted)}
+.card p{color:#e1e9fb}
+.card p+p{margin-top:.5rem}
+.panel{display:flex;flex-direction:column;gap:.85rem}
+.panel[hidden]{display:none}
+/* voce non ancora disponibile: non è un link, quindi non deve sembrarlo */
+.projects .soon{display:block;min-height:2.75rem;padding:.55rem .7rem;border-radius:.8rem;border:1px dashed rgba(255,255,255,.2);opacity:.85;cursor:default}
+.projects .soon b::after{content:none}
+.badge{display:inline-block;margin-left:.4rem;padding:0 .5rem;border-radius:99px;font-size:.7rem;font-weight:500;color:var(--muted);border:1px solid rgba(255,255,255,.2);vertical-align:.1em}
+/* bottoni di azione */
+.actions{display:flex;flex-wrap:wrap;gap:.5rem;margin-top:.75rem}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:.4rem;
+  min-height:2.75rem;padding:.5rem .8rem;border-radius:.9rem;font-size:.85rem;font-weight:600;color:#fff;cursor:pointer;text-shadow:var(--ts-hi);
+  border:1px solid rgba(255,255,255,.22);
+  background:linear-gradient(135deg,rgba(140,194,255,.3),rgba(169,155,255,.22));
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 6px 16px -6px rgba(0,0,0,.4);
+  transition:background .25s,border-color .25s,transform .25s;
+}
+.btn:hover{background:linear-gradient(135deg,rgba(140,194,255,.45),rgba(169,155,255,.36));border-color:rgba(255,255,255,.35)}
+.btn:active{transform:scale(.97)}
+.status{min-height:1.2em;margin-top:.6rem;font-size:.82rem;color:var(--accent-hi)}
+.friends{display:grid;grid-template-columns:repeat(auto-fill,minmax(7rem,1fr));gap:.5rem}
+.friends li{padding:.7rem .5rem;border-radius:.8rem;text-align:center;font-size:.85rem;color:var(--muted);background:rgba(255,255,255,.04);border:1px dashed rgba(255,255,255,.14)}
+
+/* tile */
+aside{display:flex;flex-direction:column;gap:1.25rem}
+.tile{display:flex;justify-content:center;align-items:center;width:10rem;font-size:.92rem;font-weight:600;color:var(--accent-hi);text-shadow:var(--ts-hi)}
+.t1{height:9rem}.t2{height:12rem}
+a.tile{transition:box-shadow .25s,background-color .25s}
+a.tile:hover,a.tile:focus-visible{background-color:rgba(60,80,170,.4);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 0 1px rgba(140,194,255,.5),0 24px 60px -12px rgba(0,0,0,.55)}
+a.tile:active{background-color:rgba(60,80,170,.55)}
+
+/* entrata morbida */
+@media (prefers-reduced-motion:no-preference){
+  html{scroll-behavior:smooth}
+  .panel:not([hidden]){animation:pin .35s cubic-bezier(.2,.7,.2,1) both}
+  @keyframes pin{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+  .glass{animation:in .6s cubic-bezier(.2,.7,.2,1) both}
+  main{animation-delay:.08s}aside .glass:first-child{animation-delay:.16s}aside .glass:last-child{animation-delay:.24s}
+  @keyframes in{from{opacity:0;transform:translateY(14px) scale(.985)}to{opacity:1;transform:none}}
+}
+@media (prefers-reduced-motion:reduce){
+  .orb{animation:none}
+}
+
+/* tablet / mobile */
+@media (max-width:820px){
+  .o1{left:-4rem;top:3%}
+  .o2{right:-6rem;top:44%}
+  .o3{left:28%;bottom:-6rem}
+  .o4{left:auto;right:8%;top:1%}
+  .ring{left:auto;right:-3rem;top:18%}
+  .wrap{flex-direction:column;justify-content:flex-start;align-items:stretch;gap:1rem;max-width:30rem;margin:0 auto;padding:1rem}
+  .side{width:100%;display:grid;grid-template-columns:auto 1fr;grid-template-areas:"av nick" "av quote" "line line" "nav nav";align-items:center;column-gap:1rem;row-gap:.15rem;padding:1rem}
+  .avatar{grid-area:av;margin-bottom:.35rem}
+  .avatar img{width:4.75rem;height:4.75rem}
+  .side .nick{grid-area:nick;align-self:end}.side .quote{grid-area:quote;align-self:start}
+  hr{grid-area:line;margin:.45rem 0}
+  nav{grid-area:nav}
+  nav ul{flex-direction:row;flex-wrap:wrap;justify-content:center}
+  nav li{flex:1 1 calc(50% - .35rem)}
+  nav a{min-height:2.75rem;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16)}
+  main{width:100%;height:auto;max-height:none}
+  .scroll{height:auto;overflow:visible}
+  aside{flex-direction:row;gap:1rem}
+  .tile{flex:1;width:auto;height:8rem}
+  /* blur un po' più leggero su mobile per fluidità */
+  .glass{-webkit-backdrop-filter:blur(20px) saturate(180%) brightness(1.06);backdrop-filter:blur(20px) saturate(180%) brightness(1.06)}
+}
+@media (max-width:360px){
+  .wrap{padding:.75rem}
+  nav li{flex-basis:100%}
+}
+</style>
 </head>
-<body class="bg-gradient-to-b from-black via-blue-950 to-black text-white font-mono">
+<body>
+<a class="skip" href="#contenuto">Vai al contenuto</a>
+<div class="bg" aria-hidden="true">
+  <span class="orb o1"></span><span class="orb o2"></span><span class="orb o3"></span><span class="orb o4"></span><span class="orb ring"></span>
+</div>
 
-  <div class="flex justify-center items-center h-screen gap-6">
-    
-    <!-- menu, profilo, contatti -->
-    <div class="flex flex-col items-center gap-3 w-40 border-2 border-blue-500 bg-blue-900/20 shadow-lg p-3 rounded-lg">
-      <img src="assets/profilo.jpg" alt="Profilo" class="w-24 h-24 border-2 border-blue-400 rounded-full object-cover">
-      <p class="text-sm text-blue-300">enzoware</p>
-      <p class="text-xs italic text-gray-400">"Buone cose.."</p>
-      <hr class="w-full border-blue-700">
-      <ul class="text-xs space-y-1 text-blue-300">
-        <li><a href="#" target="_blank" class="hover:underline hover:text-blue-400 ">Home</a></li>
-        <li><a href="#" target="_blank" class="hover:underline hover:text-blue-400 ">About Me</a></li>
-        <li><a href="#" target="_blank" class="hover:underline hover:text-blue-400 ">Friends</a></li>
-        <li><a href="#" target="_blank" class="hover:underline hover:text-blue-400 ">Messages</a></li>
+<div class="wrap">
+  <header class="glass side">
+    <div class="avatar"><img src="assets/profilo.webp" alt="Foto profilo di Vincenzo" width="96" height="96" fetchpriority="high" decoding="async"></div>
+    <p class="nick">enzoware</p>
+    <p class="quote">"Buone cose.."</p>
+    <hr>
+    <nav aria-label="Menu">
+      <ul>
+        <li><a href="#home" data-tab="home" aria-current="page"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-8 9 8M5 10v10h5v-6h4v6h5V10"/></svg>Home</a></li>
+        <li><a href="#about" data-tab="about"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>About Me</a></li>
+        <li><a href="#friends" data-tab="friends"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-8-5.2-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.8-8 11-8 11z"/></svg>Friends</a></li>
+        <li><a href="#messages" data-tab="messages"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>Messages</a></li>
       </ul>
+    </nav>
+  </header>
+
+  <main class="glass" id="contenuto" tabindex="-1">
+    <div class="scroll">
+      <h1>★ My Portfolio ★</h1>
+
+      <div class="panel" id="home" data-title="Home">
+        <section class="card" aria-labelledby="prj">
+          <h2 id="prj">Progetti</h2>
+          <ul class="projects">
+            <li><a href="https://github.com/enzoware/nemici-miei" target="_blank" rel="noopener noreferrer"><b>Nemici-Miei</b><br><span>PYGAME School Project.</span></a></li>
+            <li><div class="soon" aria-disabled="true"><b>Progetto 2</b><span class="badge">in arrivo</span><br><span>Descrizione del progetto.</span></div></li>
+            <li><div class="soon" aria-disabled="true"><b>Progetto 3</b><span class="badge">in arrivo</span><br><span>Descrizione del progetto.</span></div></li>
+          </ul>
+        </section>
+        <section class="card">
+          <h2>Ultimo post</h2>
+          <p>[Ultimo post]</p>
+        </section>
+      </div>
+
+      <div class="panel" id="about" data-title="About Me">
+        <section class="card" aria-labelledby="abt">
+          <h2 id="abt">About Me</h2>
+          <p>Ciao, sono Vincenzo, in rete <b>enzoware</b>. Mi piace costruire piccoli progetti e imparare facendo.</p>
+          <p>Il codice dei miei lavori è su GitHub.</p>
+          <div class="actions"><a class="btn" href="https://github.com/enzoware" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div>
+        </section>
+      </div>
+
+      <div class="panel" id="friends" data-title="Friends">
+        <section class="card" aria-labelledby="frn">
+          <h2 id="frn">Top Friends</h2>
+          <ul class="friends">
+            <li>Presto qui</li><li>Presto qui</li><li>Presto qui</li>
+          </ul>
+        </section>
+      </div>
+
+      <div class="panel" id="messages" data-title="Messages">
+        <section class="card" aria-labelledby="msg">
+          <h2 id="msg">Messages</h2>
+          <p>Vuoi scrivermi o dare un'occhiata al mio codice? Il modo più rapido è GitHub.</p>
+          <div class="actions">
+            <a class="btn" href="https://github.com/enzoware" target="_blank" rel="noopener noreferrer">Scrivimi su GitHub ↗</a>
+            <button class="btn" type="button" id="share">Condividi il sito</button>
+          </div>
+          <p class="status" id="status" role="status" aria-live="polite"></p>
+        </section>
+      </div>
     </div>
+  </main>
 
-    <!-- main content -->
-    <div class="flex flex-col w-96 h-[500px] border-2 border-blue-500 bg-blue-900/10 rounded-lg shadow-xl p-4 overflow-y-auto">
-      <div class="text-center text-blue-300 mb-2">★ My Portfolio ★</div>
-      <div class="border border-blue-400 bg-blue-950/30 p-3 rounded-md text-sm">
-        <ul>
-          <li>• <a href="https://github.com/enzoware/nemici-miei" target="_blank" class="hover:underline hover:text-blue-400 ">Nemici-Miei</a>: PYGAME School Project.</li>
-          <li>• <a href="#" target="_blank" class="hover:underline hover:text-blue-400 ">Progetto 2</a>: Descrizione del progetto.</li>
-          <li>• <a href="#" target="_blank" class="hover:underline hover:text-blue-400 ">Progetto 3</a>: Descrizione del progetto.</li>
-        </ul>
-      </div>
-      <div class="mt-3 border border-blue-400 bg-blue-950/30 p-3 rounded-md text-sm">
-        <p>[Ultimo post]</p>
-      </div>
-    </div>
+  <aside>
+    <div class="glass tile t1"><p>[Playlist]</p></div>
+    <a class="glass tile t2" href="#friends" data-tab="friends"><p>[Top Friends]</p></a>
+  </aside>
+</div>
 
-    <!-- social, musica, link -->
-    <div class="flex flex-col items-center gap-3">
-      <div class="w-36 h-36 border-2 border-blue-500 bg-blue-900/20 rounded-lg shadow-md flex justify-center items-center">
-        <p class="text-xs text-blue-300">[Playlist]</p>
-      </div>
-      <div class="w-36 h-48 border-2 border-blue-500 bg-blue-900/20 rounded-lg shadow-md flex justify-center items-center">
-        <p class="text-xs text-blue-300">[Top Friends]</p>
-      </div>
-    </div>
+<script>
+/* navigazione a schede: hash routing, funziona su GitHub Pages senza server.
+   Senza JS tutte le sezioni restano visibili una sotto l'altra. */
+(function(){
+  var panels=[].slice.call(document.querySelectorAll('.panel'));
+  var links=[].slice.call(document.querySelectorAll('[data-tab]'));
+  var scroller=document.querySelector('.scroll');
+  var main=document.getElementById('contenuto');
+  var base='Portfolio | Vincenzo';
+  var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var names=panels.map(function(p){return p.id});
 
-  </div>
+  function show(name,user){
+    if(names.indexOf(name)<0)name='home';
+    panels.forEach(function(p){p.hidden=p.id!==name});
+    links.forEach(function(a){
+      var on=a.getAttribute('data-tab')===name;
+      if(a.closest('nav')){on?a.setAttribute('aria-current','page'):a.removeAttribute('aria-current')}
+    });
+    var cur=document.getElementById(name);
+    document.title=name==='home'?base:cur.getAttribute('data-title')+' | '+base;
+    scroller.scrollTop=0;
+    if(user&&matchMedia('(max-width:820px)').matches){
+      main.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});
+    }
+  }
+  function fromHash(){return location.hash.replace('#','')||'home'}
 
+  document.addEventListener('click',function(e){
+    var a=e.target.closest&&e.target.closest('[data-tab]');
+    if(!a||e.metaKey||e.ctrlKey||e.shiftKey||e.button)return;
+    e.preventDefault();
+    var name=a.getAttribute('data-tab');
+    if(fromHash()!==name)history.pushState(null,'','#'+name);
+    show(name,true);
+  });
+  addEventListener('hashchange',function(){show(fromHash(),false)});
+  show(fromHash(),false);
+
+  /* frecce ← → (o swipe laterale su touch) per passare da una sezione all'altra */
+  function go(d){
+    var i=names.indexOf(fromHash());if(i<0)i=0;
+    var n=names[Math.max(0,Math.min(names.length-1,i+d))];
+    if(n!==names[i]){history.pushState(null,'','#'+n);show(n,false)}
+  }
+  addEventListener('keydown',function(e){
+    if(e.altKey||e.ctrlKey||e.metaKey||e.shiftKey)return;
+    var t=e.target&&e.target.tagName;if(t==='INPUT'||t==='TEXTAREA'||t==='SELECT')return;
+    if(e.key==='ArrowRight')go(1);else if(e.key==='ArrowLeft')go(-1);
+  });
+  var tx=0,ty=0;
+  main.addEventListener('touchstart',function(e){var t=e.changedTouches[0];tx=t.clientX;ty=t.clientY},{passive:true});
+  main.addEventListener('touchend',function(e){
+    var t=e.changedTouches[0],dx=t.clientX-tx,dy=t.clientY-ty;
+    if(Math.abs(dx)>70&&Math.abs(dy)<40&&Math.abs(dx)>Math.abs(dy)*2)go(dx<0?1:-1);
+  },{passive:true});
+
+  /* condividi / copia link */
+  var btn=document.getElementById('share'),out=document.getElementById('status');
+  function say(t){out.textContent=t;clearTimeout(say.t);say.t=setTimeout(function(){out.textContent=''},3500)}
+  if(btn)btn.addEventListener('click',function(){
+    var url=location.origin+location.pathname;
+    var copy=function(){
+      if(navigator.clipboard&&navigator.clipboard.writeText){
+        navigator.clipboard.writeText(url).then(function(){say('Link copiato negli appunti ✓')},function(){say('Copia il link: '+url)});
+      }else say('Copia il link: '+url);
+    };
+    if(navigator.share){
+      navigator.share({title:base,url:url}).catch(function(e){if(!e||e.name!=='AbortError')copy()});
+    }else copy();
+  });
+})();
+</script>
+<script>
+(function(){
+  var root=document.documentElement;
+  var fine=matchMedia('(hover:hover) and (pointer:fine)').matches;
+  var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var glass=[].slice.call(document.querySelectorAll('.glass'));
+  var sx=0,sy=0,raf=0;
+
+  /* riflesso speculare sul vetro (aggiornato in rAF, solo mouse/trackpad) */
+  var sheenRaf=0;
+  function sheen(){
+    sheenRaf=0;
+    for(var i=0;i<glass.length;i++){
+      var r=glass[i].getBoundingClientRect();
+      glass[i].style.setProperty('--mx',(sx-r.left)+'px');
+      glass[i].style.setProperty('--my',(sy-r.top)+'px');
+    }
+  }
+  if(fine){
+    addEventListener('pointermove',function(e){
+      sx=e.clientX;sy=e.clientY;
+      if(!sheenRaf)sheenRaf=requestAnimationFrame(sheen);
+    },{passive:true});
+  }
+  if(reduce)return;
+
+  /* ───────── motore di movimento ─────────
+     • posizione = somma di onde sinusoidali incommensurabili → moto organico che non si ripete
+     • puro sfondo: nessuna reazione a mouse o scroll
+     • velocità filtrata → stretch lungo la direzione + motion blur proporzionale
+     • profondità: sfere lontane si muovono meno e sono più sfocate
+     • solo transform/filter: niente layout, tutto sul compositor */
+  root.classList.add('js-motion');
+  var defs=[
+    {s:'.o1',a:[[62,0.24,0],[31,0.55,1.7]],b:[[47,0.20,2.2],[23,0.61,.6]],d:1.0,bl:0},
+    {s:'.o2',a:[[70,0.18,3.1],[29,0.49,.4]],b:[[52,0.22,1.1],[26,0.58,2.8]],d:.7,bl:1},
+    {s:'.o3',a:[[57,0.21,5.2],[34,0.46,2.4]],b:[[39,0.27,.3],[21,0.65,4.1]],d:.45,bl:2.5},
+    {s:'.o4',a:[[39,0.32,1.4],[21,0.70,3.3]],b:[[34,0.29,4.6],[16,0.78,.9]],d:1.5,bl:0},
+    {s:'.ring',a:[[49,0.17,2.7],[26,0.43,5.5]],b:[[42,0.21,.8],[18,0.54,3.7]],d:1.2,bl:0}
+  ];
+  var orbs=[];
+  defs.forEach(function(d){
+    var el=document.querySelector(d.s);
+    if(el)orbs.push({el:el,a:d.a,b:d.b,d:d.d,bl:d.bl,x:0,y:0,vx:0,vy:0,q:-1,init:false});
+  });
+
+  var ema=.016,slow=0,lite=false;
+  var t0=performance.now(),last=t0;
+
+  function frame(now){
+    raf=requestAnimationFrame(frame);
+    var dt=(now-last)/1000;last=now;
+    if(dt<=0)return;
+    if(dt>.05)dt=.05;
+    var t=(now-t0)/1000;
+    var kv=1-Math.exp(-dt*9);
+
+    for(var i=0;i<orbs.length;i++){
+      var o=orbs[i],x=0,y=0,k;
+      for(k=0;k<o.a.length;k++)x+=o.a[k][0]*Math.sin(t*o.a[k][1]+o.a[k][2]);
+      for(k=0;k<o.b.length;k++)y+=o.b[k][0]*Math.sin(t*o.b[k][1]+o.b[k][2]);
+      if(!o.init){o.x=x;o.y=y;o.init=true}
+      o.vx+=((x-o.x)/dt-o.vx)*kv;
+      o.vy+=((y-o.y)/dt-o.vy)*kv;
+      o.x=x;o.y=y;
+      var sp=Math.sqrt(o.vx*o.vx+o.vy*o.vy);
+      var st=Math.min(sp*.0022,.3);           /* stretch massimo +34% */
+      var a=Math.atan2(o.vy,o.vx);
+      var sX=1+st,sY=1/Math.sqrt(sX);          /* volume costante: squash & stretch */
+      o.el.style.transform='translate3d('+x.toFixed(2)+'px,'+y.toFixed(2)+'px,0) rotate('+a.toFixed(3)+'rad) scale('+sX.toFixed(3)+','+sY.toFixed(3)+') rotate('+(-a).toFixed(3)+'rad)';
+      /* motion blur: quantizzato a 0.5px per non rifare il filtro a ogni frame */
+      var q=lite?0:Math.round((o.bl+Math.min(sp*.02,4))*2)/2;
+      if(q!==o.q){o.el.style.filter=q?'blur('+q+'px)':'none';o.q=q}
+    }
+
+    /* qualità adattiva: se il device scende sotto ~38fps in modo continuo, passa a "lite" */
+    ema=ema*.95+dt*.05;
+    if(!lite){
+      slow=ema>.026?slow+1:0;
+      if(slow>150){lite=true;root.setAttribute('data-lite','')}
+    }
+  }
+  raf=requestAnimationFrame(frame);
+  document.addEventListener('visibilitychange',function(){last=performance.now()});
+})();
+</script>
 </body>
 </html>
