@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Vincenzo Allocca | Software Developer · Computer Engineering Student · Founder</title>
+<title>Vincenzo Allocca | Developer · Student · Founder</title>
 <meta name="description" content="Vincenzo Allocca (@vincenzoallocca): sviluppatore full-stack, studente di Ingegneria Informatica alla Federico II e fondatore di HASTE. Progetti, competenze, formazione e impegno civico.">
 <meta name="theme-color" content="#050816">
 <meta name="color-scheme" content="dark">
@@ -13,25 +13,28 @@
 <meta property="og:type" content="website">
 <meta property="og:locale" content="it_IT">
 <meta property="og:site_name" content="Vincenzo Allocca">
-<meta property="og:title" content="Vincenzo Allocca | Software Developer · Computer Engineering Student · Founder">
+<meta property="og:title" content="Vincenzo Allocca | Developer · Student · Founder">
 <meta property="og:description" content="Sviluppo prodotti digitali, infrastrutture web e sperimentazione con l'intelligenza artificiale. Fondatore di HASTE, studente di Ingegneria Informatica.">
 <meta property="og:url" content="https://vincenzoallocca.dev/">
 <meta property="og:image" content="https://vincenzoallocca.dev/assets/profilo.webp">
 <meta property="og:image:type" content="image/webp">
 <meta property="og:image:alt" content="Foto profilo di Vincenzo Allocca">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:title" content="Vincenzo Allocca | Software Developer · Founder">
+<meta name="twitter:title" content="Vincenzo Allocca | Developer · Founder">
 <meta name="twitter:description" content="Sviluppatore full-stack, studente di Ingegneria Informatica e fondatore di HASTE.">
 <meta name="twitter:image" content="https://vincenzoallocca.dev/assets/profilo.webp">
 <script type="application/ld+json">
-{"@context":"https://schema.org","@type":"Person","name":"Vincenzo Allocca","alternateName":"vincenzoallocca","url":"https://vincenzoallocca.dev/","image":"https://vincenzoallocca.dev/assets/profilo.webp","jobTitle":"Software Developer","description":"Sviluppatore full-stack, studente di Ingegneria Informatica e fondatore di HASTE.","alumniOf":[{"@type":"CollegeOrUniversity","name":"Università degli Studi di Napoli Federico II"},{"@type":"HighSchool","name":"ITIS Ettore Majorana"}],"sameAs":["https://github.com/vincenzoallocca","https://haste.it","https://www.instagram.com/vincenzooallocca/","https://www.facebook.com/profile.php?id=100084588892488"]}
+{"@context":"https://schema.org","@type":"Person","name":"Vincenzo Allocca","alternateName":"vincenzoallocca","url":"https://vincenzoallocca.dev/","image":"https://vincenzoallocca.dev/assets/profilo.webp","jobTitle":"Developer","description":"Sviluppatore full-stack, studente di Ingegneria Informatica e fondatore di HASTE.","alumniOf":[{"@type":"CollegeOrUniversity","name":"Università degli Studi di Napoli Federico II"},{"@type":"HighSchool","name":"ITIS Ettore Majorana"}],"sameAs":["https://github.com/vincenzoallocca","https://haste.it","https://www.instagram.com/vincenzooallocca/","https://www.facebook.com/profile.php?id=100084588892488"]}
 </script>
-<link rel="icon" type="image/png" href="assets/favicon.png">
+<link rel="icon" href="assets/favicon.ico" sizes="48x48">
+<link rel="icon" href="assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="assets/apple-touch-icon.png">
+<link rel="manifest" href="assets/site.webmanifest">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Space+Grotesk:wght@500;700&display=swap">
-<link rel="preload" as="image" href="assets/profilo.webp" type="image/webp">
-<script>try{if(!matchMedia('(prefers-reduced-motion:reduce)').matches)document.documentElement.classList.add('intro-on')}catch(e){}</script>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Space+Grotesk:wght@500;700&display=swap" media="print" onload="this.media='all'"><noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;600;700&family=Space+Grotesk:wght@500;700&display=swap"></noscript>
+<link rel="preload" as="image" href="assets/profilo.webp" type="image/webp" fetchpriority="high">
+<script>try{if(!matchMedia('(prefers-reduced-motion:reduce)').matches)document.documentElement.classList.add('intro-on','intro-hold')}catch(e){}</script>
 <style>
 :root{
   --bg:#050816;
@@ -51,12 +54,13 @@
   --grain:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='.16'/></svg>");
 }
 /* telefono / touch: ombre del testo più leggere (meno da disegnare a ogni ridisegno) */
-@media (max-width:820px),(pointer:coarse){
+@media (max-width:900px),(pointer:coarse){
   :root{
-    --ts:0 0 1px rgba(2,4,16,.95),0 1px 3px rgba(2,4,16,.8);
-    --ts-hi:0 0 1px rgba(2,4,16,.95),0 1px 3px rgba(2,4,16,.8),0 0 10px rgba(169,210,255,.7);
+    --ts:0 1px 2px rgba(2,4,16,.8);
+    --ts-hi:0 1px 2px rgba(2,4,16,.8),0 0 8px rgba(169,210,255,.55);
   }
 }
+@media (min-width:1280px){html{font-size:clamp(16px,.5vw + 9.6px,26px)}}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{background:var(--bg);-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent}
 body{
@@ -125,7 +129,11 @@ button:focus-visible{outline:2px solid var(--accent-hi);outline-offset:3px;borde
 .js-motion .orb{animation:none}
 /* modalità lite: se il dispositivo fatica, meno blur ma stessa scena */
 html[data-lite]{--ts:none;--ts-hi:none}
-html[data-lite] .glass{-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px);animation:none}
+html[data-lite] .glass{animation:none}
+html[data-lite] .bg canvas{filter:none}
+@media (min-width:901px) and (pointer:fine){
+  html[data-lite] .glass{-webkit-backdrop-filter:blur(8px);backdrop-filter:blur(8px)}
+}
 html[data-lite] .panel{animation:none}
 html[data-lite] .ic,html[data-lite] h1{filter:none}
 html[data-lite] .nick{text-shadow:none}
@@ -169,7 +177,7 @@ html[data-lite] .nick{text-shadow:none}
 
 .wrap{
   display:flex;justify-content:center;align-items:center;gap:1.25rem;
-  min-height:100vh;min-height:100dvh;padding:1.25rem;
+  min-height:100vh;min-height:calc(100dvh - env(safe-area-inset-top,0px) - env(safe-area-inset-bottom,0px));padding:1.25rem;
 }
 
 /* profilo */
@@ -333,7 +341,7 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
 }
 
 /* tablet / mobile */
-@media (max-width:820px){
+@media (max-width:900px){
   .o1{left:-4rem;top:3%}
   .o2{right:-6rem;top:44%}
   .o3{left:28%;bottom:-6rem}
@@ -353,21 +361,42 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
   .scroll{height:auto;overflow:visible}
   aside{flex-direction:row;gap:1rem}
   .tile{flex:1;width:auto;min-height:8rem}
-  /* blur un po' più leggero su mobile per fluidità */
-  .glass{-webkit-backdrop-filter:blur(20px) saturate(180%) brightness(1.06);backdrop-filter:blur(20px) saturate(180%) brightness(1.06)}
+  main{scroll-margin-top:calc(env(safe-area-inset-top,0px) + .75rem)}
+  /* testi piccoli: su telefono restano leggibili */
+  .tile{font-size:.82rem}
+  .tile .mini b{font-size:.86rem}
+  .tile .mini span{font-size:.78rem}
+  .tile .chips li{font-size:.74rem;padding:.1rem .55rem}
+}
+@media (min-width:600px) and (max-width:900px){
+  .wrap{max-width:38rem;padding:1.5rem}
+  nav ul{flex-wrap:nowrap}
+  nav li{flex:1 1 0}
+  nav a{padding:.4rem .5rem;gap:.4rem}
+}
+@media (max-width:380px){
+  aside{flex-direction:column}
+  .tile{flex:none;min-height:0}
 }
 @media (max-width:360px){
   .wrap{padding:.75rem}
-  nav li{flex-basis:100%}
 }
-/* telefono / touch: stessa scena, ma molto meno lavoro per la GPU */
-@media (max-width:820px),(pointer:coarse){
+/* telefono / touch: stessa scena, ma nessun lavoro per la GPU mentre scorri.
+   Il vetro non usa backdrop-filter (andrebbe ricalcolato a ogni frame di scroll, soprattutto sul pannello alto):
+   la scena 3D viene sfocata a monte, sul canvas, che durante lo scroll è fermo e quindi non costa nulla. */
+@media (max-width:900px),(pointer:coarse){
   :root{--grain:none}
   .glass{
-    background-image:linear-gradient(135deg,rgba(255,255,255,.17) 0%,rgba(255,255,255,.05) 42%,rgba(255,255,255,.03) 62%,rgba(255,255,255,.1) 100%);
-    -webkit-backdrop-filter:blur(12px) saturate(150%);backdrop-filter:blur(12px) saturate(150%);
-    box-shadow:inset 0 1px 0 rgba(255,255,255,.4),inset 0 -1px 0 rgba(255,255,255,.06),0 10px 28px -12px rgba(0,0,0,.5);
+    -webkit-backdrop-filter:none;backdrop-filter:none;
+    background-image:linear-gradient(135deg,rgba(255,255,255,.15) 0%,rgba(255,255,255,.05) 42%,rgba(255,255,255,.03) 62%,rgba(255,255,255,.09) 100%);
+    box-shadow:inset 0 0 0 1px rgba(255,255,255,.15),inset 0 1px 0 rgba(255,255,255,.4),0 8px 22px -12px rgba(0,0,0,.5);
   }
+  .glass::before{display:none} /* il bordo a maschera crea una superficie offscreen: sui pannelli alti pesa */
+  .side,.tile{--tint:.6}
+  main{--tint:.72}
+  .gl .bg canvas{filter:blur(8px)}
+  /* fallback senza WebGL (sfere CSS): qui il vetro sfoca davvero, ma leggero */
+  html.js-motion .glass{-webkit-backdrop-filter:blur(10px);backdrop-filter:blur(10px)}
   .ic{filter:none}
   h1,.feature h3{filter:none}
   .card{box-shadow:inset 0 1px 0 rgba(255,255,255,.18)}
@@ -382,23 +411,19 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
   .glass{-webkit-backdrop-filter:none;backdrop-filter:none;background-color:rgba(18,26,58,.94)}
 }
 
-/* scroll a blocchi: ogni card / intro è un punto di aggancio */
-@media (min-width:821px){
+/* scroll a blocchi: solo desktop con mouse/trackpad. Su touch lo scroll resta libero e nativo:
+   uno snap "mandatory" su card più alte dello schermo blocca l'inerzia e dà la sensazione di lag. */
+@media (min-width:901px) and (pointer:fine){
   .scroll{scroll-snap-type:y mandatory;scroll-padding:1.25rem}
   .panel>*{scroll-snap-align:start;scroll-snap-stop:always}
 }
-@media (max-width:820px){
-  html{scroll-snap-type:y mandatory}
-  .side,.panel>*,aside>.glass{scroll-snap-align:start;scroll-margin-top:calc(env(safe-area-inset-top) + 1rem)}
-}
-@media (prefers-reduced-motion:reduce){html{scroll-snap-type:y proximity}}
 /* ───────── INTRO D'APERTURA ─────────
    Stessa scena del sito: sfere colorate dietro un pannello di vetro, avatar con anello conico,
    titolo a gradiente e barra luminosa. Solo transform/opacity (GPU). Si vede solo se c'è JS. */
 #intro{display:none;position:fixed;inset:0;z-index:100;align-items:center;justify-content:center;overflow:hidden;cursor:pointer;
-  background:var(--bg);transition:opacity .7s var(--ease),transform .9s var(--ease)}
+  background:var(--bg);will-change:opacity,transform;transition:opacity .6s ease-out,transform .6s var(--ease)}
 html.intro-on #intro,html.intro-out #intro{display:flex}
-html.intro-out #intro{opacity:0;transform:scale(1.05);pointer-events:none}
+html.intro-out #intro{opacity:0;transform:scale(1.03);pointer-events:none}
 html.intro-on{overflow:hidden}
 html.intro-on .bg canvas{opacity:0} /* il 3D compare in dissolvenza mentre l'intro esce */
 #intro::before{content:"";position:absolute;inset:0;
@@ -439,6 +464,8 @@ html.intro-on .bg canvas{opacity:0} /* il 3D compare in dissolvenza mentre l'int
 .in-bar{display:block;width:100%;height:3px;border-radius:99px;margin-top:.6rem;background:rgba(255,255,255,.12);overflow:hidden;animation:inRise .8s var(--ease) .6s backwards}
 .in-bar i{display:block;height:100%;transform-origin:left center;transform:scaleX(0);
   background:linear-gradient(90deg,var(--accent),var(--accent2),#f472b6);box-shadow:0 0 12px rgba(140,194,255,.7);animation:inBar 1.45s cubic-bezier(.65,0,.25,1) .3s forwards}
+html.intro-hold .in-orb,html.intro-hold .in-card,html.intro-hold .in-card *,html.intro-hold .in-av::before{animation-play-state:paused}
+.in-av::before{will-change:transform}
 @keyframes inPop{from{opacity:0;transform:scale(.5)}to{opacity:1;transform:none}}
 @keyframes inF1{from{transform:translate3d(0,0,0)}to{transform:translate3d(1.2rem,-1.4rem,0)}}
 @keyframes inF2{from{transform:translate3d(0,0,0)}to{transform:translate3d(-1.3rem,1.2rem,0)}}
@@ -446,9 +473,8 @@ html.intro-on .bg canvas{opacity:0} /* il 3D compare in dissolvenza mentre l'int
 @keyframes inRise{from{opacity:0;transform:translate3d(0,12px,0)}to{opacity:1;transform:none}}
 @keyframes inBar{to{transform:scaleX(1)}}
 @keyframes inSpin{to{transform:rotate(360deg)}}
-@media (hover:hover) and (pointer:fine){
-  #intro{transition:opacity .7s var(--ease),transform .9s var(--ease),filter .8s var(--ease)}
-  html.intro-out #intro{filter:blur(6px)}
+@media (max-width:900px),(pointer:coarse){
+  .in-card{-webkit-backdrop-filter:none;backdrop-filter:none;background-color:rgba(12,18,48,.68)}
 }
 @media (max-width:360px){.in-o1{left:calc(50% - 10.5rem)}.in-o2{right:calc(50% - 11rem)}}
 @media (prefers-reduced-transparency:reduce),(prefers-contrast:more){
@@ -472,19 +498,27 @@ html.intro-on .bg canvas{opacity:0} /* il 3D compare in dissolvenza mentre l'int
   </div>
 </div>
 <script>
-/* intro: resta almeno ~1.7s, poi esce appena la pagina è caricata (max 4s). Un tocco la salta. */
+/* intro: parte quando i font sono pronti (max 0.9s), resta almeno ~1.7s, esce appena la pagina è caricata (max ~4.5s). Un tocco la salta. */
 (function(){
   var root=document.documentElement,el=document.getElementById('intro');
-  if(!el||!root.classList.contains('intro-on')){root.classList.remove('intro-on');return}
-  var t0=performance.now(),MIN=1700,done=false;
+  if(!el||!root.classList.contains('intro-on')){root.classList.remove('intro-on','intro-hold');return}
+  var t0=performance.now(),MIN=1700,done=false,held=true,loaded=document.readyState==='complete';
+  function release(){if(!held)return;held=false;t0=performance.now();root.classList.remove('intro-hold');tryOut()}
+  function tryOut(){if(!held&&loaded&&!done)setTimeout(out,Math.max(0,MIN-(performance.now()-t0)))}
   function out(){
-    if(done)return;done=true;
+    if(done)return;done=true;release();
     root.classList.remove('intro-on');root.classList.add('intro-out');
-    setTimeout(function(){root.classList.remove('intro-out');if(el.parentNode)el.parentNode.removeChild(el)},1000);
+    setTimeout(function(){root.classList.remove('intro-out');if(el.parentNode)el.parentNode.removeChild(el)},800);
   }
-  function wait(){setTimeout(out,Math.max(0,MIN-(performance.now()-t0)))}
-  if(document.readyState==='complete')wait();else addEventListener('load',wait);
-  setTimeout(out,4000);
+  function fonts(){
+    if(!document.fonts||!document.fonts.load){release();return}
+    Promise.all([document.fonts.load('700 1em "Space Grotesk"'),document.fonts.load('500 1em "Space Grotesk"')]).then(release,release);
+  }
+  var fl=document.querySelector('link[href*="fonts.googleapis.com"]');
+  if(!fl||fl.media!=='print')fonts();else fl.addEventListener('load',fonts);
+  setTimeout(release,900);
+  if(loaded)tryOut();else addEventListener('load',function(){loaded=true;tryOut()});
+  setTimeout(out,4500);
   el.addEventListener('click',out);
 })();
 </script>
@@ -515,7 +549,7 @@ html.intro-on .bg canvas{opacity:0} /* il 3D compare in dissolvenza mentre l'int
       <div class="panel" id="home" data-title="Home">
         <div class="intro">
           <h1>Vincenzo Allocca</h1>
-          <p class="sub">Developer · Computer Engineering Student · Founder</p>
+          <p class="sub">Developer · Student · Founder</p>
           <p class="lead">Studio Ingegneria Informatica e sviluppo progetti digitali. Mi interessa costruire tecnologie che abbiano un'utilità concreta, sperimentare con nuove soluzioni e trasformare le idee in prodotti funzionanti.</p>
         </div>
 
@@ -524,7 +558,6 @@ html.intro-on .bg canvas{opacity:0} /* il 3D compare in dissolvenza mentre l'int
           <h3 id="haste">HASTE</h3>
           <p class="role">Fondatore e sviluppatore</p>
           <p>Collettivo culturale indipendente e auto-organizzato nato in Campania nel 2026: una piattaforma editoriale, culturale e civica che ho fondato e di cui curo lo sviluppo, le pubbliche relazioni e l'evoluzione tecnologica.</p>
-          <p>Ho migrato una piattaforma esistente verso un'architettura Cloudflare, lavorando su backend, frontend, database e infrastruttura.</p>
           <ul class="chips" aria-label="Tecnologie di HASTE">
             <li>Cloudflare Pages</li><li>Workers</li><li>D1</li><li>R2</li>
           </ul>
@@ -553,21 +586,21 @@ html.intro-on .bg canvas{opacity:0} /* il 3D compare in dissolvenza mentre l'int
           <h2 id="stk">Tech stack</h2>
           <div class="group">
             <h3>Linguaggi e sviluppo</h3>
-            <ul class="chips"><li>C</li><li>C++</li><li>PHP</li><li>JavaScript</li><li>HTML</li><li>CSS</li><li>SQL</li></ul>
+            <ul class="chips"><li>C</li><li>C++</li><li>PHP</li><li>JS</li><li>HTML</li><li>CSS</li><li>SQL</li></ul>
           </div>
           <div class="group">
             <h3>Infrastrutture e strumenti</h3>
-            <ul class="chips"><li>Cloudflare</li><li>Workers</li><li>D1</li><li>R2</li><li>Git</li><li>GitHub</li></ul>
+            <ul class="chips"><li>Cloudflare</li><li>Workers</li><li>D1</li><li>R2</li><li>Git</li></ul>
           </div>
           <div class="group">
             <h3>Aree di interesse</h3>
-            <ul class="chips"><li>Full-Stack Development</li><li>Backend Development</li><li>Database</li><li>Web Infrastructure</li><li>Intelligenza artificiale</li><li>Automazione</li></ul>
+            <ul class="chips"><li>Backend</li><li>Web Infrastructure</li><li>Intelligenza artificiale</li><li>Automazione</li></ul>
           </div>
         </section>
         <section class="card" aria-labelledby="frm">
           <h2 id="frm">Formazione</h2>
           <ul class="edu">
-            <li><b>Università degli Studi di Napoli Federico II</b><span>Ingegneria Informatica</span></li>
+            <li><b>Università Federico II</b><span>Ingegneria Informatica</span></li>
             <li><b>ITIS Ettore Majorana</b><span>Informatica e Telecomunicazioni</span></li>
           </ul>
         </section>
@@ -582,11 +615,11 @@ html.intro-on .bg canvas{opacity:0} /* il 3D compare in dissolvenza mentre l'int
         </section>
         <section class="card" aria-labelledby="fff">
           <h3 id="fff">Fridays for Future Marigliano</h3>
-          <p>Attivo con il gruppo di Marigliano dal 2019 al 2021. Manifestazioni e iniziative per la protezione dell'ambiente e il clima.</p>
+          <p>Attivo con il gruppo di Marigliano dal 2019 al 2021. Organizzazione di manifestazioni e iniziative per la protezione dell'ambiente e il clima.</p>
         </section>
         <section class="card" aria-labelledby="vrd">
-          <h3 id="vrd">Green Spaces Marigliano</h3>
-          <p>Realizzazione di una raccolta firme (circa 10.000) nel Comune di Marigliano per chiedere più verde pubblico, con la presentazione di una richiesta per incrementare il verde urbano.</p>
+          <h3 id="vrd">EcoGreen Marigliano</h3>
+          <p>Raccolta firme (circa 10.000) nel Comune di Marigliano per chiedere più verde pubblico, con la presentazione di una richiesta per incrementare il verde urbano.</p>
         </section>
         <section class="card" aria-labelledby="mob">
           <h3 id="mob">SENZA BUS NON SI STUDIA BENE.</h3>
@@ -647,9 +680,9 @@ html.intro-on .bg canvas{opacity:0} /* il 3D compare in dissolvenza mentre l'int
     var ni=names.indexOf(name),pi=show.i==null?ni:show.i;show.i=ni;
     cur.setAttribute('data-dir',ni>pi?'1':ni<pi?'-1':'0');
     dispatchEvent(new CustomEvent('sectionchange',{detail:ni}));
-    document.title=name==='home'?'Vincenzo Allocca | Software Developer · Computer Engineering Student · Founder':cur.getAttribute('data-title')+' | '+base;
+    document.title=name==='home'?'Vincenzo Allocca | Developer · Student · Founder':cur.getAttribute('data-title')+' | '+base;
     scroller.scrollTop=0;
-    if(user&&matchMedia('(max-width:820px)').matches){
+    if(user&&matchMedia('(max-width:900px)').matches){
       main.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});
     }
   }
@@ -670,7 +703,12 @@ html.intro-on .bg canvas{opacity:0} /* il 3D compare in dissolvenza mentre l'int
   function go(d){
     var i=names.indexOf(fromHash());if(i<0)i=0;
     var n=names[Math.max(0,Math.min(names.length-1,i+d))];
-    if(n!==names[i]){history.pushState(null,'','#'+n);show(n,false)}
+    if(n!==names[i]){
+      history.pushState(null,'','#'+n);show(n,false);
+      /* telefono: se eri in fondo a una sezione lunga, la nuova parte dall'inizio */
+      if(matchMedia('(max-width:900px)').matches&&main.getBoundingClientRect().top<0)
+        main.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});
+    }
   }
   addEventListener('keydown',function(e){
     if(e.altKey||e.ctrlKey||e.metaKey||e.shiftKey)return;
@@ -705,7 +743,7 @@ html.intro-on .bg canvas{opacity:0} /* il 3D compare in dissolvenza mentre l'int
    Su touch/telefono lavora lo scroll-snap nativo (CSS), che è già sul compositor. */
 (function(){
   var el=document.querySelector('.scroll');if(!el)return;
-  if(matchMedia('(max-width:820px)').matches)return;
+  if(matchMedia('(max-width:900px)').matches)return;
   var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
   var raf=0,anim=false,cool=false,lastW=0,lastAbs=0,acc=0;
   function ease(t){return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2}
@@ -770,8 +808,8 @@ html.intro-on .bg canvas{opacity:0} /* il 3D compare in dissolvenza mentre l'int
   var cv=document.getElementById('scene3d');if(!cv)return;
   var root=document.documentElement;
   var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
-  var mobile=matchMedia('(pointer:coarse)').matches||innerWidth<=820;
-  var gl=cv.getContext('webgl',{antialias:true,alpha:true,premultipliedAlpha:true,powerPreference:'low-power'});
+  var mobile=matchMedia('(pointer:coarse)').matches||innerWidth<=900;
+  var gl=cv.getContext('webgl',{antialias:!mobile,alpha:true,premultipliedAlpha:true,powerPreference:'low-power'});
   if(!gl)return;
 
   var VS='attribute vec3 aP;attribute vec3 aN;uniform mat4 uMVP,uM;uniform mat3 uR;varying vec3 vN,vW;'+
@@ -871,7 +909,10 @@ html.intro-on .bg canvas{opacity:0} /* il 3D compare in dissolvenza mentre l'int
     gl.bindBuffer(gl.ELEMENT_ARRAY_BUFFER,ib);gl.bufferData(gl.ELEMENT_ARRAY_BUFFER,new Uint16Array(g.i),gl.STATIC_DRAW);
     return {vb:vb,nb:nb,ib:ib,n:g.i.length};
   }
-  var G={sphere:upload(sphere(40,56)),torus:upload(torus(80,28,.05)),cube:upload(cube()),octa:upload(octa()),knot:upload(knot(240,22,2,3,.15))};
+  /* telefono: meno poligoni (la scena è sfocata e a mezza risoluzione, il dettaglio non si vedrebbe) */
+  var G=mobile
+    ?{sphere:upload(sphere(24,32)),torus:upload(torus(48,16,.05)),cube:upload(cube()),octa:upload(octa()),knot:upload(knot(120,14,2,3,.15))}
+    :{sphere:upload(sphere(40,56)),torus:upload(torus(80,28,.05)),cube:upload(cube()),octa:upload(octa()),knot:upload(knot(240,22,2,3,.15))};
 
   /* matrici 4x4 column-major, scritte in buffer preallocati: zero allocazioni per frame = niente scatti da garbage collector */
   function mul(a,b,o){for(var c=0;c<4;c++)for(var r=0;r<4;r++){var q=0;for(var k=0;k<4;k++)q+=a[k*4+r]*b[c*4+k];o[c*4+r]=q}return o}
@@ -900,24 +941,25 @@ html.intro-on .bg canvas{opacity:0} /* il 3D compare in dissolvenza mentre l'int
 
   /* posizioni/misure (px, origine al centro, y verso l'alto) che ricalcano il layout CSS delle sfere */
   function layout(){
-    var w=W,h=H,m=w<=820,R=function(rem,vw){return Math.min(rem*16,vw*w)/2},
+    var w=W,h=H,m=w<=900,rm=parseFloat(getComputedStyle(root).fontSize)||16,
+        R=function(rem,vw){return Math.min(rem*rm,vw*w)/2},
         y=function(top,r){return h/2-(top+r)};
-    var hr=Math.min(150,Math.max(70,Math.min(w,h)*.19));
+    var hr=Math.min(150,Math.max(70,Math.min(w,h)*.19))*rm/16;
     var r1=R(24,.58),r2=R(26,.62),r3=R(20,.5),r4=R(8,.26),r5=R(15,.46);
     if(!m){
-      obj[0].p=[-33*16+r1,y(.06*h,r1),r1];
-      obj[1].p=[34*16-r2,y(.46*h,r2),r2];
-      obj[2].p=[-6*16+r3,h/2-(h+7*16-r3),r3];
+      obj[0].p=[-33*rm+r1,y(.06*h,r1),r1];
+      obj[1].p=[34*rm-r2,y(.46*h,r2),r2];
+      obj[2].p=[-6*rm+r3,h/2-(h+7*rm-r3),r3];
       obj[3].p=[.27*w,.2*h,hr];
-      obj[4].p=[-11*16+r5,y(.22*h,r5),r5];
+      obj[4].p=[-11*rm+r5,y(.22*h,r5),r5];
       obj[5].p=[-.40*w,-.30*h,34];
       obj[6].p=[.38*w,.28*h,40];
     }else{
-      obj[0].p=[-64+r1-w/2,y(.03*h,r1),r1];
-      obj[1].p=[w/2+96-r2,y(.44*h,r2),r2];
-      obj[2].p=[.28*w+r3-w/2,h/2-(h+6*16-r3),r3];
+      obj[0].p=[-4*rm+r1-w/2,y(.03*h,r1),r1];
+      obj[1].p=[w/2+6*rm-r2,y(.44*h,r2),r2];
+      obj[2].p=[.28*w+r3-w/2,h/2-(h+6*rm-r3),r3];
       obj[3].p=[.25*w,.3*h,hr*.85];
-      obj[4].p=[w/2+3*16-r5,y(.18*h,r5),r5];
+      obj[4].p=[w/2+3*rm-r5,y(.18*h,r5),r5];
       obj[5].p=[-.30*w,-.12*h,28];
       obj[6].p=[.30*w,.20*h,32];
     }
@@ -936,7 +978,7 @@ html.intro-on .bg canvas{opacity:0} /* il 3D compare in dissolvenza mentre l'int
     layout();
     return true;
   }
-  var quality=mobile?1:1.5; /* telefono: 1 pixel per pixel CSS, non 2-3x */
+  var quality=mobile?.5:1.5; /* telefono: mezza risoluzione CSS (il canvas è sfocato via CSS): 4x meno pixel da colorare */
 
   gl.enable(gl.DEPTH_TEST);gl.enable(gl.BLEND);gl.blendFunc(gl.ONE,gl.ONE_MINUS_SRC_ALPHA);gl.clearColor(0,0,0,0);
   gl.uniform3fv(U.uFogC,BG);
@@ -994,17 +1036,18 @@ html.intro-on .bg canvas{opacity:0} /* il 3D compare in dissolvenza mentre l'int
 
   var raf=0,t0=performance.now(),tv=0,lastScroll=-1e9,paused=false,lastDraw=t0,lastRaf=t0,ema=.016,slow=0,rs=0,minGap=mobile?29:0,lite=false;
   /* dispositivo che fatica: meno risoluzione, 20fps, blur più piccolo e niente ombre sul testo (vedi html[data-lite]) */
-  function goLite(){lite=true;root.setAttribute('data-lite','');quality=.75;minGap=45;resize(true)}
+  function goLite(){lite=true;root.setAttribute('data-lite','');quality=mobile?.4:.75;minGap=45;resize(true)}
   function frame(now){
     raf=requestAnimationFrame(frame);
     var rd=(now-lastRaf)/1000;lastRaf=now;
     /* misura la fluidità reale del browser (intervallo fra frame veri, non solo i nostri) */
     if(rd>0&&rd<.5){ema=ema*.95+rd*.05;if(!lite){slow=ema>.028?slow+1:0;if(slow>90)goLite()}}
+    if(root.classList.contains('intro-on')&&frame.w){lastDraw=now;return}   /* sotto l'intro il canvas è trasparente: dopo il frame di riscaldamento niente lavoro inutile */
     if(mobile&&now-lastScroll<140&&now>trans){paused=true;return}   /* …ma non durante il cambio sezione: niente blocco + scatto */   /* mentre scorri sul telefono il 3D si ferma: la GPU serve allo scroll e al blur */
     if(paused){paused=false;lastDraw=now;return}         /* alla ripartenza non c'è salto: il tempo della scena era fermo */
     if(now-lastDraw<minGap)return;        /* mobile: 30fps bastano, la scena è sfocata dal vetro */
     var dt=Math.min((now-lastDraw)/1000,.05);lastDraw=now;if(dt<=0)return;
-    tv+=dt;step(dt);draw(tv);
+    tv+=dt;step(dt);draw(tv);frame.w=1;
   }
   addEventListener('scroll',function(){if(mobile)lastScroll=performance.now()},{passive:true,capture:true});
   resize();
