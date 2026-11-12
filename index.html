@@ -3,20 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Portfolio | Vincenzo</title>
-<meta name="description" content="Portfolio di Vincenzo (enzoware): progetti e contatti.">
+<title>Vincenzo Allocca | Software Developer · Computer Engineering Student · Founder</title>
+<meta name="description" content="Vincenzo Allocca (@vincenzoallocca): sviluppatore full-stack, studente di Ingegneria Informatica alla Federico II e fondatore di HASTE. Progetti, competenze, formazione e impegno civico.">
 <meta name="theme-color" content="#050816">
 <meta name="color-scheme" content="dark">
-<link rel="canonical" href="https://enzoware.dpdns.org/">
-<meta name="author" content="Vincenzo (enzoware)">
+<meta name="robots" content="index,follow">
+<link rel="canonical" href="https://vincenzoallocca.dev/">
+<meta name="author" content="Vincenzo Allocca">
 <meta property="og:type" content="website">
 <meta property="og:locale" content="it_IT">
-<meta property="og:site_name" content="Portfolio | Vincenzo">
-<meta property="og:title" content="Portfolio | Vincenzo">
-<meta property="og:description" content="Portfolio di Vincenzo (enzoware): progetti e contatti.">
-<meta property="og:url" content="https://enzoware.dpdns.org/">
-<meta property="og:image" content="https://enzoware.dpdns.org/assets/profilo.webp">
+<meta property="og:site_name" content="Vincenzo Allocca">
+<meta property="og:title" content="Vincenzo Allocca | Software Developer · Computer Engineering Student · Founder">
+<meta property="og:description" content="Sviluppo prodotti digitali, infrastrutture web e sperimentazione con l'intelligenza artificiale. Fondatore di HASTE, studente di Ingegneria Informatica.">
+<meta property="og:url" content="https://vincenzoallocca.dev/">
+<meta property="og:image" content="https://vincenzoallocca.dev/assets/profilo.webp">
+<meta property="og:image:type" content="image/webp">
+<meta property="og:image:alt" content="Foto profilo di Vincenzo Allocca">
 <meta name="twitter:card" content="summary">
+<meta name="twitter:title" content="Vincenzo Allocca | Software Developer · Founder">
+<meta name="twitter:description" content="Sviluppatore full-stack, studente di Ingegneria Informatica e fondatore di HASTE.">
+<meta name="twitter:image" content="https://vincenzoallocca.dev/assets/profilo.webp">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Person","name":"Vincenzo Allocca","alternateName":"vincenzoallocca","url":"https://vincenzoallocca.dev/","image":"https://vincenzoallocca.dev/assets/profilo.webp","jobTitle":"Software Developer","description":"Sviluppatore full-stack, studente di Ingegneria Informatica e fondatore di HASTE.","alumniOf":[{"@type":"CollegeOrUniversity","name":"Università degli Studi di Napoli Federico II"},{"@type":"HighSchool","name":"ITIS Ettore Majorana"}],"sameAs":["https://github.com/vincenzoallocca","https://haste.it","https://www.instagram.com/vincenzooallocca/","https://www.facebook.com/profile.php?id=100084588892488"]}
+</script>
 <link rel="icon" type="image/png" href="assets/favicon.png">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -35,6 +44,7 @@
   --accent2:#a99bff;
   --edge:rgba(255,255,255,.14);
   --radius:1.5rem;
+  --ease:cubic-bezier(.22,.8,.24,1);
   --display:"Space Grotesk",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
   /* grana fine che "satina" il vetro */
   --grain:url("data:image/svg+xml;utf8,<svg xmlns='http://www.w3.org/2000/svg' width='160' height='160'><filter id='n'><feTurbulence type='fractalNoise' baseFrequency='.9' numOctaves='2' stitchTiles='stitch'/><feColorMatrix values='0 0 0 0 1 0 0 0 0 1 0 0 0 0 1 0 0 0 .55 0'/></filter><rect width='100%' height='100%' filter='url(%23n)' opacity='.16'/></svg>");
@@ -162,15 +172,15 @@ html[data-lite] .nick{text-shadow:none}
 }
 
 /* profilo */
-.side{display:flex;flex-direction:column;align-items:center;gap:.8rem;width:11.5rem;padding:1.2rem .9rem}
+.side{display:flex;flex-direction:column;align-items:center;gap:.8rem;width:12.5rem;padding:1.2rem .9rem}
 .avatar{
   padding:3px;border-radius:50%;
   background:conic-gradient(from 200deg,var(--accent),var(--accent2),#22d3ee,var(--accent));
   box-shadow:0 0 0 4px rgba(255,255,255,.07),0 8px 28px rgba(124,183,255,.35);
 }
 .avatar img{display:block;width:6rem;height:6rem;border-radius:50%;object-fit:cover;border:3px solid rgba(5,8,22,.85)}
-.nick{font-family:var(--display);font-size:1.25rem;font-weight:700;letter-spacing:-.01em;text-shadow:0 0 1px rgba(2,4,16,.95),0 1px 3px rgba(2,4,16,.8),0 0 14px rgba(140,194,255,.7)}
-.quote{font-size:.85rem;font-style:italic;color:var(--muted)}
+.nick{font-family:var(--display);font-size:1.02rem;max-width:100%;overflow-wrap:anywhere;text-align:center;font-weight:700;letter-spacing:-.01em;text-shadow:0 0 1px rgba(2,4,16,.95),0 1px 3px rgba(2,4,16,.8),0 0 14px rgba(140,194,255,.7)}
+.quote{font-size:.8rem;font-style:italic;color:var(--muted);white-space:nowrap;text-align:center}
 hr{width:100%;border:0;height:1px;background:linear-gradient(90deg,transparent,rgba(255,255,255,.28),transparent)}
 nav{width:100%}
 nav ul{display:flex;flex-direction:column;gap:.35rem}
@@ -179,6 +189,7 @@ nav a{
   min-height:2.75rem;padding:.4rem .75rem;border-radius:.8rem;
   font-size:.92rem;font-weight:600;color:var(--accent-hi);gap:.55rem;border:1px solid transparent;
   transition:background .25s,color .25s,border-color .25s,transform .25s,box-shadow .25s;
+  transition-timing-function:var(--ease);
 }
 nav a:hover,nav a:active,nav a[aria-current]{
   background:linear-gradient(135deg,rgba(255,255,255,.17),rgba(255,255,255,.06));
@@ -192,14 +203,15 @@ main{--tint:.62;width:26rem;max-width:100%;height:30rem;max-height:calc(100dvh -
 .scroll{
   position:relative;z-index:1;height:100%;border-radius:inherit;
   display:flex;flex-direction:column;gap:.85rem;padding:1.25rem;
-  overflow-y:auto;overscroll-behavior:contain;
+  overflow-y:auto;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;scroll-behavior:auto;
   scrollbar-width:thin;scrollbar-color:rgba(255,255,255,.28) transparent;
 }
 .intro{display:grid;gap:.5rem;padding:.1rem .15rem .2rem}
-h1{font-family:var(--display);font-size:clamp(2.5rem,11vw,3.25rem);line-height:1.05;padding-bottom:.08em;font-weight:700;letter-spacing:-.035em;text-align:left;text-shadow:none;
+h1{font-family:var(--display);font-size:clamp(2.2rem,10vw,2.7rem);line-height:1.05;padding-bottom:.08em;font-weight:700;letter-spacing:-.035em;text-align:left;text-shadow:none;
   filter:drop-shadow(0 0 1px rgba(2,4,16,.9)) drop-shadow(0 0 12px rgba(140,194,255,.55));
   background:linear-gradient(90deg,var(--accent-hi),#d2c9ff 70%,#ffc2ea);-webkit-background-clip:text;background-clip:text;color:transparent}
-.lead{font-size:.9rem;line-height:1.55;color:var(--muted);max-width:30ch}
+.sub{font-family:var(--display);font-size:.82rem;font-weight:500;line-height:1.4;color:var(--accent-hi);letter-spacing:.01em;text-shadow:var(--ts-hi)}
+.lead{font-size:.88rem;line-height:1.6;color:var(--muted);max-width:44ch}
 h2{font-family:var(--display);font-size:.8rem;font-weight:700;text-transform:uppercase;letter-spacing:.12em;color:var(--accent-hi);margin-bottom:.6rem;text-shadow:var(--ts-hi)}
 /* le card interne NON usano backdrop-filter (annidato non funzionerebbe): vetro "leggero" a sola trasparenza */
 .card{
@@ -225,6 +237,8 @@ h2{font-family:var(--display);font-size:.8rem;font-weight:700;text-transform:upp
 .projects a:active{transform:perspective(600px) rotateX(var(--rx,0deg)) rotateY(var(--ry,0deg)) scale(.985)}
 .projects b{color:var(--accent-hi);font-weight:700;text-shadow:var(--ts-hi)}
 .projects b::after{content:" ↗";opacity:.8}
+.projects a[href^="mailto:"] b::after{content:none}
+.projects span{overflow-wrap:anywhere}
 .projects span{color:var(--muted)}
 .card p{color:#e1e9fb}
 .card p+p{margin-top:.5rem}
@@ -243,18 +257,48 @@ h2{font-family:var(--display);font-size:.8rem;font-weight:700;text-transform:upp
   background:linear-gradient(135deg,rgba(140,194,255,.3),rgba(169,155,255,.22));
   box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 6px 16px -6px rgba(0,0,0,.4);
   transition:background .25s,border-color .25s,transform .25s;
+  transition-timing-function:var(--ease);
 }
 .btn:hover{background:linear-gradient(135deg,rgba(140,194,255,.45),rgba(169,155,255,.36));border-color:rgba(255,255,255,.35)}
 .btn:active{transform:scale(.97)}
 .status{min-height:1.2em;margin-top:.6rem;font-size:.82rem;color:var(--accent-hi)}
-.friends{display:grid;grid-template-columns:repeat(auto-fill,minmax(7rem,1fr));gap:.5rem}
-.friends li{padding:.7rem .5rem;border-radius:.8rem;text-align:center;font-size:.85rem;color:var(--muted);background:rgba(255,255,255,.04);border:1px dashed rgba(255,255,255,.14)}
+.card h3{font-family:var(--display);font-size:1.05rem;font-weight:700;letter-spacing:-.01em;color:#fff;margin-bottom:.35rem}
+.card h3+p{margin-top:.1rem}
+.projects .static{display:block;padding:.55rem .7rem;border-radius:.8rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)}
+/* progetto in evidenza */
+.feature{
+  border-color:rgba(169,155,255,.5);padding:1.15rem 1.1rem;
+  background:linear-gradient(155deg,rgba(140,194,255,.2),rgba(169,155,255,.12) 55%,rgba(244,114,182,.08)),rgba(5,8,28,.38);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.3),0 0 0 1px rgba(169,155,255,.14),0 14px 34px -12px rgba(124,183,255,.35);
+}
+.feature h3{font-size:1.7rem;line-height:1.1;letter-spacing:-.02em;margin-bottom:.2rem;
+  background:linear-gradient(90deg,var(--accent-hi),#d2c9ff 70%,#ffc2ea);-webkit-background-clip:text;background-clip:text;color:transparent;text-shadow:none;
+  filter:drop-shadow(0 0 10px rgba(140,194,255,.4))}
+.feature .role{font-size:.8rem;color:var(--accent-hi);margin-bottom:.6rem}
+/* chip: tecnologie e competenze, senza livelli */
+.chips{display:flex;flex-wrap:wrap;gap:.35rem;margin-top:.65rem}
+.chips li{padding:.12rem .6rem;border-radius:99px;font-size:.76rem;color:var(--accent-hi);background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.18)}
+.group+.group{margin-top:.9rem}
+.group h3{font-size:.88rem;color:var(--muted);font-weight:500;margin-bottom:0}
+.group .chips{margin-top:.4rem}
+.edu{display:flex;flex-direction:column;gap:.4rem}
+.edu li{padding:.55rem .7rem;border-radius:.8rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)}
+.edu b{display:block;color:var(--accent-hi);font-weight:700}
+.edu span{color:var(--muted);font-size:.85rem}
+.facts{display:flex;flex-direction:column;gap:.9rem}
+.facts p{font-size:.9rem}
 
 /* tile */
 aside{display:flex;flex-direction:column;gap:1.25rem}
-.tile{display:flex;justify-content:center;align-items:center;width:10rem;font-size:.92rem;font-weight:600;color:var(--accent-hi);text-shadow:var(--ts-hi)}
-.t1{height:9rem}.t2{height:12rem}
-a.tile{transition:box-shadow .25s,background-color .25s}
+.tile{display:flex;flex-direction:column;justify-content:center;align-items:flex-start;gap:.15rem;width:10rem;padding:1rem .9rem;text-align:left;font-size:.78rem;font-weight:500;color:var(--muted)}
+.tile h2{margin-bottom:.4rem}
+.t1{min-height:9rem}.t2{min-height:12rem}
+.tile .mini{display:flex;flex-direction:column;gap:.5rem}
+.tile .mini b{display:block;color:var(--accent-hi);font-weight:700;font-size:.8rem;line-height:1.3}
+.tile .mini span{display:block;font-size:.72rem;line-height:1.35}
+.tile .chips{margin-top:0;gap:.28rem}
+.tile .chips li{font-size:.68rem;padding:.08rem .5rem}
+a.tile{transition:box-shadow .3s var(--ease),background-color .3s var(--ease)}
 a.tile:focus-visible{background-color:rgba(60,80,170,.4);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 0 1px rgba(140,194,255,.5),0 24px 60px -12px rgba(0,0,0,.55)}
 @media (hover:hover){
   a.tile:hover{background-color:rgba(60,80,170,.4);box-shadow:inset 0 1px 0 rgba(255,255,255,.5),0 0 0 1px rgba(140,194,255,.5),0 24px 60px -12px rgba(0,0,0,.55)}
@@ -271,12 +315,20 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
     .panel:not([hidden]){animation-duration:.6s}
     @keyframes pin{from{opacity:0;filter:blur(5px);transform:perspective(900px) translate3d(calc(var(--d,0)*34px),12px,-90px) rotateY(calc(var(--d,0)*-9deg))}to{opacity:1;filter:none;transform:none}}
   }
+  .panel:not([hidden])>*{animation:rise .55s var(--ease) backwards}
+  .panel:not([hidden])>*:nth-child(1){animation-delay:.04s}
+  .panel:not([hidden])>*:nth-child(2){animation-delay:.1s}
+  .panel:not([hidden])>*:nth-child(3){animation-delay:.16s}
+  .panel:not([hidden])>*:nth-child(4){animation-delay:.22s}
+  .panel:not([hidden])>*:nth-child(n+5){animation-delay:.28s}
+  @keyframes rise{from{opacity:0;transform:translate3d(0,12px,0)}to{opacity:1;transform:none}}
   .glass{animation:in .6s cubic-bezier(.2,.7,.2,1) backwards}
   main{animation-delay:.08s}aside .glass:first-child{animation-delay:.16s}aside .glass:last-child{animation-delay:.24s}
   @keyframes in{from{opacity:0;transform:translateY(14px) scale(.985)}to{opacity:1;transform:none}}
 }
 @media (prefers-reduced-motion:reduce){
   .orb{animation:none}
+  .panel>*{animation:none!important}
 }
 
 /* tablet / mobile */
@@ -299,7 +351,7 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
   main{width:100%;height:auto;max-height:none}
   .scroll{height:auto;overflow:visible}
   aside{flex-direction:row;gap:1rem}
-  .tile{flex:1;width:auto;height:8rem}
+  .tile{flex:1;width:auto;min-height:8rem}
   /* blur un po' più leggero su mobile per fluidità */
   .glass{-webkit-backdrop-filter:blur(20px) saturate(180%) brightness(1.06);backdrop-filter:blur(20px) saturate(180%) brightness(1.06)}
 }
@@ -309,19 +361,36 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
 }
 /* telefono / touch: stessa scena, ma molto meno lavoro per la GPU */
 @media (max-width:820px),(pointer:coarse){
+  :root{--grain:none}
   .glass{
+    background-image:linear-gradient(135deg,rgba(255,255,255,.17) 0%,rgba(255,255,255,.05) 42%,rgba(255,255,255,.03) 62%,rgba(255,255,255,.1) 100%);
     -webkit-backdrop-filter:blur(12px) saturate(150%);backdrop-filter:blur(12px) saturate(150%);
     box-shadow:inset 0 1px 0 rgba(255,255,255,.4),inset 0 -1px 0 rgba(255,255,255,.06),0 10px 28px -12px rgba(0,0,0,.5);
   }
   .ic{filter:none}
-  h1{filter:drop-shadow(0 0 10px rgba(140,194,255,.45))}
+  h1,.feature h3{filter:none}
+  .card{box-shadow:inset 0 1px 0 rgba(255,255,255,.18)}
+  .panel:not([hidden])>*{animation-duration:.4s}
   .nick{text-shadow:0 0 1px rgba(2,4,16,.95),0 1px 3px rgba(2,4,16,.8),0 0 8px rgba(140,194,255,.6)}
-  .projects a{transform:none;transition:background-color .2s,border-color .2s}
+  .projects a{transform:none;transition:background-color .2s,border-color .2s,transform .2s}
+  .glass{animation-duration:.45s}
+  .bg canvas{transition-duration:.6s}
   .projects a:active{transform:scale(.985)}
 }
 @media (prefers-reduced-transparency:reduce),(prefers-contrast:more){
   .glass{-webkit-backdrop-filter:none;backdrop-filter:none;background-color:rgba(18,26,58,.94)}
 }
+
+/* scroll a blocchi: ogni card / intro è un punto di aggancio */
+@media (min-width:821px){
+  .scroll{scroll-snap-type:y mandatory;scroll-padding:1.25rem}
+  .panel>*{scroll-snap-align:start;scroll-snap-stop:always}
+}
+@media (max-width:820px){
+  html{scroll-snap-type:y mandatory}
+  .side,.panel>*,aside>.glass{scroll-snap-align:start;scroll-margin-top:calc(env(safe-area-inset-top) + 1rem)}
+}
+@media (prefers-reduced-motion:reduce){html{scroll-snap-type:y proximity}}
 </style>
 </head>
 <body>
@@ -333,16 +402,16 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
 
 <div class="wrap">
   <header class="glass side">
-    <div class="avatar"><img src="assets/profilo.webp" alt="Foto profilo di Vincenzo" width="96" height="96" fetchpriority="high" decoding="async"></div>
-    <p class="nick">enzoware</p>
-    <p class="quote">"Buone cose.."</p>
+    <div class="avatar"><img src="assets/profilo.webp" alt="Foto profilo di Vincenzo Allocca" width="96" height="96" fetchpriority="high" decoding="async"></div>
+    <p class="nick">@vincenzoallocca</p>
+    <p class="quote">Digital Entrepreneur</p>
     <hr>
     <nav aria-label="Menu">
       <ul>
         <li><a href="#home" data-tab="home" aria-current="page"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M3 11l9-8 9 8M5 10v10h5v-6h4v6h5V10"/></svg>Home</a></li>
-        <li><a href="#about" data-tab="about"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>About Me</a></li>
-        <li><a href="#friends" data-tab="friends"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 21s-8-5.2-8-11a4.5 4.5 0 0 1 8-2.8A4.5 4.5 0 0 1 20 10c0 5.8-8 11-8 11z"/></svg>Friends</a></li>
-        <li><a href="#messages" data-tab="messages"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 7l9 6 9-6"/></svg>Messages</a></li>
+        <li><a href="#about" data-tab="about"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8"/></svg>Chi sono</a></li>
+        <li><a href="#impegno" data-tab="impegno"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M11 20A7 7 0 0 1 9.8 6.1C15.5 5 17 4.5 19 2c1 2 2 4.2 2 8 0 5.5-4.8 10-10 10z"/><path d="M2 21c0-3 1.9-5.4 5.1-6.5C9.5 13.7 12 13 14 11"/></svg>Impegno</a></li>
+        <li><a href="#contatti" data-tab="contatti"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg>Contatti</a></li>
       </ul>
     </nav>
   </header>
@@ -350,56 +419,114 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
   <main class="glass" id="contenuto" tabindex="-1">
     <div class="scroll">
       <div class="panel" id="home" data-title="Home">
-        <div class="intro"><h1>Vincenzo</h1><p class="lead">Studente e sviluppatore. Costruisco piccoli progetti e imparo facendo.</p></div>
+        <div class="intro">
+          <h1>Vincenzo Allocca</h1>
+          <p class="sub">Software Developer · Computer Engineering Student · Founder</p>
+          <p class="lead">Studio Ingegneria Informatica e sviluppo progetti digitali. Mi interessa costruire tecnologie che abbiano un'utilità concreta, sperimentare con nuove soluzioni e trasformare le idee in prodotti funzionanti.</p>
+        </div>
+
+        <section class="card feature" aria-labelledby="haste">
+          <h2>Progetto in evidenza</h2>
+          <h3 id="haste">HASTE</h3>
+          <p class="role">Fondatore e sviluppatore</p>
+          <p>Collettivo culturale indipendente e auto-organizzato nato in Campania nel 2026: una piattaforma editoriale, culturale e civica che ho fondato e di cui curo lo sviluppo, le pubbliche relazioni e l'evoluzione tecnologica.</p>
+          <p>Ho migrato una piattaforma esistente verso un'architettura Cloudflare, lavorando su backend, frontend, database e infrastruttura.</p>
+          <ul class="chips" aria-label="Tecnologie di HASTE">
+            <li>Cloudflare Pages</li><li>Workers</li><li>D1</li><li>R2</li>
+          </ul>
+          <div class="actions"><a class="btn" href="https://haste.it" target="_blank" rel="noopener noreferrer">Visita HASTE ↗</a></div>
+        </section>
+
         <section class="card" aria-labelledby="prj">
-          <h2 id="prj">Progetti</h2>
+          <h2 id="prj">Altri progetti</h2>
           <ul class="projects">
-            <li><a href="https://github.com/enzoware/nemici-miei" target="_blank" rel="noopener noreferrer"><b>Nemici-Miei</b><br><span>PYGAME School Project.</span></a></li>
-            <li><div class="soon" aria-disabled="true"><b>Progetto 2</b><span class="badge">in arrivo</span><br><span>Descrizione del progetto.</span></div></li>
-            <li><div class="soon" aria-disabled="true"><b>Progetto 3</b><span class="badge">in arrivo</span><br><span>Descrizione del progetto.</span></div></li>
+            <li><a href="https://github.com/enzoware/nemici-miei" target="_blank" rel="noopener noreferrer"><b>Nemici-Miei</b><br><span>Progetto scolastico realizzato con Python e Pygame.</span></a></li>
+            <li><div class="static"><b>Sperimentazione tecnologica</b><br><span>Progetti personali, strumenti di intelligenza artificiale, automazione e sviluppo web.</span></div></li>
           </ul>
-        </section>
-        <section class="card">
-          <h2>Ultimo post</h2>
-          <p>[Ultimo post]</p>
         </section>
       </div>
 
-      <div class="panel" id="about" data-title="About Me">
+      <div class="panel" id="about" data-title="Chi sono">
         <section class="card" aria-labelledby="abt">
-          <h2 id="abt">About Me</h2>
-          <p>Ciao, sono Vincenzo, in rete <b>enzoware</b>. Mi piace costruire piccoli progetti e imparare facendo.</p>
-          <p>Il codice dei miei lavori è su GitHub.</p>
-          <div class="actions"><a class="btn" href="https://github.com/enzoware" target="_blank" rel="noopener noreferrer">GitHub ↗</a></div>
+          <h2 id="abt">Chi sono</h2>
+          <p>Sono <b>Vincenzo Allocca</b>, sviluppatore full-stack e studente di Ingegneria Informatica all'Università Federico II di Napoli. Con interesse particolare per le infrastrutture cloud e l'intelligenza artificiale.</p>
+          <p>Accanto alla tecnologia, coltivo il mio impegno in ambito politico e sociale. Sono fondatore e membro della direzione di <b>HASTE</b>, un collettivo indipendente e auto-organizzato, con cui porto avanti progetti e iniziative di partecipazione civica.</p>
+          <div class="actions">
+            <a class="btn" href="https://github.com/vincenzoallocca" target="_blank" rel="noopener noreferrer">GitHub ↗</a>
+          </div>
         </section>
-      </div>
-
-      <div class="panel" id="friends" data-title="Friends">
-        <section class="card" aria-labelledby="frn">
-          <h2 id="frn">Top Friends</h2>
-          <ul class="friends">
-            <li>Presto qui</li><li>Presto qui</li><li>Presto qui</li>
+        <section class="card" aria-labelledby="stk">
+          <h2 id="stk">Tech stack</h2>
+          <div class="group">
+            <h3>Linguaggi e sviluppo</h3>
+            <ul class="chips"><li>C</li><li>C++</li><li>PHP</li><li>JavaScript</li><li>HTML</li><li>CSS</li><li>SQL</li></ul>
+          </div>
+          <div class="group">
+            <h3>Infrastrutture e strumenti</h3>
+            <ul class="chips"><li>Cloudflare</li><li>Workers</li><li>D1</li><li>R2</li><li>Git</li><li>GitHub</li></ul>
+          </div>
+          <div class="group">
+            <h3>Aree di interesse</h3>
+            <ul class="chips"><li>Full-Stack Development</li><li>Backend Development</li><li>Database</li><li>Web Infrastructure</li><li>Intelligenza artificiale</li><li>Automazione</li></ul>
+          </div>
+        </section>
+        <section class="card" aria-labelledby="frm">
+          <h2 id="frm">Formazione</h2>
+          <ul class="edu">
+            <li><b>Università degli Studi di Napoli Federico II</b><span>Ingegneria Informatica</span></li>
+            <li><b>ITIS Ettore Majorana</b><span>Informatica e Telecomunicazioni</span></li>
           </ul>
         </section>
       </div>
 
-      <div class="panel" id="messages" data-title="Messages">
-        <section class="card" aria-labelledby="msg">
-          <h2 id="msg">Messages</h2>
-          <p>Vuoi scrivermi o dare un'occhiata al mio codice? Il modo più rapido è GitHub.</p>
-          <div class="actions">
-            <a class="btn" href="https://github.com/enzoware" target="_blank" rel="noopener noreferrer">Scrivimi su GitHub ↗</a>
-            <button class="btn" type="button" id="share">Condividi il sito</button>
+      <div class="panel" id="impegno" data-title="Impegno">
+        <section class="card" aria-labelledby="imp">
+          <h2 id="imp">Impegno</h2>
+          <div class="facts">
+            <p>Partecipazione civica, ambiente e territorio: attività concrete sul territorio.</p>
           </div>
-          <p class="status" id="status" role="status" aria-live="polite"></p>
+        </section>
+        <section class="card" aria-labelledby="fff">
+          <h3 id="fff">Fridays for Future Marigliano</h3>
+          <p>Attivo con il gruppo di Marigliano dal 2019 al 2021. Manifestazioni e iniziative per la protezione dell'ambiente e il clima.</p>
+        </section>
+        <section class="card" aria-labelledby="vrd">
+          <h3 id="vrd">Green Spaces Marigliano</h3>
+          <p>Realizzazione di una raccolta firme (circa 10.000) nel Comune di Marigliano per chiedere più verde pubblico, con la presentazione di una richiesta per incrementare il verde urbano.</p>
+        </section>
+        <section class="card" aria-labelledby="mob">
+          <h3 id="mob">SENZA BUS NON SI STUDIA BENE.</h3>
+          <p>Raccolta firme sul trasporto pubblico e sul collegamento Baiano–Napoli, per sostenere soluzioni di mobilità per gli studenti.</p>
+        </section>
+      </div>
+
+      <div class="panel" id="contatti" data-title="Contatti">
+        <section class="card" aria-labelledby="ctt">
+          <h2 id="ctt">Contatti</h2>
+          <p>Utilizza uno di questi canali per entrare in contatto con me.</p>
+          <ul class="projects" style="margin-top:.75rem">
+            <li><a href="mailto:vincenzoallocca07@gmail.com"><b>Email</b><br><span>vincenzoallocca07@gmail.com</span></a></li>
+            <li><a href="https://wa.me/393312925490" target="_blank" rel="noopener noreferrer"><b>WhatsApp</b><br><span>+39 331 292 5490</span></a></li>
+            <li><a href="https://www.instagram.com/vincenzooallocca/" target="_blank" rel="noopener noreferrer"><b>Instagram</b><br><span>@vincenzooallocca</span></a></li>
+            <li><a href="https://www.facebook.com/profile.php?id=100084588892488" target="_blank" rel="noopener noreferrer"><b>Facebook</b><br><span>Vincenzo Allocca</span></a></li>
+          </ul>
         </section>
       </div>
     </div>
   </main>
 
   <aside>
-    <div class="glass tile t1"><p>[Playlist]</p></div>
-    <a class="glass tile t2" href="#friends" data-tab="friends"><p>[Top Friends]</p></a>
+    <section class="glass tile t1" aria-labelledby="t-frm">
+      <h2 id="t-frm">Formazione</h2>
+      <ul class="mini">
+        <li><b>Federico II</b><span>Ingegneria Informatica</span></li>
+        <li><b>ITIS E. Majorana</b><span>Informatica e Telecomunicazioni</span></li>
+      </ul>
+    </section>
+    <a class="glass tile t2" href="#about" data-tab="about" aria-label="Tech stack: vai alle competenze">
+      <h2>Tech stack</h2>
+      <ul class="chips"><li>Cloudflare</li><li>JavaScript</li><li>PHP</li><li>C / C++</li><li>SQL</li><li>Git</li></ul>
+    </a>
   </aside>
 </div>
 
@@ -411,7 +538,7 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
   var links=[].slice.call(document.querySelectorAll('[data-tab]'));
   var scroller=document.querySelector('.scroll');
   var main=document.getElementById('contenuto');
-  var base='Portfolio | Vincenzo';
+  var base='Vincenzo Allocca';
   var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
   var names=panels.map(function(p){return p.id});
 
@@ -426,7 +553,7 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
     var ni=names.indexOf(name),pi=show.i==null?ni:show.i;show.i=ni;
     cur.setAttribute('data-dir',ni>pi?'1':ni<pi?'-1':'0');
     dispatchEvent(new CustomEvent('sectionchange',{detail:ni}));
-    document.title=name==='home'?base:cur.getAttribute('data-title')+' | '+base;
+    document.title=name==='home'?'Vincenzo Allocca | Software Developer · Computer Engineering Student · Founder':cur.getAttribute('data-title')+' | '+base;
     scroller.scrollTop=0;
     if(user&&matchMedia('(max-width:820px)').matches){
       main.scrollIntoView({behavior:reduce?'auto':'smooth',block:'start'});
@@ -477,6 +604,68 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
       navigator.share({title:base,url:url}).catch(function(e){if(!e||e.name!=='AbortError')copy()});
     }else copy();
   });
+})();
+</script>
+<script>
+/* scroll a blocchi (desktop): rotella e trackpad avanzano di una card alla volta con easing.
+   Su touch/telefono lavora lo scroll-snap nativo (CSS), che è già sul compositor. */
+(function(){
+  var el=document.querySelector('.scroll');if(!el)return;
+  if(matchMedia('(max-width:820px)').matches)return;
+  var reduce=matchMedia('(prefers-reduced-motion:reduce)').matches;
+  var raf=0,anim=false,cool=false,lastW=0,lastAbs=0,acc=0;
+  function ease(t){return t<.5?4*t*t*t:1-Math.pow(-2*t+2,3)/2}
+  function end(){anim=false;cancelAnimationFrame(raf);el.style.scrollSnapType=''}
+  function tops(){
+    var panel=el.querySelector('.panel:not([hidden])');if(!panel)return [];
+    var pad=parseFloat(getComputedStyle(el).paddingTop)||0,max=el.scrollHeight-el.clientHeight;
+    return [].map.call(panel.children,function(b){return Math.max(0,Math.min(max,b.offsetTop-pad))});
+  }
+  function go(dir){
+    var cur=el.scrollTop,max=el.scrollHeight-el.clientHeight,ch=el.clientHeight,t=tops(),to=null,i;
+    if(dir>0){
+      if(cur>=max-2)return false;
+      for(i=0;i<t.length;i++)if(t[i]>cur+4){to=t[i];break}
+      if(to===null)to=max;
+      if(to-cur>ch*.95)to=cur+ch*.85;      /* blocco più alto del riquadro: scorri a pezzi */
+    }else{
+      if(cur<=2)return false;
+      for(i=t.length-1;i>=0;i--)if(t[i]<cur-4){to=t[i];break}
+      if(to===null)to=0;
+      if(cur-to>ch*.95)to=cur-ch*.85;
+    }
+    to=Math.max(0,Math.min(max,to));
+    if(reduce){el.scrollTop=to;return true}
+    var from=cur,d=Math.abs(to-from),dur=Math.min(750,Math.max(420,d*1.1)),t0=0;
+    anim=true;el.style.scrollSnapType='none';   /* niente lotta fra snap CSS e animazione */
+    (function tick(now){
+      if(!anim)return;
+      if(!t0)t0=now;
+      var k=Math.min(1,(now-t0)/dur);
+      el.scrollTop=from+(to-from)*ease(k);
+      if(k<1)raf=requestAnimationFrame(tick);
+      else{end();cool=true;lastW=performance.now()}
+    })(performance.now());
+    return true;
+  }
+  el.addEventListener('wheel',function(e){
+    if(e.ctrlKey||Math.abs(e.deltaX)>Math.abs(e.deltaY))return;
+    if(el.scrollHeight-el.clientHeight<=0)return;
+    var now=performance.now(),a=Math.abs(e.deltaY)*(e.deltaMode===1?36:1);
+    if(anim){e.preventDefault();lastW=now;lastAbs=a;return}
+    if(cool){
+      /* coda d'inerzia del trackpad: ignorata finché non c'è una pausa o un nuovo gesto più forte */
+      if(now-lastW>110||a>lastAbs*1.4+8){cool=false;acc=0}
+      else{e.preventDefault();lastW=now;lastAbs=a;return}
+    }
+    lastW=now;lastAbs=a;
+    acc+=e.deltaY*(e.deltaMode===1?36:1);
+    if(Math.abs(acc)<24){e.preventDefault();return}
+    var dir=acc>0?1:-1;acc=0;
+    if(go(dir))e.preventDefault();
+  },{passive:false});
+  ['keydown','pointerdown'].forEach(function(n){el.addEventListener(n,end,{passive:true})});
+  addEventListener('sectionchange',function(){end();cool=false;acc=0});
 })();
 </script>
 <script>
@@ -660,7 +849,7 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
   gl.uniform3f(U.uCam,0,0,0); /* sostituito per frame */
 
   /* stato reattivo: sezione corrente (molla) e puntatore/giroscopio (smussato) */
-  var NAMES=['home','about','friends','messages'],ix=NAMES.indexOf(location.hash.replace('#',''));
+  var NAMES=['home','about','impegno','contatti'],ix=NAMES.indexOf(location.hash.replace('#',''));
   var secT=Math.max(ix,0),secTarget=secT,secV=0,IN=window.__in=window.__in||{x:0,y:0},pX=0,pY=0;
   addEventListener('sectionchange',function(e){secTarget=e.detail;if(reduce){secT=secTarget;draw(6)}});
   function step(dt){
@@ -706,7 +895,7 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
     gl.depthMask(true);
   }
 
-  var raf=0,t0=performance.now(),lastDraw=t0,lastRaf=t0,ema=.016,slow=0,rs=0,scrolling=false,st=0,minGap=mobile?29:0,lite=false;
+  var raf=0,t0=performance.now(),tv=0,lastScroll=-1e9,paused=false,lastDraw=t0,lastRaf=t0,ema=.016,slow=0,rs=0,minGap=mobile?29:0,lite=false;
   /* dispositivo che fatica: meno risoluzione, 20fps, blur più piccolo e niente ombre sul testo (vedi html[data-lite]) */
   function goLite(){lite=true;root.setAttribute('data-lite','');quality=.75;minGap=45;resize(true)}
   function frame(now){
@@ -714,16 +903,13 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
     var rd=(now-lastRaf)/1000;lastRaf=now;
     /* misura la fluidità reale del browser (intervallo fra frame veri, non solo i nostri) */
     if(rd>0&&rd<.5){ema=ema*.95+rd*.05;if(!lite){slow=ema>.028?slow+1:0;if(slow>90)goLite()}}
-    if(scrolling&&mobile)return;          /* mentre scorri sul telefono il 3D si ferma: la GPU serve allo scroll e al blur */
+    if(mobile&&now-lastScroll<140){paused=true;return}   /* mentre scorri sul telefono il 3D si ferma: la GPU serve allo scroll e al blur */
+    if(paused){paused=false;lastDraw=now;return}         /* alla ripartenza non c'è salto: il tempo della scena era fermo */
     if(now-lastDraw<minGap)return;        /* mobile: 30fps bastano, la scena è sfocata dal vetro */
     var dt=Math.min((now-lastDraw)/1000,.05);lastDraw=now;if(dt<=0)return;
-    step(dt);draw((now-t0)/1000);
+    tv+=dt;step(dt);draw(tv);
   }
-  addEventListener('scroll',function(){
-    if(!mobile)return;
-    scrolling=true;clearTimeout(st);
-    st=setTimeout(function(){scrolling=false;lastDraw=performance.now()},140);
-  },{passive:true,capture:true});
+  addEventListener('scroll',function(){if(mobile)lastScroll=performance.now()},{passive:true,capture:true});
   resize();
   addEventListener('resize',function(){cancelAnimationFrame(rs);rs=requestAnimationFrame(function(){if(resize()&&reduce)draw(6)})},{passive:true});
   cv.addEventListener('webglcontextlost',function(e){e.preventDefault();cancelAnimationFrame(raf);root.classList.remove('gl')});
