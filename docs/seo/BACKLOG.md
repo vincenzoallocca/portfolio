@@ -32,4 +32,3 @@ proprietario; "Codice" = realizzabile nel repository.
 | B13 | Profilo LinkedIn in `sameAs` | Manuale + Codice | Solo se esiste ed è pubblico; aggiungere anche il link visibile in Contatti |
 | B14 | Versione inglese | Codice + Contenuto | Solo con un obiettivo concreto. Progetto: `/en/` e `/en/projects/haste/`, `hreflang` it/en reciproci + `x-default` verso `/`, canonical per lingua, sitemap con `xhtml:link`, `og:locale:alternate`, selettore lingua, traduzione scritta a mano |
 | B15 | Rivedere la keyword map con dati reali | Manuale | Dopo 4–8 settimane di dati Search Console |
-| B16 | Immagine Open Graph dedicata al caso studio | Contenuto | Oggi riusa l'immagine del profilo |

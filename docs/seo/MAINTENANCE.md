@@ -34,6 +34,21 @@ npx --yes html-validate@11.21.1 --config .github/htmlvalidate.json index.html 40
 npx --yes @lhci/cli@0.16.1 autorun --config=.github/lighthouserc.json
 ```
 
+Rigenerare le immagini Open Graph dopo aver modificato `scripts/og/*.html` o `og.css`
+(`puppeteer-core` viene installato in `.og-tmp/`, ignorata da git):
+
+```bash
+npm i --no-save --prefix .og-tmp puppeteer-core@24
+```
+
+```bash
+NODE_PATH=.og-tmp/node_modules node scripts/og/render.mjs
+```
+
+Dopo il deploy, i social conservano in cache la vecchia anteprima: forzare l'aggiornamento con
+il [Debugger di condivisione di Facebook](https://developers.facebook.com/tools/debug/) e il
+[Post Inspector di LinkedIn](https://www.linkedin.com/post-inspector/).
+
 ## Quando modifichi il sito
 
 | Modifica | Cosa fare |
@@ -41,7 +56,7 @@ npx --yes @lhci/cli@0.16.1 autorun --config=.github/lighthouserc.json
 | Testo della home o del caso studio | Aggiornare `dateModified` nel JSON-LD della pagina; rigenerare la sitemap; se cambiano fatti, aggiornare `llms.txt` |
 | Nuova pagina | Seguire la checklist in [STRATEGY.md §7](STRATEGY.md#7-strategia-editoriale); usare percorsi assoluti (`/assets/…`) e `assets/css/pagina.css`; rigenerare la sitemap |
 | Nuovo profilo social | Aggiungerlo a `sameAs` **e** come `<link rel="me">` solo se è autentico e linkato visibilmente |
-| Ruolo/biografia | Cambiare in modo coerente: `<title>`, description, `og:*`, `twitter:*`, sottotitolo, `jobTitle`/`description` del Person, testo JS che aggiorna `document.title`, `llms.txt`, `site.webmanifest`, bio GitHub |
+| Ruolo/biografia | Cambiare in modo coerente: `<title>`, immagini Open Graph (`scripts/og/`), description, `og:*`, `twitter:*`, sottotitolo, `jobTitle`/`description` del Person, testo JS che aggiorna `document.title`, `llms.txt`, `site.webmanifest`, bio GitHub |
 | Pagina da togliere dall'indice | Usare `<meta name="robots" content="noindex">` e lasciarla scansionabile; **non** usare `robots.txt` per rimuovere URL dall'indice |
 | Pagina eliminata | Lasciare che risponda 404 (GitHub Pages non supporta redirect 301 lato server); se esiste un sostituto, linkarlo dalla 404 |
 
