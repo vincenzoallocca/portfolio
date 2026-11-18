@@ -12,6 +12,7 @@
 <meta name="author" content="Vincenzo Allocca">
 <link rel="me" href="https://github.com/vincenzoallocca">
 <link rel="me" href="https://www.instagram.com/vincenzooallocca/">
+<link rel="me" href="https://www.facebook.com/profile.php?id=100084588892488">
 <link rel="alternate" type="text/plain" href="/llms.txt" title="LLM summary">
 <meta property="og:type" content="profile">
 <meta property="profile:first_name" content="Vincenzo">
@@ -63,12 +64,20 @@
       "alternateName": ["vincenzoallocca", "@vincenzoallocca"],
       "url": "https://vincenzoallocca.dev/",
       "image": "https://vincenzoallocca.dev/assets/profilo.webp",
-      "email": "mailto:vincenzoallocca07@gmail.com",
+      "email": "vincenzoallocca07@gmail.com",
       "jobTitle": "Digital Entrepreneur",
       "description": "Digital Entrepreneur e sviluppatore full-stack, studente di Ingegneria Informatica all'Università degli Studi di Napoli Federico II e fondatore del collettivo culturale HASTE.",
-      "knowsAbout": ["Sviluppo web full-stack", "Backend engineering", "Cloudflare Workers", "Cloudflare D1", "Cloudflare R2", "C", "C++", "PHP", "JavaScript", "TypeScript", "SQL", "Git", "Linux", "Intelligenza artificiale", "Automazione"],
+      "knowsAbout": ["Sviluppo web full-stack", "Backend engineering", "Cloudflare Workers", "Cloudflare D1", "Cloudflare R2", "C", "C++", "PHP", "JavaScript", "TypeScript", "Python", "SQL", "Git", "Linux", "Sicurezza informatica", "Intelligenza artificiale", "Automazione"],
       "affiliation": { "@type": "CollegeOrUniversity", "name": "Università degli Studi di Napoli Federico II", "url": "https://www.unina.it/" },
-      "alumniOf": { "@type": "HighSchool", "name": "ITIS Ettore Majorana" },
+      "alumniOf": { "@id": "https://vincenzoallocca.dev/#itis-majorana" },
+      "hasCredential": {
+        "@type": "EducationalOccupationalCredential",
+        "credentialCategory": "Diploma",
+        "name": "Diploma in Informatica e Telecomunicazioni",
+        "dateCreated": "2026",
+        "recognizedBy": { "@id": "https://vincenzoallocca.dev/#itis-majorana" }
+      },
+      "award": "1° posto PCTO in sviluppo di videogiochi (2025)",
       "founder": { "@id": "https://haste.it/#organization" },
       "memberOf": { "@id": "https://haste.it/#organization" },
       "sameAs": [
@@ -78,14 +87,21 @@
       ]
     },
     {
+      "@type": "HighSchool",
+      "@id": "https://vincenzoallocca.dev/#itis-majorana",
+      "name": "ITIS Ettore Majorana"
+    },
+    {
       "@type": "Organization",
       "@id": "https://haste.it/#organization",
-      "name": "HASTE",
-      "url": "https://haste.it",
+      "name": "HASTE Collective",
+      "alternateName": "HASTE",
+      "url": "https://haste.it/",
       "description": "Collettivo culturale indipendente e auto-organizzato nato in Campania nel 2026: piattaforma editoriale, culturale e civica.",
       "foundingDate": "2026",
       "foundingLocation": { "@type": "Place", "name": "Campania, Italia" },
-      "founder": { "@id": "https://vincenzoallocca.dev/#person" }
+      "founder": { "@id": "https://vincenzoallocca.dev/#person" },
+      "subjectOf": { "@id": "https://vincenzoallocca.dev/progetti/haste/#webpage" }
     }
   ]
 }
@@ -350,7 +366,7 @@ h2{font-family:var(--display);font-size:1rem;font-weight:680;font-stretch:110%;l
 .chips li{padding:.2rem .6rem;border-radius:99px;font-size:.8125rem;font-weight:520;letter-spacing:0;line-height:1.3;color:var(--accent-hi);background:rgba(255,255,255,.07);border:1px solid rgba(255,255,255,.18)}
 .group+.group{margin-top:.9rem}
 .group h3{font-family:var(--font-body);font-size:.88rem;color:var(--text-secondary);font-weight:600;margin-bottom:0;letter-spacing:-.005em}
-.group .chips{margin-top:.4rem}
+.group .chips,.group .edu{margin-top:.4rem}
 .edu{display:flex;flex-direction:column;gap:.4rem}
 .edu li{padding:.55rem .7rem;border-radius:.8rem;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.08)}
 .edu b{display:block;color:var(--accent-hi);font-weight:700;font-size:.88rem;letter-spacing:-.005em}
@@ -512,11 +528,12 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
         <section class="card feature" aria-labelledby="haste">
           <h2 id="haste">HASTE</h2>
           <p class="role">Fondatore e sviluppatore</p>
-          <p>Collettivo culturale indipendente e auto-organizzato nato in Campania nel 2026: una piattaforma editoriale, culturale e civica che ho fondato e di cui curo l'architettura tecnica, l'infrastruttura web e l'evoluzione digitale.</p>
+          <p>HASTE Collective è un collettivo culturale indipendente e auto-organizzato nato in Campania nel 2026: una piattaforma editoriale, culturale e civica che ho fondato e di cui curo l'architettura tecnica, l'infrastruttura web e l'evoluzione digitale.</p>
           <ul class="chips">
             <li>Cloudflare Pages</li><li>Workers</li><li>D1</li><li>R2</li><li>TypeScript</li>
           </ul>
           <div class="actions">
+            <a class="btn" href="/progetti/haste/">Caso studio: come è costruito HASTE</a>
             <a class="btn" href="https://haste.it" target="_blank" rel="noopener">Apri haste.it</a>
           </div>
         </section>
@@ -527,7 +544,7 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
             <li>
               <a href="https://github.com/vincenzoallocca/nemici-miei" target="_blank" rel="noopener">
                 <b>Nemici-Miei</b>
-                <span>Progetto scolastico open-source realizzato con Python e Pygame.</span>
+                <span>Gioco con vista isometrica e animazioni dei personaggi, realizzato in Python e Pygame per il PCTO 2024–2025. Codice open source.</span>
               </a>
             </li>
             <li>
@@ -555,7 +572,7 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
           <h2 id="stk">Tech stack</h2>
           <div class="group">
             <h3>Linguaggi e sviluppo</h3>
-            <ul class="chips"><li>C</li><li>C++</li><li>PHP</li><li>JavaScript</li><li>HTML5</li><li>CSS3</li><li>SQL</li></ul>
+            <ul class="chips"><li>C</li><li>C++</li><li>PHP</li><li>JavaScript</li><li>TypeScript</li><li>Python</li><li>HTML5</li><li>CSS3</li><li>SQL</li></ul>
           </div>
           <div class="group">
             <h3>Infrastrutture e strumenti</h3>
@@ -563,16 +580,26 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
           </div>
           <div class="group">
             <h3>Aree di interesse</h3>
-            <ul class="chips"><li>Backend Engineering</li><li>Web Infrastructure</li><li>Intelligenza artificiale</li><li>Automazione</li></ul>
+            <ul class="chips"><li>Backend Engineering</li><li>Web Infrastructure</li><li>Sicurezza informatica</li><li>Intelligenza artificiale</li><li>Automazione</li></ul>
           </div>
         </section>
 
         <section class="card" aria-labelledby="frm">
           <h2 id="frm">Formazione</h2>
-          <ul class="edu">
-            <li><b>Universit&agrave; Federico II di Napoli</b><span>Ingegneria Informatica</span></li>
-            <li><b>ITIS Ettore Majorana</b><span>Informatica e Telecomunicazioni</span></li>
-          </ul>
+          <div class="group">
+            <h3>Studi</h3>
+            <ul class="edu">
+              <li><b>Universit&agrave; degli Studi di Napoli Federico II</b><span>Ingegneria Informatica, dal 2026</span></li>
+              <li><b>ITIS Ettore Majorana</b><span>Diploma in Informatica e Telecomunicazioni, 2026 (90/100)</span></li>
+            </ul>
+          </div>
+          <div class="group">
+            <h3>Riconoscimenti e attivit&agrave;</h3>
+            <ul class="edu">
+              <li><b>1&deg; posto PCTO in sviluppo di videogiochi</b><span>2025</span></li>
+              <li><b>Model European Parliament</b><span>Fasi scolastiche e regionali, 2024</span></li>
+            </ul>
+          </div>
         </section>
       </div>
 

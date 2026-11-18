@@ -1,27 +1,34 @@
 # Vincenzo Allocca
 
-> Vincenzo Allocca è un Digital Entrepreneur e sviluppatore full-stack italiano, studente di Ingegneria Informatica all'Università degli Studi di Napoli Federico II e fondatore di HASTE, collettivo culturale indipendente nato in Campania nel 2026. Sito ufficiale: https://vincenzoallocca.dev/
+> Vincenzo Allocca è un Digital Entrepreneur e sviluppatore full-stack italiano, studente di Ingegneria Informatica all'Università degli Studi di Napoli Federico II e fondatore di HASTE Collective, collettivo culturale indipendente nato in Campania nel 2026. Sito ufficiale: https://vincenzoallocca.dev/
+
+## Pagine
+
+- [Profilo](https://vincenzoallocca.dev/): chi è, progetti, formazione, impegno civico e contatti
+- [Caso studio HASTE Collective](https://vincenzoallocca.dev/progetti/haste/): fondazione, ruolo e architettura tecnica della piattaforma
 
 ## Profilo
 
 - Nome: Vincenzo Allocca (username GitHub: vincenzoallocca)
-- Ruolo: Digital Entrepreneur, sviluppatore full-stack, studente di Ingegneria Informatica, fondatore di HASTE
-- Formazione: Università degli Studi di Napoli Federico II, Ingegneria Informatica; ITIS Ettore Majorana, Informatica e Telecomunicazioni
+- Ruolo: Digital Entrepreneur, sviluppatore full-stack, studente di Ingegneria Informatica, fondatore di HASTE Collective
+- Formazione: Università degli Studi di Napoli Federico II, Ingegneria Informatica (dal 2026); ITIS Ettore Majorana, diploma in Informatica e Telecomunicazioni (2026, 90/100)
+- Riconoscimenti e attività: 1° posto PCTO in sviluppo di videogiochi (2025); Model European Parliament, fasi scolastiche e regionali (2024)
 
-## HASTE
+## HASTE Collective
 
-- [HASTE](https://haste.it): collettivo culturale indipendente e auto-organizzato nato in Campania nel 2026. Piattaforma editoriale, culturale e civica. Vincenzo Allocca l'ha fondato, fa parte della direzione e ne cura architettura tecnica, infrastruttura web ed evoluzione digitale.
-- Tecnologie usate: Cloudflare Pages, Workers, D1, R2, TypeScript
+- [HASTE](https://haste.it/): collettivo culturale indipendente e auto-organizzato nato in Campania nel 2026: magazine di attualità e cultura, manifesto, catalogo e partecipazione civica. Vincenzo Allocca l'ha fondato, ne cura la direzione editoriale e lo sviluppo della piattaforma web.
+- Tecnologie: Cloudflare Pages, Workers, D1, R2, TypeScript
+- [Status page](https://status.haste.it/): SvelteKit su Cloudflare Workers con database D1 e controlli pianificati ogni minuto; [codice pubblico](https://github.com/vincenzoallocca/haste-status-new)
 
 ## Competenze
 
-- Linguaggi: C, C++, PHP, JavaScript, HTML, CSS, SQL
+- Linguaggi: C, C++, PHP, JavaScript, TypeScript, Python, HTML, CSS, SQL
 - Infrastruttura e strumenti: Cloudflare (Workers, D1, R2), Git, Linux
-- Interessi: backend engineering, infrastruttura web, intelligenza artificiale, automazione
+- Interessi: backend engineering, infrastruttura web, sicurezza informatica, intelligenza artificiale, automazione
 
 ## Progetti
 
-- [Nemici-Miei](https://github.com/vincenzoallocca/nemici-miei): progetto scolastico open source in Python e Pygame
+- [Nemici-Miei](https://github.com/vincenzoallocca/nemici-miei): gioco con vista isometrica in Python e Pygame, progetto PCTO 2024–2025, open source
 
 ## Impegno civico
 

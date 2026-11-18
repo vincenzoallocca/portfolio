@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>HASTE Collective: caso studio tecnico | Vincenzo Allocca</title>
+<meta name="description" content="Come ho fondato e sviluppato HASTE Collective, collettivo culturale nato in Campania: piattaforma su Cloudflare, sicurezza, status page e API per agenti AI.">
+<meta name="theme-color" content="#050816">
+<meta name="color-scheme" content="dark">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
+<link rel="canonical" href="https://vincenzoallocca.dev/progetti/haste/">
+<meta name="author" content="Vincenzo Allocca">
+<meta property="og:type" content="article">
+<meta property="og:locale" content="it_IT">
+<meta property="og:site_name" content="Vincenzo Allocca">
+<meta property="og:title" content="HASTE Collective: caso studio tecnico">
+<meta property="og:description" content="Fondazione, direzione e sviluppo della piattaforma di HASTE Collective: Cloudflare, sicurezza, status page e API per agenti AI.">
+<meta property="og:url" content="https://vincenzoallocca.dev/progetti/haste/">
+<meta property="og:image" content="https://vincenzoallocca.dev/assets/og-image.jpg">
+<meta property="og:image:type" content="image/jpeg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta property="og:image:alt" content="Vincenzo Allocca, Digital Entrepreneur e fondatore di HASTE">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="HASTE Collective: caso studio tecnico">
+<meta name="twitter:description" content="Fondazione, direzione e sviluppo della piattaforma di HASTE Collective.">
+<meta name="twitter:image" content="https://vincenzoallocca.dev/assets/og-image.jpg">
+<meta name="twitter:image:alt" content="Vincenzo Allocca, Digital Entrepreneur e fondatore di HASTE">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "WebPage",
+      "@id": "https://vincenzoallocca.dev/progetti/haste/#webpage",
+      "url": "https://vincenzoallocca.dev/progetti/haste/",
+      "name": "HASTE Collective: caso studio tecnico",
+      "description": "Fondazione, direzione e sviluppo della piattaforma di HASTE Collective, collettivo culturale indipendente nato in Campania nel 2026.",
+      "inLanguage": "it-IT",
+      "dateModified": "2026-11-18",
+      "isPartOf": { "@id": "https://vincenzoallocca.dev/#website" },
+      "about": { "@id": "https://haste.it/#organization" },
+      "author": { "@id": "https://vincenzoallocca.dev/#person" },
+      "breadcrumb": { "@id": "https://vincenzoallocca.dev/progetti/haste/#breadcrumb" },
+      "hasPart": { "@id": "https://vincenzoallocca.dev/progetti/haste/#status-page" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://vincenzoallocca.dev/progetti/haste/#breadcrumb",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://vincenzoallocca.dev/" },
+        { "@type": "ListItem", "position": 2, "name": "Progetti", "item": "https://vincenzoallocca.dev/progetti/" },
+        { "@type": "ListItem", "position": 3, "name": "HASTE Collective" }
+      ]
+    },
+    {
+      "@type": "Person",
+      "@id": "https://vincenzoallocca.dev/#person",
+      "name": "Vincenzo Allocca",
+      "url": "https://vincenzoallocca.dev/"
+    },
+    {
+      "@type": "Organization",
+      "@id": "https://haste.it/#organization",
+      "name": "HASTE Collective",
+      "alternateName": "HASTE",
+      "url": "https://haste.it/",
+      "foundingDate": "2026",
+      "foundingLocation": { "@type": "Place", "name": "Campania, Italia" },
+      "founder": { "@id": "https://vincenzoallocca.dev/#person" }
+    },
+    {
+      "@type": "SoftwareSourceCode",
+      "@id": "https://vincenzoallocca.dev/progetti/haste/#status-page",
+      "name": "HASTE Status",
+      "description": "Status page di HASTE: monitoraggio della disponibilità dei servizi con controlli pianificati, eseguita su Cloudflare Workers con database D1.",
+      "url": "https://status.haste.it/",
+      "codeRepository": "https://github.com/vincenzoallocca/haste-status-new",
+      "programmingLanguage": ["TypeScript", "Svelte"],
+      "runtimePlatform": "Cloudflare Workers",
+      "author": { "@id": "https://vincenzoallocca.dev/#person" },
+      "about": { "@id": "https://haste.it/#organization" }
+    }
+  ]
+}
+</script>
+<link rel="icon" href="/assets/favicon.ico" sizes="48x48">
+<link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
+<link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
+<link rel="manifest" href="/assets/site.webmanifest">
+<link rel="preload" href="/assets/fonts/mona-sans.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/assets/css/pagina.css">
+</head>
+<body>
+<a class="skip" href="#contenuto">Vai al contenuto principale</a>
+
+<div class="page">
+  <header class="top">
+    <a class="brand" href="/"><img src="/assets/profilo.webp" alt="" width="40" height="40">Vincenzo Allocca</a>
+    <nav class="crumbs" aria-label="Percorso">
+      <ol>
+        <li><a href="/">Home</a></li>
+        <li><a href="/progetti/">Progetti</a></li>
+        <li><span aria-current="page">HASTE Collective</span></li>
+      </ol>
+    </nav>
+  </header>
+
+  <main id="contenuto" tabindex="-1">
+    <article>
+      <section class="card hero" aria-labelledby="titolo">
+        <p class="eyebrow">Caso studio</p>
+        <h1 id="titolo">HASTE Collective</h1>
+        <p class="lead">HASTE è un collettivo culturale indipendente nato in Campania nel 2026: un magazine di attualità e cultura, un manifesto e uno spazio di partecipazione civica. L'ho fondato e ne seguo la direzione editoriale e lo sviluppo della piattaforma web.</p>
+        <dl class="facts">
+          <div><dt>Ruolo</dt><dd>Fondatore, direzione editoriale, sviluppo</dd></div>
+          <div><dt>Anno</dt><dd>2026</dd></div>
+          <div><dt>Luogo</dt><dd>Campania</dd></div>
+          <div><dt>Sito</dt><dd><a href="https://haste.it/" rel="noopener">haste.it</a></dd></div>
+        </dl>
+      </section>
+
+      <section class="card" aria-labelledby="cosa">
+        <h2 id="cosa">Cos'è HASTE</h2>
+        <p>HASTE nasce come collettivo auto-organizzato: un gruppo di persone che vuole raccontare attualità, cultura e territorio con una voce indipendente. Il progetto si regge su tre direzioni (editoriale, creativa e community) e su una piattaforma web che tiene insieme tutto il resto.</p>
+        <p>Sul sito convivono più parti con esigenze diverse:</p>
+        <ul>
+          <li><a href="https://haste.it/magazine" rel="noopener">Magazine</a>: articoli di attualità, politica e cultura.</li>
+          <li><a href="https://haste.it/manifesto" rel="noopener">Manifesto</a>: i principi del collettivo.</li>
+          <li><a href="https://haste.it/catalogo" rel="noopener">Catalogo</a>: prodotti del collettivo, con tracciamento degli ordini.</li>
+          <li><a href="https://haste.it/petizione" rel="noopener">Petizione</a> e area <a href="https://haste.it/press" rel="noopener">press</a>: partecipazione civica e rapporti con la stampa.</li>
+        </ul>
+      </section>
+
+      <section class="card" aria-labelledby="ruolo">
+        <h2 id="ruolo">Il mio ruolo</h2>
+        <p>Ho fondato HASTE insieme ad altre persone del collettivo, che curano la direzione creativa e la community. Io mi occupo di due cose: la <strong>direzione editoriale</strong>, cioè la linea del magazine, e la <strong>parte tecnica</strong>, dall'ideazione della piattaforma allo sviluppo, all'infrastruttura web e alla sua evoluzione.</p>
+      </section>
+
+      <section class="card" aria-labelledby="arch">
+        <h2 id="arch">Architettura e scelte tecniche</h2>
+        <h3>Edge su Cloudflare</h3>
+        <p>La piattaforma è servita dalla rete edge di Cloudflare e costruita sui suoi servizi: Pages per la distribuzione del sito, Workers per la logica lato server, D1 come database SQL e R2 come object storage. Il codice è scritto in TypeScript.</p>
+        <ul class="chips" aria-label="Tecnologie della piattaforma">
+          <li>Cloudflare Pages</li><li>Workers</li><li>D1</li><li>R2</li><li>TypeScript</li>
+        </ul>
+
+        <h3>Sicurezza di base fatta bene</h3>
+        <p>Il sito è servito solo in HTTPS con HSTS (inclusi i sottodomini, con richiesta di preload), una Content-Security-Policy che autorizza gli script tramite un nonce generato a ogni richiesta, il blocco dell'incorporamento da siti terzi (<code>frame-ancestors</code>) e una Referrer-Policy restrittiva. Sono tutte intestazioni HTTP verificabili da chiunque.</p>
+
+        <h3>Status page</h3>
+        <p>Per sapere subito se qualcosa non funziona, HASTE ha una <a href="https://status.haste.it/" rel="noopener">status page</a> separata dal sito principale. È un'applicazione SvelteKit (Svelte 5, TypeScript, Tailwind CSS) eseguita su un Cloudflare Worker con database D1: un cron trigger lancia i controlli di disponibilità ogni minuto e salva risultati e incidenti. Il codice ha test con Vitest ed è <a href="https://github.com/vincenzoallocca/haste-status-new" rel="noopener">pubblico su GitHub</a>.</p>
+
+        <h3>Pronta per gli agenti AI</h3>
+        <p>haste.it pubblica file di discovery nella cartella <code>/.well-known/</code> (catalogo API, agent card, server card MCP, indice delle skill) e un endpoint <a href="https://modelcontextprotocol.io/" rel="noopener">MCP</a> che permette ad assistenti e agenti AI di leggere articoli, categorie e stato del catalogo in modo strutturato, invece di dover interpretare l'HTML.</p>
+      </section>
+
+      <section class="card" aria-labelledby="link">
+        <h2 id="link">Approfondisci</h2>
+        <div class="actions">
+          <a class="btn" href="https://haste.it/" rel="noopener">Visita haste.it</a>
+          <a class="btn ghost" href="https://status.haste.it/" rel="noopener">Status page</a>
+          <a class="btn ghost" href="https://github.com/vincenzoallocca/haste-status-new" rel="noopener">Codice su GitHub</a>
+        </div>
+        <p class="note">Le informazioni tecniche di questa pagina sono verificabili dalle intestazioni HTTP di haste.it, dai suoi file pubblici in <code>/.well-known/</code> e dal repository pubblico della status page.</p>
+      </section>
+    </article>
+  </main>
+
+  <footer>
+    <nav aria-label="Link del sito">
+      <ul>
+        <li><a href="/">Profilo</a></li>
+        <li><a href="/progetti/">Progetti</a></li>
+        <li><a href="/#contatti">Contatti</a></li>
+        <li><a href="https://github.com/vincenzoallocca" rel="noopener me">GitHub</a></li>
+      </ul>
+    </nav>
+    <p>Vincenzo Allocca · Digital Entrepreneur e fondatore di HASTE</p>
+  </footer>
+</div>
+</body>
+</html>
