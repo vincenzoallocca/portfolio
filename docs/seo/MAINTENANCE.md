@@ -13,7 +13,7 @@ Non pubblica nulla: il deploy resta quello di GitHub Pages dal branch `main`.
 | Link esterni | `lychee` su tutte le pagine e su `llms.txt` (esclusi social che bloccano i bot) | Avviso |
 | Lighthouse CI | 3 run mobile per `/` e `/progetti/haste/`; SEO = 100 e Accessibility ≥ 95 e CLS ≤ 0,1 **bloccanti**; Performance ≥ 90, Best Practices ≥ 95, LCP ≤ 2,5 s, TBT ≤ 300 ms, peso JS/totale come avvisi | Misto |
 
-I report Lighthouse sono scaricabili come artifact `lighthouse-report` per 14 giorni. Non vengono
+I report Lighthouse (cartella `lighthouse-report/`) sono scaricabili come artifact `lighthouse-report` per 14 giorni. Non vengono
 caricati su servizi esterni.
 
 ## Comandi locali

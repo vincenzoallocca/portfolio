@@ -19,6 +19,6 @@
         "resource-summary:total:size": ["warn", { "maxNumericValue": 250000 }]
       }
     },
-    "upload": { "target": "filesystem", "outputDir": ".lighthouseci" }
+    "upload": { "target": "filesystem", "outputDir": "lighthouse-report" }
   }
 }
