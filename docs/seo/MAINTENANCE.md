@@ -35,7 +35,8 @@ npx --yes @lhci/cli@0.16.1 autorun --config=.github/lighthouserc.json
 ```
 
 Rigenerare le immagini Open Graph dopo aver modificato `scripts/og/*.html` o `og.css`
-(`puppeteer-core` viene installato in `.og-tmp/`, ignorata da git):
+(`puppeteer-core` viene installato in `.og-tmp/`, ignorata da git). Lo script genera solo
+`assets/og-haste.jpg`: `assets/og-image.jpg` della home è l'immagine originale e non va sovrascritta.
 
 ```bash
 npm i --no-save --prefix .og-tmp puppeteer-core@24

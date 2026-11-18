@@ -1,5 +1,6 @@
 #!/usr/bin/env node
 // Rigenera le immagini Open Graph (1200×630, JPEG) dai modelli HTML in questa cartella.
+// assets/og-image.jpg (home) non è generata qui: è l'immagine originale, da non sovrascrivere.
 //
 //   npm i --no-save --prefix .og-tmp puppeteer-core@24
 //   NODE_PATH=.og-tmp/node_modules node scripts/og/render.mjs
@@ -24,7 +25,6 @@ try {
 const HERE = fileURLToPath(new URL('.', import.meta.url));
 const ROOT = join(HERE, '..', '..');
 const JOBS = [
-  { template: 'profilo.html', out: 'assets/og-image.jpg' },
   { template: 'haste.html', out: 'assets/og-haste.jpg' },
 ];
 const CHROME = process.env.CHROME_PATH || [
