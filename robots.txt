@@ -1,45 +1,11 @@
 # vincenzoallocca.dev
-# Tutti i crawler sono benvenuti, compresi quelli dei motori di ricerca AI.
+# Un solo gruppo per tutti i crawler (motori di ricerca e crawler AI sono benvenuti).
+# Nota: un crawler con un gruppo User-agent dedicato ignora le regole del gruppo "*".
+# Per questo non si aggiungono gruppi per singoli bot se non servono regole diverse.
 User-agent: *
 Allow: /
-
-User-agent: Googlebot
-Allow: /
-
-User-agent: Bingbot
-Allow: /
-
-User-agent: GPTBot
-Allow: /
-
-User-agent: OAI-SearchBot
-Allow: /
-
-User-agent: ChatGPT-User
-Allow: /
-
-User-agent: ClaudeBot
-Allow: /
-
-User-agent: Claude-SearchBot
-Allow: /
-
-User-agent: Claude-User
-Allow: /
-
-User-agent: PerplexityBot
-Allow: /
-
-User-agent: Perplexity-User
-Allow: /
-
-User-agent: Google-Extended
-Allow: /
-
-User-agent: Applebot-Extended
-Allow: /
-
-User-agent: CCBot
-Allow: /
+# Documentazione interna del repository: non è contenuto per gli utenti.
+Disallow: /docs/
+Disallow: /scripts/
 
 Sitemap: https://vincenzoallocca.dev/sitemap.xml
