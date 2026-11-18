@@ -1,0 +1,37 @@
+# Vincenzo Allocca
+
+> Vincenzo Allocca è uno sviluppatore full-stack italiano, studente di Ingegneria Informatica all'Università degli Studi di Napoli Federico II e fondatore di HASTE, collettivo culturale indipendente nato in Campania nel 2026. Sito ufficiale: https://vincenzoallocca.dev/
+
+## Profilo
+
+- Nome: Vincenzo Allocca (username GitHub: vincenzoallocca)
+- Ruolo: sviluppatore full-stack, studente di Ingegneria Informatica, fondatore di HASTE
+- Formazione: Università degli Studi di Napoli Federico II, Ingegneria Informatica; ITIS Ettore Majorana, Informatica e Telecomunicazioni
+
+## HASTE
+
+- [HASTE](https://haste.it): collettivo culturale indipendente e auto-organizzato nato in Campania nel 2026. Piattaforma editoriale, culturale e civica. Vincenzo Allocca l'ha fondato, fa parte della direzione e ne cura architettura tecnica, infrastruttura web ed evoluzione digitale.
+- Tecnologie usate: Cloudflare Pages, Workers, D1, R2, TypeScript
+
+## Competenze
+
+- Linguaggi: C, C++, PHP, JavaScript, HTML, CSS, SQL
+- Infrastruttura e strumenti: Cloudflare (Workers, D1, R2), Git, Linux
+- Interessi: backend engineering, infrastruttura web, intelligenza artificiale, automazione
+
+## Progetti
+
+- [Nemici-Miei](https://github.com/vincenzoallocca/nemici-miei): progetto scolastico open source in Python e Pygame
+
+## Impegno civico
+
+- Fridays for Future Marigliano (2019–2021): cortei, assemblee e campagne sull'emergenza climatica
+- EcoGreen Marigliano: petizione cittadina con circa 10.000 firme per più alberi e aree verdi urbane a Marigliano
+- "Senza bus non si studia bene": campagna e raccolta firme per potenziare il trasporto pubblico sulla tratta Baiano–Napoli
+
+## Contatti
+
+- [Email](mailto:vincenzoallocca07@gmail.com): vincenzoallocca07@gmail.com
+- [GitHub](https://github.com/vincenzoallocca): profilo e repository
+- [Instagram](https://www.instagram.com/vincenzooallocca/): @vincenzooallocca
+- [Facebook](https://www.facebook.com/profile.php?id=100084588892488): Vincenzo Allocca
