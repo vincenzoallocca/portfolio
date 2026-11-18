@@ -72,6 +72,15 @@ Invariati: title, description, Open Graph, ruolo principale, design, script, Web
 | `404.html` | `<!DOCTYPE html>` | P2-1 |
 | `extreme-performance-report.md`, `typography-redesign-report.md` | Spostati con `git mv` in `docs/reports/` (contenuto invariato). Non sono più alla root e `/docs/` è esclusa dalla scansione | P1-2 |
 
+## Immagini Open Graph (seconda iterazione)
+
+| File | Modifica |
+|---|---|
+| `assets/og-image.jpg` | Ricreata (1200×630, JPEG, ~74 KB): pannello di vetro con sfere e Mona Sans come il sito; foto, handle, ruolo "Digital Entrepreneur", "Fondatore di HASTE Collective", "Sviluppatore full-stack · Ingegneria Informatica · Federico II", dominio. Stesso nome file: i meta tag della home non cambiano |
+| `assets/og-haste.jpg` | Nuova (1200×630, ~74 KB) per `/progetti/haste/`: "Caso studio", "HASTE Collective", ruolo, tecnologie verificate, firma con URL. `og:image`, `twitter:image` e relativi `alt` della pagina aggiornati |
+| `scripts/og/` | Modelli HTML (`profilo.html`, `haste.html`, `og.css`) e `render.mjs`, che li fotografa con Chrome headless tramite `puppeteer-core` |
+| `scripts/seo-check.mjs` | Nuovo errore bloccante se `og:image`/`twitter:image` puntano a un file inesistente nel sito |
+
 ## Cosa non è stato modificato, e perché
 
 | Elemento | Motivo |

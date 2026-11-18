@@ -158,6 +158,11 @@ for (const p of pages) {
       if (!metaContent(p.html, 'property', k)) warn(where, `${k} mancante`);
     }
     if (p.jsonld.length === 0) warn(where, 'nessun dato strutturato JSON-LD');
+    for (const img of [metaContent(p.html, 'property', 'og:image'), metaContent(p.html, 'name', 'twitter:image')]) {
+      if (img && img.startsWith(ORIGIN + '/') && !existsSync(join(ROOT, img.slice(ORIGIN.length + 1)))) {
+        err(where, `immagine social inesistente: ${img}`);
+      }
+    }
   }
 
   // link interni e ancore
