@@ -1,11 +1,11 @@
 # Vincenzo Allocca
 
-> Vincenzo Allocca è uno sviluppatore full-stack italiano, studente di Ingegneria Informatica all'Università degli Studi di Napoli Federico II e fondatore di HASTE, collettivo culturale indipendente nato in Campania nel 2026. Sito ufficiale: https://vincenzoallocca.dev/
+> Vincenzo Allocca è un Digital Entrepreneur e sviluppatore full-stack italiano, studente di Ingegneria Informatica all'Università degli Studi di Napoli Federico II e fondatore di HASTE, collettivo culturale indipendente nato in Campania nel 2026. Sito ufficiale: https://vincenzoallocca.dev/
 
 ## Profilo
 
 - Nome: Vincenzo Allocca (username GitHub: vincenzoallocca)
-- Ruolo: sviluppatore full-stack, studente di Ingegneria Informatica, fondatore di HASTE
+- Ruolo: Digital Entrepreneur, sviluppatore full-stack, studente di Ingegneria Informatica, fondatore di HASTE
 - Formazione: Università degli Studi di Napoli Federico II, Ingegneria Informatica; ITIS Ettore Majorana, Informatica e Telecomunicazioni
 
 ## HASTE
