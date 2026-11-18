@@ -10,12 +10,13 @@
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <style>
+@font-face{font-family:'Mona Sans';font-weight:400 800;font-stretch:100% 125%;font-display:swap;src:url('/assets/fonts/mona-sans.woff2') format('woff2')}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{background:#050816;color-scheme:dark}
 body{
   min-height:100vh;min-height:100dvh;
   display:grid;place-items:center;padding:1.5rem;color:#f4f7ff;text-align:center;
-  font-family:ui-monospace,SFMono-Regular,Menlo,Monaco,Consolas,"Liberation Mono",monospace;
+  font-family:"Mona Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
   background:radial-gradient(50rem 30rem at 50% -10%,rgba(76,110,255,.28),transparent 70%),#050816;
 }
 main{
@@ -24,8 +25,7 @@ main{
   box-shadow:0 24px 60px -12px rgba(0,0,0,.55);
 }
 h1{
-  font-size:3.5rem;line-height:1.1;margin-bottom:.5rem;letter-spacing:-.03em;
-  background:linear-gradient(90deg,#8cc2ff,#a99bff);-webkit-background-clip:text;background-clip:text;color:transparent;
+  font-size:4rem;line-height:1;margin-bottom:.75rem;letter-spacing:-.04em;font-weight:800;font-stretch:125%;color:#fff;
 }
 p{color:#b6c3e2;margin-bottom:1.5rem;font-size:.95rem;line-height:1.5}
 a{
@@ -44,8 +44,8 @@ a:focus-visible{outline:2px solid #8cc2ff;outline-offset:3px}
 <body>
 <main>
   <h1>404</h1>
-  <p>Questa pagina non esiste o &egrave; stata spostata.</p>
-  <a href="/">&larr; Torna alla home</a>
+  <p>Questo indirizzo non porta a nessuna pagina. Controlla il link oppure torna alla home.</p>
+  <a href="/">Torna alla home</a>
 </main>
 </body>
 </html>
