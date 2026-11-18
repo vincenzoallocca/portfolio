@@ -6,6 +6,7 @@
 
 - [Profilo](https://vincenzoallocca.dev/): chi è, progetti, formazione, impegno civico e contatti
 - [Caso studio HASTE Collective](https://vincenzoallocca.dev/progetti/haste/): fondazione, ruolo e architettura tecnica della piattaforma
+- [Nemici-Miei](https://vincenzoallocca.dev/progetti/nemici-miei/): il gioco isometrico in Python e Pygame, giocabile nel browser anche da telefono
 
 ## Profilo
 
@@ -28,7 +29,7 @@
 
 ## Progetti
 
-- [Nemici-Miei](https://github.com/vincenzoallocca/nemici-miei): gioco con vista isometrica in Python e Pygame, progetto PCTO 2024–2025, open source
+- [Nemici-Miei](https://vincenzoallocca.dev/progetti/nemici-miei/): gioco con vista isometrica in Python e Pygame, progetto PCTO 2024–2025, open source; [si gioca nel browser](https://vincenzoallocca.github.io/nemici-miei/) anche da telefono (Pygame compilato in WebAssembly con pygbag); [codice](https://github.com/vincenzoallocca/nemici-miei)
 
 ## Impegno civico
 
