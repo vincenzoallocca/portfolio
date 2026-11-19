@@ -18,12 +18,14 @@ un risultato.
 
 | Dato | Disponibile? |
 |---|---|
-| Volumi di ricerca, difficoltà, CPC | **No** (nessuno strumento keyword collegato e autorizzato) |
+| Volumi di ricerca, difficoltà, CPC | **Parziale** (OpenSEO, 19/11/2026): le query sul nome sono sotto la soglia dei fornitori; vedi [REPORT-2026-11-19.md](REPORT-2026-11-19.md) §G |
 | Impression, clic, CTR, posizioni | **No** (nessun accesso a Search Console) |
 | Stato di indicizzazione | **No** (richiede Search Console → Ispezione URL) |
 | Contenuti e fatti verificabili | Sì (repository, GitHub, haste.it) |
 
 Le priorità sotto sono quindi basate su **intento di ricerca e pertinenza**, non su volumi.
+Le SERP del 19/11/2026 mostrano che sul nome domina un omonimo (docente di geologia alla Federico II):
+la disambiguazione dell'entità è parte della strategia.
 Vanno riviste dopo 4–8 settimane di dati Search Console (report Prestazioni → Query).
 
 ## 3. Decisione architetturale
