@@ -2,3 +2,6 @@
 node_modules/
 .og-tmp/
 lighthouse-report/
+
+# Configurazione locale di Claude Code (anteprima): non pubblicare
+.claude/

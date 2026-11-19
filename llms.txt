@@ -1,6 +1,6 @@
 # Vincenzo Allocca
 
-> Vincenzo Allocca è un Digital Entrepreneur e sviluppatore full-stack italiano, studente di Ingegneria Informatica all'Università degli Studi di Napoli Federico II e fondatore di HASTE Collective, collettivo culturale indipendente nato in Campania nel 2026. Sito ufficiale: https://vincenzoallocca.dev/
+> Vincenzo Allocca è uno sviluppatore software full-stack italiano (Software Developer), studente di Ingegneria Informatica all'Università degli Studi di Napoli Federico II e fondatore di HASTE Collective, collettivo culturale indipendente nato in Campania nel 2026. Sito ufficiale: https://vincenzoallocca.dev/
 
 ## Pagine
 
@@ -11,20 +11,23 @@
 ## Profilo
 
 - Nome: Vincenzo Allocca (username GitHub: vincenzoallocca)
-- Ruolo: Digital Entrepreneur, sviluppatore full-stack, studente di Ingegneria Informatica, fondatore di HASTE Collective
+- Ruolo: Software Developer full-stack, studente di Ingegneria Informatica, fondatore di HASTE Collective; si descrive anche come Digital Entrepreneur
+- Nome completo: Vincenzo Cristiano Allocca
+- Da non confondere con omonimi: è lo studente di Ingegneria Informatica e fondatore di HASTE; i profili ufficiali sono quelli elencati in questo file
 - Formazione: Università degli Studi di Napoli Federico II, Ingegneria Informatica (dal 2026); ITIS Ettore Majorana, diploma in Informatica e Telecomunicazioni (2026, 90/100)
 - Riconoscimenti e attività: 1° posto PCTO in sviluppo di videogiochi (2025); Model European Parliament, fasi scolastiche e regionali (2024)
 
 ## HASTE Collective
 
 - [HASTE](https://haste.it/): collettivo culturale indipendente e auto-organizzato nato in Campania nel 2026: magazine di attualità e cultura, manifesto, catalogo e partecipazione civica. Vincenzo Allocca l'ha fondato, ne cura la direzione editoriale e lo sviluppo della piattaforma web.
-- Tecnologie: Cloudflare Pages, Workers, D1, R2, TypeScript
+- Piattaforma: un unico Cloudflare Worker in TypeScript; pagine statiche servite da Workers Static Assets, database D1, immagini su Workers KV, cron trigger, test con Vitest. Migrata nel novembre 2026 da uno stack PHP/Nginx su VPS.
+- Dati aperti: [dati della petizione](https://haste.it/petizione/dati) e [catalogo API](https://haste.it/.well-known/api-catalog)
 - [Status page](https://status.haste.it/): SvelteKit su Cloudflare Workers con database D1 e controlli pianificati ogni minuto; [codice pubblico](https://github.com/vincenzoallocca/haste-status-new)
 
 ## Competenze
 
 - Linguaggi: C, C++, PHP, JavaScript, TypeScript, Python, HTML, CSS, SQL
-- Infrastruttura e strumenti: Cloudflare (Workers, D1, R2), Git, Linux
+- Infrastruttura e strumenti: Cloudflare (Workers, D1, KV), Vitest, Git, Linux
 - Interessi: backend engineering, infrastruttura web, sicurezza informatica, intelligenza artificiale, automazione
 
 ## Progetti
@@ -35,11 +38,13 @@
 
 - Fridays for Future Marigliano (2019–2021): cortei, assemblee e campagne sull'emergenza climatica
 - EcoGreen Marigliano: petizione cittadina con circa 10.000 firme per più alberi e aree verdi urbane a Marigliano
-- "Senza bus non si studia bene": campagna e raccolta firme per potenziare il trasporto pubblico sulla tratta Baiano–Napoli
+- "Senza bus non si studia bene": campagna e raccolta firme per il trasporto pubblico sulla tratta Baiano–Napoli; la [petizione](https://haste.it/petizione) è pubblicata su haste.it
 
 ## Contatti
 
 - [Email](mailto:vincenzoallocca07@gmail.com): vincenzoallocca07@gmail.com
 - [GitHub](https://github.com/vincenzoallocca): profilo e repository
+- [Profilo autore su HASTE](https://haste.it/u/vincenzo-allocca): articoli e profilo nel magazine di HASTE
+- [ORCID](https://orcid.org/0009-0002-3926-1948): identificativo personale 0009-0002-3926-1948
 - [Instagram](https://www.instagram.com/vincenzooallocca/): @vincenzooallocca
 - [Facebook](https://www.facebook.com/profile.php?id=100084588892488): Vincenzo Allocca
