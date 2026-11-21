@@ -310,6 +310,19 @@ nav a:active{transform:scale(.98)}
 }
 .share-btn:hover{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.25);color:#fff}
 .share-btn:active{transform:scale(.98)}
+.share-btn[aria-expanded="true"]{background:rgba(255,255,255,.1);border-color:rgba(255,255,255,.25);color:#fff}
+.share-panel{width:100%;display:grid;grid-template-columns:1fr;gap:.25rem}
+.share-panel[hidden]{display:none}
+.share-opt{
+  display:flex;align-items:center;gap:.45rem;min-height:2.2rem;padding:.3rem .6rem;border-radius:.7rem;
+  font-family:var(--font-body);font-size:.74rem;font-weight:600;line-height:1.2;text-align:left;color:var(--text-secondary);
+  border:1px solid rgba(255,255,255,.1);background:rgba(255,255,255,.03);
+  transition:background .2s,border-color .2s,color .2s,transform .2s;
+}
+.share-opt .ic{width:1rem;height:1rem;color:var(--accent-hi)}
+.share-opt:hover{background:rgba(255,255,255,.09);border-color:rgba(255,255,255,.22);color:#fff}
+.share-opt:active{transform:scale(.97)}
+.share-opt[hidden]{display:none}
 .status:empty{min-height:0}
 .status{min-height:1.2em;font-size:.74rem;color:var(--accent-hi);text-align:center;transition:opacity .2s}
 
@@ -419,6 +432,8 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
 
 /* ───────── TRANSIZIONI ───────── */
 @media (prefers-reduced-motion:no-preference){
+  .share-panel:not([hidden]){animation:sp-in .18s var(--ease)}
+  @keyframes sp-in{from{opacity:0;transform:translateY(-4px)}to{opacity:1;transform:none}}
   .panel[data-dir="1"]{--d:1}.panel[data-dir="-1"]{--d:-1}
   .panel.enter{animation:pin .32s var(--ease) both}
   @keyframes pin{from{opacity:0;transform:translate3d(calc(var(--d,0)*16px),0,0)}to{opacity:1;transform:none}}
@@ -452,6 +467,7 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
   nav li{width:100%}
   nav a{width:100%;min-height:2.75rem;background:rgba(255,255,255,.06);border:1px solid rgba(255,255,255,.16);justify-content:center}
   .side-actions{grid-area:act;margin-top:.4rem}
+  .share-panel{grid-template-columns:repeat(3,1fr)}
   main{width:100%;height:auto;max-height:none;scroll-margin-top:calc(env(safe-area-inset-top,0px) + .75rem)}
   .scroll{height:auto;overflow:visible;-webkit-mask-image:none;mask-image:none}
   [data-active=about] aside{display:none}
@@ -533,10 +549,18 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
       </ul>
     </nav>
     <div class="side-actions">
-      <button class="share-btn" id="share" type="button" aria-label="Condividi o copia il link del portfolio">
+      <button class="share-btn" id="share" type="button" aria-expanded="false" aria-controls="share-panel">
         <svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
-        <span>Condividi</span>
+        <span>Condividi il portfolio</span>
       </button>
+      <div class="share-panel" id="share-panel" hidden>
+        <button class="share-opt" type="button" data-share="native" hidden><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12v7a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-7"/><path d="M16 6l-4-4-4 4"/><path d="M12 2v13"/></svg><span>Altre app</span></button>
+        <a class="share-opt" data-share="whatsapp" href="https://wa.me/?text=" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg><span>WhatsApp</span></a>
+        <a class="share-opt" data-share="telegram" href="https://t.me/share/url" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M21 3L3 10.5l6.5 2.5L12 20l3-5.5L21 3z"/><path d="M9.5 13L21 3"/></svg><span>Telegram</span></a>
+        <a class="share-opt" data-share="linkedin" href="https://www.linkedin.com/sharing/share-offsite/" target="_blank" rel="noopener"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="3"/><path d="M8 10v7M8 7v.01M12 17v-4a2 2 0 0 1 4 0v4M12 10v7"/></svg><span>LinkedIn</span></a>
+        <button class="share-opt" type="button" data-share="link"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M10 13a5 5 0 0 0 7.5.5l3-3a5 5 0 0 0-7-7l-1.7 1.7"/><path d="M14 11a5 5 0 0 0-7.5-.5l-3 3a5 5 0 0 0 7 7l1.7-1.7"/></svg><span>Copia link</span></button>
+        <button class="share-opt" type="button" data-share="text"><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg><span>Copia messaggio</span></button>
+      </div>
       <div id="status" class="status" role="status" aria-live="polite"></div>
     </div>
   </header>
@@ -797,24 +821,52 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
     },{passive:true});
   }
 
-  /* Condividi / Copia link con feedback accessibile */
-  var btn=document.getElementById('share'),out=document.getElementById('status');
+  /* Condivisione: pannello con app native, WhatsApp, Telegram, LinkedIn e copia */
+  var btn=document.getElementById('share'),panel=document.getElementById('share-panel'),out=document.getElementById('status');
+  var canon=(document.querySelector('link[rel="canonical"]')||{}).href||(location.origin+'/');
+  var msg='Ti consiglio il portfolio di Vincenzo Allocca, sviluppatore software e fondatore di HASTE: '+canon;
   function say(t,ms){
     if(!out)return;
     out.textContent=t;clearTimeout(say.t);
     say.t=setTimeout(function(){out.textContent=''},ms||3500);
   }
-  if(btn)btn.addEventListener('click',function(){
-    var url=location.origin+location.pathname;
-    var copy=function(){
-      if(navigator.clipboard&&navigator.clipboard.writeText){
-        navigator.clipboard.writeText(url).then(function(){say('Link copiato negli appunti ✓')},function(){say('Copia: '+url,12000)});
-      }else say('Copia: '+url,12000);
+  function copy(text,ok){
+    var fallback=function(){
+      var ta=document.createElement('textarea');ta.value=text;ta.setAttribute('readonly','');
+      ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();
+      var done=false;try{done=document.execCommand('copy')}catch(e){}
+      document.body.removeChild(ta);
+      say(done?ok:'Copia a mano: '+text,done?3500:12000);
     };
-    if(navigator.share){
-      try{navigator.share({title:base,url:url}).catch(function(e){if(!e||e.name!=='AbortError')copy()})}catch(e){copy()}
-    }else copy();
-  });
+    if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(text).then(function(){say(ok)},fallback);
+    else fallback();
+  }
+  function toggle(open){
+    if(!btn||!panel)return;
+    if(open===undefined)open=panel.hidden;
+    panel.hidden=!open;btn.setAttribute('aria-expanded',open?'true':'false');
+    if(open&&panel.scrollIntoView)setTimeout(function(){panel.scrollIntoView({block:'nearest',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'})},200);
+  }
+  if(btn&&panel){
+    var e=encodeURIComponent;
+    panel.querySelector('[data-share="whatsapp"]').href='https://wa.me/?text='+e(msg);
+    panel.querySelector('[data-share="telegram"]').href='https://t.me/share/url?url='+e(canon)+'&text='+e('Il portfolio di Vincenzo Allocca, sviluppatore software e fondatore di HASTE');
+    panel.querySelector('[data-share="linkedin"]').href='https://www.linkedin.com/sharing/share-offsite/?url='+e(canon);
+    var nat=panel.querySelector('[data-share="native"]');
+    if(navigator.share)nat.hidden=false;
+    btn.addEventListener('click',function(){toggle()});
+    panel.addEventListener('click',function(ev){
+      var o=ev.target.closest('.share-opt');if(!o)return;
+      var k=o.getAttribute('data-share');
+      if(k==='native'){
+        navigator.share({title:document.title,text:msg.replace(': '+canon,''),url:canon}).then(function(){toggle(false)},function(){});
+      }else if(k==='link'){copy(canon,'Link copiato negli appunti ✓');toggle(false)}
+      else if(k==='text'){copy(msg,'Messaggio copiato negli appunti ✓');toggle(false)}
+      else toggle(false);
+    });
+    document.addEventListener('click',function(ev){if(!panel.hidden&&!ev.target.closest('.side-actions'))toggle(false)});
+    document.addEventListener('keydown',function(ev){if(ev.key==='Escape'&&!panel.hidden){toggle(false);btn.focus()}});
+  }
 })();
 </script>
 
