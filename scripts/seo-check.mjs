@@ -197,6 +197,13 @@ for (const p of pages) {
     const nodes = block['@graph'] || [block];
     for (const n of nodes) {
       if (!n['@type']) err(where, `nodo JSON-LD senza @type (${n['@id'] || '?'})`);
+      // Google (ProfilePage, Article) vuole un DateTime ISO 8601: una data sola dà
+      // "Invalid datetime value". Il fuso orario evita ambiguità.
+      for (const k of ['dateModified', 'datePublished']) {
+        if (n[k] !== undefined && !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2})?([+-]\d{2}:\d{2}|Z)$/.test(n[k])) {
+          err(where, `JSON-LD ${k} non è un DateTime ISO 8601 con fuso orario: ${n[k]}`);
+        }
+      }
       graphNodes.push({ node: n, page: p });
     }
   }
