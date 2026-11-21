@@ -34,6 +34,12 @@
 
 - [Nemici-Miei](https://vincenzoallocca.dev/progetti/nemici-miei/): gioco con vista isometrica in Python e Pygame, nato come progetto di gruppo per il PCTO 2024–2025, open source; Vincenzo ne cura il repository e ha realizzato la versione web, i comandi touch e i test; [si gioca nel browser](https://vincenzoallocca.github.io/nemici-miei/) anche da telefono (Pygame compilato in WebAssembly con pygbag); [codice](https://github.com/vincenzoallocca/nemici-miei)
 
+## Articoli tecnici
+
+- [Moving a PHP + SQLite site to one Cloudflare Worker on the free plan](https://dev.to/vincenzoallocca/moving-a-php-sqlite-site-to-one-cloudflare-worker-on-the-free-plan-what-the-d1-import-didnt-35cb) (DEV, inglese): la migrazione di HASTE a D1 e KV
+- [Portare un gioco Pygame nel browser e sul telefono con pygbag](https://vincenzoallocca.hashnode.dev/portare-un-gioco-pygame-nel-browser-e-sul-telefono-con-pygbag-cosa-ho-imparato-con-nemici-miei) (Hashnode, italiano): il porting web di Nemici Miei
+- [Use your own domain as a Bluesky handle on GitHub Pages](https://dev.to/vincenzoallocca/use-your-own-domain-as-a-bluesky-handle-on-github-pages-without-touching-dns-5fne) (DEV, inglese)
+
 ## Impegno civico
 
 - Fridays for Future Marigliano (2019–2021): cortei, assemblee e campagne sull'emergenza climatica
@@ -48,5 +54,6 @@
 - [ORCID](https://orcid.org/0009-0002-3926-1948): identificativo personale 0009-0002-3926-1948
 - [LinkedIn](https://www.linkedin.com/in/vincenzocristianoallocca/): profilo professionale
 - [Bluesky](https://bsky.app/profile/vincenzoallocca.dev): @vincenzoallocca.dev (handle verificato sul dominio del sito)
+- [DEV](https://dev.to/vincenzoallocca), [Hashnode](https://hashnode.com/@vincenzoallocca), [Peerlist](https://peerlist.io/vincenzoallocca), [Gravatar](https://gravatar.com/vincenzoallocca07), [Threads](https://www.threads.com/@vincenzooallocca)
 - [Instagram](https://www.instagram.com/vincenzooallocca/): @vincenzooallocca
 - [Facebook](https://www.facebook.com/profile.php?id=100084588892488): Vincenzo Allocca
