@@ -58,7 +58,7 @@
       "url": "https://vincenzoallocca.dev/",
       "name": "Vincenzo Allocca – Software Developer e fondatore di HASTE",
       "inLanguage": "it-IT",
-      "dateModified": "2026-11-21T17:02:11+01:00",
+      "dateModified": "2026-11-21T17:07:07+01:00",
       "isPartOf": { "@id": "https://vincenzoallocca.dev/#website" },
       "mainEntity": { "@id": "https://vincenzoallocca.dev/#person" },
       "primaryImageOfPage": { "@type": "ImageObject", "url": "https://vincenzoallocca.dev/assets/profilo.webp", "width": 256, "height": 256 }
@@ -87,7 +87,15 @@
         "recognizedBy": { "@id": "https://vincenzoallocca.dev/#itis-majorana" }
       },
       "award": "1° posto PCTO in sviluppo di videogiochi (2025)",
-      "memberOf": { "@id": "https://haste.it/#organization" },
+      "memberOf": [
+        { "@id": "https://haste.it/#organization" },
+        {
+          "@type": "OrganizationRole",
+          "roleName": "Componente del Direttivo di circolo",
+          "memberOf": { "@type": "Organization", "name": "Partito Democratico – Circolo di Marigliano" },
+          "subjectOf": { "@type": "NewsArticle", "headline": "Marigliano, il Pd ha eletto nuovo segretario e Direttivo", "url": "https://www.laprovinciaonline.info/marigliano-il-pd-ha-eletto-nuovo-segretario-e-direttivo/", "datePublished": "2026-02-19T17:50:04+00:00", "publisher": { "@type": "Organization", "name": "La Provincia Online", "url": "https://www.laprovinciaonline.info/" } }
+        }
+      ],
       "sameAs": [
         "https://github.com/vincenzoallocca",
         "https://haste.it/u/vincenzo-allocca",
@@ -667,6 +675,13 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
           <p>La petizione &egrave; pubblicata su haste.it: finch&eacute; la linea resta interrotta, chiede una navetta temporanea che colleghi San Vitaliano, Marigliano, Mariglianella e Brusciano alla stazione EAV di Somma Vesuviana.</p>
           <div class="actions">
             <a class="btn" href="https://haste.it/petizione" target="_blank" rel="noopener">Leggi la petizione su haste.it</a>
+          </div>
+        </section>
+        <section class="card" aria-labelledby="pdm">
+          <h2 id="pdm">Partito Democratico &ndash; Circolo di Marigliano</h2>
+          <p>Componente del Direttivo di circolo, eletto con il rinnovo degli organismi del febbraio 2026.</p>
+          <div class="actions">
+            <a class="btn" href="https://www.laprovinciaonline.info/marigliano-il-pd-ha-eletto-nuovo-segretario-e-direttivo/" target="_blank" rel="noopener">Fonte: La Provincia Online, 19 febbraio 2026</a>
           </div>
         </section>
       </div>
