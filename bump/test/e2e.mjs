@@ -8,7 +8,7 @@ import { createRequire } from 'node:module';
 const require = createRequire(process.env.PUPPETEER_FROM + '/noop.js');
 const puppeteer = require('puppeteer-core');
 const SITE = process.argv[2] || 'http://localhost:4173';
-const API = 'http://localhost:8799/v1/bump';
+const API = SITE.includes('localhost') ? 'http://localhost:8799/v1/bump' : 'https://bump.vincenzoallocca.dev/v1/bump';
 
 const browser = await puppeteer.launch({ executablePath: 'C:/Program Files/Google/Chrome/Application/chrome.exe', headless: true });
 
