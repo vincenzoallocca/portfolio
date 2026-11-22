@@ -7,5 +7,7 @@ Allow: /
 # Documentazione interna del repository: non è contenuto per gli utenti.
 Disallow: /docs/
 Disallow: /scripts/
+# Sorgente del Worker del pulsante BUMP (gira su bump.vincenzoallocca.dev).
+Disallow: /bump/
 
 Sitemap: https://vincenzoallocca.dev/sitemap.xml

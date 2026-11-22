@@ -1,0 +1,30 @@
+# Worker del pulsante BUMP (bump/): typecheck e test a ogni modifica.
+# Non pubblica nulla: il deploy del Worker si fa con `npm run deploy` in bump/.
+name: BUMP worker
+
+on:
+  push:
+    branches: [main]
+    paths: ['bump/**', '.github/workflows/bump.yml']
+  pull_request:
+    paths: ['bump/**', '.github/workflows/bump.yml']
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  test:
+    name: Typecheck e test
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: bump
+    steps:
+      - uses: actions/checkout@v7
+      - uses: actions/setup-node@v7
+        with:
+          node-version: 24
+      - run: npm ci --ignore-scripts
+      - run: npm run typecheck
+      - run: npm test

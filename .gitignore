@@ -5,3 +5,9 @@ lighthouse-report/
 
 # Configurazione locale di Claude Code (anteprima): non pubblicare
 .claude/
+
+# Worker BUMP: dipendenze, stato locale di wrangler e segreti di sviluppo
+bump/node_modules/
+bump/.wrangler/
+.wrangler/
+bump/.dev.vars
