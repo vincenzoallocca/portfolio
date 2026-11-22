@@ -347,6 +347,10 @@ h1 span{display:block}
 }
 .sub{font-family:var(--font-body);font-size:.9375rem;font-weight:600;line-height:1.45;color:var(--accent-hi);letter-spacing:-.005em}
 .lead{font-size:.9375rem;line-height:1.6;color:var(--text-secondary);max-width:60ch}
+h2,h3{text-wrap:balance}
+.lead,.card p{text-wrap:pretty}
+/* Transizione morbida tra le pagine del sito (View Transitions tra documenti); i browser che non la supportano navigano come sempre */
+@media (prefers-reduced-motion:no-preference){@view-transition{navigation:auto}}
 h2{font-family:var(--display);font-size:1rem;font-weight:680;font-stretch:110%;letter-spacing:-.01em;line-height:1.25;color:#fff;margin-bottom:.5rem}
 
 .card{
@@ -412,6 +416,8 @@ h2{font-family:var(--display);font-size:1rem;font-weight:680;font-stretch:110%;l
 .edu span{display:block;color:var(--muted);font-size:.875rem;line-height:1.4}
 .facts{display:flex;flex-direction:column;gap:.9rem}
 .contacts{margin-top:.75rem}
+.privacy{margin-top:.85rem;font-size:.78rem;line-height:1.45;color:var(--muted)}
+.privacy a{text-decoration:underline;text-underline-offset:2px}
 
 /* ───────── ASIDE / TILES ───────── */
 aside{display:flex;flex-direction:column;gap:1.25rem}
@@ -723,6 +729,7 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
             <li><a href="https://www.instagram.com/vincenzooallocca/" target="_blank" rel="noopener me"><b>Instagram</b><span>@vincenzooallocca</span></a></li>
             <li><a href="https://www.facebook.com/profile.php?id=100084588892488" target="_blank" rel="noopener me"><b>Facebook</b><span>Vincenzo Allocca</span></a></li>
           </ul>
+          <p class="privacy">Statistiche di visita anonime con <a href="https://www.goatcounter.com/" target="_blank" rel="noopener">GoatCounter</a>: nessun cookie e nessun dato personale.</p>
         </section>
       </div>
     </div>
@@ -824,21 +831,24 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
   /* Condivisione: pannello con app native, WhatsApp, Telegram, LinkedIn e copia */
   var btn=document.getElementById('share'),panel=document.getElementById('share-panel'),out=document.getElementById('status');
   var canon=(document.querySelector('link[rel="canonical"]')||{}).href||(location.origin+'/');
-  var msg='Ti consiglio il portfolio di Vincenzo Allocca, sviluppatore software e fondatore di HASTE: '+canon;
+  /* ?ref= dice a GoatCounter da quale app arriva chi apre il link; il canonical resta la home */
+  function link(ref){return canon+'?ref='+ref}
+  function message(ref){return 'Ti consiglio il portfolio di Vincenzo Allocca, sviluppatore software e fondatore di HASTE: '+link(ref)}
+  function track(k,t){try{if(window.goatcounter&&window.goatcounter.count)window.goatcounter.count({path:'condivisione-'+k,title:t,event:true})}catch(e){}}
   function say(t,ms){
     if(!out)return;
     out.textContent=t;clearTimeout(say.t);
     say.t=setTimeout(function(){out.textContent=''},ms||3500);
   }
-  function copy(text,ok){
+  function copy(text,ok,done){
     var fallback=function(){
       var ta=document.createElement('textarea');ta.value=text;ta.setAttribute('readonly','');
       ta.style.position='fixed';ta.style.opacity='0';document.body.appendChild(ta);ta.select();
-      var done=false;try{done=document.execCommand('copy')}catch(e){}
+      var copied=false;try{copied=document.execCommand('copy')}catch(e){}
       document.body.removeChild(ta);
-      say(done?ok:'Copia a mano: '+text,done?3500:12000);
+      say(copied?ok:'Copia a mano: '+text,copied?3500:12000);if(copied&&done)done();
     };
-    if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(text).then(function(){say(ok)},fallback);
+    if(navigator.clipboard&&navigator.clipboard.writeText)navigator.clipboard.writeText(text).then(function(){say(ok);if(done)done()},fallback);
     else fallback();
   }
   function toggle(open){
@@ -849,9 +859,9 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
   }
   if(btn&&panel){
     var e=encodeURIComponent;
-    panel.querySelector('[data-share="whatsapp"]').href='https://wa.me/?text='+e(msg);
-    panel.querySelector('[data-share="telegram"]').href='https://t.me/share/url?url='+e(canon)+'&text='+e('Il portfolio di Vincenzo Allocca, sviluppatore software e fondatore di HASTE');
-    panel.querySelector('[data-share="linkedin"]').href='https://www.linkedin.com/sharing/share-offsite/?url='+e(canon);
+    panel.querySelector('[data-share="whatsapp"]').href='https://wa.me/?text='+e(message('whatsapp'));
+    panel.querySelector('[data-share="telegram"]').href='https://t.me/share/url?url='+e(link('telegram'))+'&text='+e('Il portfolio di Vincenzo Allocca, sviluppatore software e fondatore di HASTE');
+    panel.querySelector('[data-share="linkedin"]').href='https://www.linkedin.com/sharing/share-offsite/?url='+e(link('linkedin'));
     var nat=panel.querySelector('[data-share="native"]');
     if(navigator.share)nat.hidden=false;
     btn.addEventListener('click',function(){toggle()});
@@ -859,10 +869,10 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
       var o=ev.target.closest('.share-opt');if(!o)return;
       var k=o.getAttribute('data-share');
       if(k==='native'){
-        navigator.share({title:document.title,text:msg.replace(': '+canon,''),url:canon}).then(function(){toggle(false)},function(){});
-      }else if(k==='link'){copy(canon,'Link copiato negli appunti ✓');toggle(false)}
-      else if(k==='text'){copy(msg,'Messaggio copiato negli appunti ✓');toggle(false)}
-      else toggle(false);
+        navigator.share({title:document.title,text:'Il portfolio di Vincenzo Allocca, sviluppatore software e fondatore di HASTE',url:link('app')}).then(function(){track('app','Condivisione completata con un’app');toggle(false)},function(){});
+      }else if(k==='link'){copy(link('link'),'Link copiato negli appunti ✓',function(){track('link','Link copiato')});toggle(false)}
+      else if(k==='text'){copy(message('messaggio'),'Messaggio copiato negli appunti ✓',function(){track('messaggio','Messaggio copiato')});toggle(false)}
+      else{track(k,'Clic su condividi con '+o.textContent.trim());toggle(false)}
     });
     document.addEventListener('click',function(ev){if(!panel.hidden&&!ev.target.closest('.side-actions'))toggle(false)});
     document.addEventListener('keydown',function(ev){if(ev.key==='Escape'&&!panel.hidden){toggle(false);btn.focus()}});
@@ -1267,5 +1277,6 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
   };
 })();
 </script>
+<script data-goatcounter="https://vincenzoallocca.goatcounter.com/count" async src="https://gc.zgo.at/count.js"></script>
 </body>
 </html>

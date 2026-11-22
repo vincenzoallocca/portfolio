@@ -191,6 +191,11 @@ for (const p of pages) {
     if (!existsSync(f)) err(where, `risorsa mancante: ${ref}`);
   }
 
+  // Script inline: un errore di sintassi blocca l'intero <script> senza che html-validate se ne accorga
+  for (const m of p.html.matchAll(/<script(?![^>]*\b(?:type\s*=\s*"application\/ld\+json"|src\s*=))[^>]*>([\s\S]*?)<\/script>/gi)) {
+    try { new Function(m[1]); } catch (e) { err(where, `script inline non valido: ${e.message}`); }
+  }
+
   // JSON-LD
   for (const block of p.jsonld) {
     if (block['@context'] !== 'https://schema.org') err(where, `JSON-LD con @context "${block['@context']}" (atteso https://schema.org)`);

@@ -265,3 +265,65 @@ L'effetto si potrà misurare solo dopo l'indicizzazione.
 | Header di sicurezza e cache | NON NECESSARIO / non realizzabile su GitHub Pages |
 | Versione inglese, nuove pagine sottili | NON NECESSARIO |
 | Commit, push, deploy | BLOCCATO (richiedono l'autorizzazione del proprietario) |
+
+---
+
+## Aggiornamento 22/11/2026 — confronto con tre checklist (video Instagram)
+
+Ho confrontato il sito con tre liste: "20 UI tips", "14 things … shows up on Google" e
+"20 ways a stranger hacks your vibecoded app".
+
+**Applicato (mancava ed era utile)**
+
+| Voce | Intervento | File |
+|---|---|---|
+| View transitions | Transizione morbida tra le pagine (`@view-transition{navigation:auto}`). È attiva solo con `prefers-reduced-motion: no-preference`; i browser che non la supportano navigano come prima | `assets/css/pagina.css`, `index.html`, `404.html` |
+| Balanced headlines | `text-wrap:balance` su h2/h3 (h1 già bilanciati); `text-wrap:pretty` sui paragrafi, per non lasciare parole isolate | `assets/css/pagina.css`, `index.html` |
+| Hit slop | L'area di tocco dei link di briciole e footer è allargata con uno pseudo-elemento invisibile (da 34 a circa 47 px), senza cambiarne l'aspetto | `assets/css/pagina.css` |
+| Placeholder immagine (al posto di BlurHash) | Colore medio della schermata (`#7aa7ac`) come sfondo dell'anteprima di Nemici Miei mentre si carica | `assets/css/pagina.css` |
+
+**Già presente:**
+- render lato server (HTML statico);
+- link reali;
+- Search Console;
+- sitemap;
+- nessun `noindex` involontario;
+- 404 reali;
+- un URL per pagina con canonical;
+- title unici;
+- stesso contenuto su mobile;
+- alt;
+- dati strutturati;
+- Core Web Vitals;
+- contenuti verificati;
+- safe area insets;
+- animazioni interrompibili e rispetto di `prefers-reduced-motion`.
+
+**Non applicabile, perché il portfolio è statico, senza login, dati o form:**
+- skeleton loader, optimistic update, command menu, undo toast, stale-while-revalidate;
+- swipe-to-dismiss, predictive back, autocompletamento dei codici OTP, chiavi di idempotenza, "safe triangle" dei menu;
+- cifre tabellari, perché non ci sono tabelle di numeri.
+
+Google Business Profile non è adatto: è per attività con sede o servizio sul territorio, non per una persona.
+Prerender con Speculation Rules scartato: pagine di pochi KB, beneficio trascurabile e rischio di contare visite mai avvenute nelle statistiche.
+
+**Sicurezza (terza lista)**
+- Il portfolio non ha superficie d'attacco lato server.
+- Su haste.it ho fatto un controllo in sola lettura sui punti pertinenti, senza trovare problemi:
+  - nessun `Math.random` per i token;
+  - confronti a tempo costante (`timingSafeEqual`);
+  - password con PBKDF2 e hash fittizio contro i timing attack;
+  - IP preso da `CF-Connecting-IP`;
+  - cache edge solo per richieste senza sessione e senza `Set-Cookie`;
+  - nessuna libreria JWT.
+
+  Non sostituisce un penetration test.
+
+**Verifiche:**
+
+| Controllo | Esito |
+|---|---|
+| `seo-check` | 0 errori |
+| `html-validate` | exit 0 |
+| Browser | Nessun errore in console; navigazione tra pagine funzionante; area di tocco verificata con `elementFromPoint` |
+| Lighthouse mobile | 99/100/100/100 su tutte e 3 le pagine; target-size superato |

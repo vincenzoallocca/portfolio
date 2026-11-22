@@ -10,6 +10,8 @@
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <style>
+/* Transizione morbida tra le pagine del sito (View Transitions tra documenti); i browser che non la supportano navigano come sempre */
+@media (prefers-reduced-motion:no-preference){@view-transition{navigation:auto}}
 @font-face{font-family:'Mona Sans';font-weight:400 800;font-stretch:100% 125%;font-display:swap;src:url('/assets/fonts/mona-sans.woff2') format('woff2')}
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html{background:#050816;color-scheme:dark}
