@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Nemici Miei: gioca nel browser | Vincenzo Allocca</title>
-<meta name="description" content="Nemici Miei, gioco d'avventura isometrico in Python e Pygame nato per il PCTO 2024–2025: giocalo nel browser, anche da telefono.">
+<meta name="description" content="Nemici Miei, gioco d'avventura isometrico nato per il PCTO 2024–2025 e riscritto in Rust: quattro livelli da giocare nel browser, anche da telefono.">
 <meta name="theme-color" content="#050816">
 <meta name="color-scheme" content="dark">
 <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
@@ -14,18 +14,18 @@
 <meta property="og:locale" content="it_IT">
 <meta property="og:site_name" content="Vincenzo Allocca">
 <meta property="og:title" content="Nemici Miei: gioca nel browser">
-<meta property="og:description" content="Gioco d'avventura isometrico in Python e Pygame: parla con Ugo, attraversa il portale e sconfiggi il boss. Si gioca anche da telefono.">
+<meta property="og:description" content="Gioco d'avventura isometrico in Rust e WebAssembly: parla con Ugo, attraversa spiaggia e rovine e sconfiggi il boss. Si gioca anche da telefono.">
 <meta property="og:url" content="https://vincenzoallocca.dev/progetti/nemici-miei/">
 <meta property="og:image" content="https://vincenzoallocca.dev/assets/og-nemici-miei.jpg">
 <meta property="og:image:type" content="image/jpeg">
 <meta property="og:image:width" content="1200">
 <meta property="og:image:height" content="630">
-<meta property="og:image:alt" content="Nemici Miei: l'eroe con il mantello rosso accanto al mago Ugo, su un'isola isometrica sospesa sopra la costa">
+<meta property="og:image:alt" content="Nemici Miei: l'eroe con il mantello rosso accanto al mago Ugo, su un'isola isometrica sospesa nel cielo">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:title" content="Nemici Miei: gioca nel browser">
-<meta name="twitter:description" content="Gioco d'avventura isometrico in Python e Pygame, giocabile nel browser anche da telefono.">
+<meta name="twitter:description" content="Gioco d'avventura isometrico in Rust e WebAssembly, giocabile nel browser anche da telefono.">
 <meta name="twitter:image" content="https://vincenzoallocca.dev/assets/og-nemici-miei.jpg">
-<meta name="twitter:image:alt" content="Nemici Miei: l'eroe con il mantello rosso accanto al mago Ugo, su un'isola isometrica sospesa sopra la costa">
+<meta name="twitter:image:alt" content="Nemici Miei: l'eroe con il mantello rosso accanto al mago Ugo, su un'isola isometrica sospesa nel cielo">
 <script type="application/ld+json">
 {
   "@context": "https://schema.org",
@@ -35,9 +35,9 @@
       "@id": "https://vincenzoallocca.dev/progetti/nemici-miei/#webpage",
       "url": "https://vincenzoallocca.dev/progetti/nemici-miei/",
       "name": "Nemici Miei: gioca nel browser",
-      "description": "Nemici Miei, gioco d'avventura isometrico in Python e Pygame nato per il PCTO 2024–2025, giocabile nel browser anche da telefono.",
+      "description": "Nemici Miei, gioco d'avventura isometrico nato per il PCTO 2024–2025 e riscritto in Rust, giocabile nel browser anche da telefono.",
       "inLanguage": "it-IT",
-      "dateModified": "2026-11-21T17:02:11+01:00",
+      "dateModified": "2026-11-22T14:00:00+01:00",
       "isPartOf": { "@id": "https://vincenzoallocca.dev/#website" },
       "about": { "@id": "https://vincenzoallocca.dev/progetti/nemici-miei/#gioco" },
       "author": { "@id": "https://vincenzoallocca.dev/#person" },
@@ -63,8 +63,8 @@
       "@type": "VideoGame",
       "@id": "https://vincenzoallocca.dev/progetti/nemici-miei/#gioco",
       "name": "Nemici Miei",
-      "description": "Gioco d'avventura in vista isometrica: parla con Ugo, bevi alla fontanella, attraversa il portale e sconfiggi il boss.",
-      "url": "https://vincenzoallocca.github.io/nemici-miei/",
+      "description": "Gioco d'avventura in vista isometrica in quattro livelli: parla con Ugo, bevi alla fontanella, sconfiggi lo stormo sulla spiaggia, raccogli le monete tra le rovine e sconfiggi il boss.",
+      "url": "https://vincenzoallocca.dev/progetti/nemici-miei/",
       "image": "https://vincenzoallocca.dev/assets/nemici-miei.webp",
       "genre": "Avventura",
       "gamePlatform": ["Browser web", "PC"],
@@ -80,8 +80,8 @@
       "@id": "https://vincenzoallocca.dev/progetti/nemici-miei/#codice",
       "name": "Nemici Miei (codice sorgente)",
       "codeRepository": "https://github.com/vincenzoallocca/nemici-miei",
-      "programmingLanguage": "Python",
-      "runtimePlatform": "Pygame, WebAssembly (pygbag)",
+      "programmingLanguage": "Rust",
+      "runtimePlatform": "macroquad, WebAssembly",
       "license": "https://www.gnu.org/licenses/gpl-3.0.html",
       "author": { "@id": "https://vincenzoallocca.dev/#person" }
     }
@@ -115,10 +115,10 @@
       <section class="card hero" aria-labelledby="titolo">
         <p class="eyebrow">Gioco</p>
         <h1 id="titolo">Nemici Miei</h1>
-        <p class="lead">Un'avventura in vista isometrica scritta in Python con Pygame, nata come progetto di gruppo per il PCTO 2024–2025. Si gioca direttamente qui, nel browser: sul computer con la tastiera, sul telefono con i comandi sullo schermo.</p>
+        <p class="lead">Un'avventura in vista isometrica nata in Python con Pygame come progetto di gruppo per il PCTO 2024–2025, e che ho poi riscritto in Rust. Si gioca direttamente qui, nel browser: sul computer con la tastiera, sul telefono con i comandi sullo schermo.</p>
         <dl class="facts">
           <div><dt>Progetto</dt><dd>PCTO 2024–2025, in gruppo</dd></div>
-          <div><dt>Tecnologie</dt><dd>Python, Pygame, WebAssembly</dd></div>
+          <div><dt>Tecnologie</dt><dd>Rust, macroquad, WebAssembly</dd></div>
           <div><dt>Dove si gioca</dt><dd>Browser, PC e telefono</dd></div>
           <div><dt>Licenza</dt><dd>Open source (GPL-3.0)</dd></div>
         </dl>
@@ -127,25 +127,26 @@
       <section class="card" aria-labelledby="gioca">
         <h2 id="gioca">Gioca</h2>
         <div class="gioco" id="gioco">
-          <img src="/assets/nemici-miei.webp" alt="Schermata di Nemici Miei: l'eroe con il mantello rosso parla con il mago Ugo vicino alla fontana" width="800" height="600">
-          <a class="play" id="avvia" href="https://vincenzoallocca.github.io/nemici-miei/" rel="noopener">Gioca</a>
+          <img src="/assets/nemici-miei.webp" alt="Schermata di Nemici Miei: l'eroe con il mantello rosso accanto al mago Ugo, vicino alla fontanella, mentre i pipistrelli si avvicinano" width="800" height="600">
+          <a class="play" id="avvia" href="/progetti/nemici-miei/gioco/">Gioca</a>
         </div>
         <div class="actions">
-          <a class="btn" href="https://vincenzoallocca.github.io/nemici-miei/" rel="noopener">Apri a schermo intero</a>
+          <a class="btn" href="/progetti/nemici-miei/gioco/">Apri a schermo intero</a>
           <a class="btn ghost" href="https://github.com/vincenzoallocca/nemici-miei" rel="noopener">Codice su GitHub</a>
         </div>
-        <p class="note">Il primo avvio scarica circa 6 MB e richiede qualche secondo. Quando compare "Tocca o clicca per iniziare", tocca il gioco: serve al browser per attivare l'audio. Da telefono il gioco si apre a schermo intero: tienilo in orizzontale.</p>
+        <p class="note">Per iniziare bastano circa 1,5 MB: la musica arriva in un secondo momento, mentre si gioca già. L'audio parte al primo tocco o click (lo richiede il browser). Da telefono il gioco si apre a schermo intero: tienilo in orizzontale.</p>
       </section>
 
       <section class="card" aria-labelledby="come">
         <h2 id="come">Come si gioca</h2>
-        <p>Ti risvegli su un'isola sospesa sopra la costa. Parla con Ugo, bevi alla fontanella per aprire il portale e affronta il boss nel secondo livello. Intanto i pipistrelli ti inseguono: ognuno che sconfiggi lascia una moneta.</p>
+        <p>Ti risvegli su un'isola sospesa nel cielo. Il viaggio dura quattro livelli: sul prato parla con Ugo e bevi alla fontanella per aprire il portale, sulla spiaggia sconfiggi tutto lo stormo di pipistrelli, tra le rovine raccogli le monete sparse tra i muri di roccia e nell'arena affronta il boss, che quando va in furia chiama rinforzi. Ogni pipistrello sconfitto lascia una moneta e i cuori a terra ti curano.</p>
         <p>Non serve ricordare niente: in alto a sinistra c'è sempre l'obiettivo del momento, i suggerimenti compaiono quando servono e una freccia gialla indica dove andare.</p>
         <h3>Tastiera</h3>
         <ul>
           <li><b>WASD</b> o frecce per muoverti</li>
           <li><b>Click</b> o <b>Spazio</b> per attaccare</li>
-          <li><b>E</b> per parlare e interagire, <b>ESC</b> per la pausa, <b>M</b> per togliere o rimettere l'audio</li>
+          <li><b>E</b> per parlare e interagire, <b>P</b> per la pausa, <b>M</b> per togliere o rimettere l'audio</li>
+          <li>Se muori, <b>R</b> ti fa riprovare il livello con la vita piena</li>
         </ul>
         <h3>Telefono</h3>
         <ul>
@@ -156,19 +157,21 @@
 
       <section class="card" aria-labelledby="contributo">
         <h2 id="contributo">Il mio contributo</h2>
-        <p>La prima versione del gioco l'abbiamo realizzata in gruppo, per il PCTO 2024–2025. Il codice l'ho poi pubblicato io su GitHub e da allora curo il repository: nel novembre 2026 ho portato il gioco nel browser con pygbag, ho aggiunto i comandi touch per il telefono e i test automatici e ho corretto diversi bug. Ogni modifica è visibile nella <a href="https://github.com/vincenzoallocca/nemici-miei/commits/main" rel="noopener">cronologia dei commit</a>.</p>
+        <p>La prima versione del gioco l'abbiamo realizzata in gruppo, per il PCTO 2024–2025. Il codice l'ho poi pubblicato io su GitHub e da allora curo il repository: nel novembre 2026 l'ho portato nel browser con pygbag e ho aggiunto i comandi touch e i test automatici; poi l'ho riscritto da zero in Rust, aggiungendo due nuovi livelli, sfondi pixel-art animati, nemici che aggirano gli ostacoli e una logica a passo fisso che gira alla stessa velocità su qualunque schermo. Ogni modifica è visibile nella <a href="https://github.com/vincenzoallocca/nemici-miei/commits/main" rel="noopener">cronologia dei commit</a>.</p>
       </section>
 
       <section class="card" aria-labelledby="tecnica">
         <h2 id="tecnica">Come è fatto</h2>
         <h3>Isometria e profondità</h3>
         <p>La mappa è una griglia di tile convertita in coordinate isometriche. Personaggi e oggetti vengono ordinati in base alla posizione sullo schermo prima di essere disegnati, così chi sta davanti copre chi sta dietro.</p>
-        <h3>Dal desktop al browser</h3>
-        <p>Il gioco gira nel browser grazie a <a href="https://pypi.org/project/pygbag/" rel="noopener">pygbag</a>, che esegue Python e Pygame compilati in WebAssembly. A ogni modifica del codice una GitHub Action ricompila la versione web e la pubblica su GitHub Pages. Ho raccontato il porting nel dettaglio in un <a href="https://vincenzoallocca.hashnode.dev/portare-un-gioco-pygame-nel-browser-e-sul-telefono-con-pygbag-cosa-ho-imparato-con-nemici-miei" rel="noopener">articolo su Hashnode</a>.</p>
+        <h3>Da Python a Rust</h3>
+        <p>La prima versione web eseguiva Python e Pygame nel browser con <a href="https://pypi.org/project/pygbag/" rel="noopener">pygbag</a> (l'ho raccontato in un <a href="https://vincenzoallocca.hashnode.dev/portare-un-gioco-pygame-nel-browser-e-sul-telefono-con-pygbag-cosa-ho-imparato-con-nemici-miei" rel="noopener">articolo su Hashnode</a>). Ora il gioco è scritto in Rust con <a href="https://macroquad.rs" rel="noopener">macroquad</a> e compilato direttamente in WebAssembly: niente interprete da scaricare, un file da meno di 1 MB, avvio in pochi istanti e la stessa base di codice per PC e browser.</p>
+        <h3>Logica separata dal disegno</h3>
+        <p>La logica gira a 60 passi al secondo fissi, indipendenti dalla frequenza del monitor, e non dipende né dalla grafica né dall'audio: i suoni sono comandi messi in coda. Per questo i test simulano una partita completa, dal menu ai titoli di coda, senza aprire una finestra.</p>
         <h3>Comandi touch</h3>
         <p>Su telefono compaiono un joystick virtuale e i pulsanti di azione. La direzione del dito viene convertita nel passo sulla griglia isometrica più vicino, quindi ci si muove nella direzione in cui si trascina.</p>
         <ul class="chips" aria-label="Tecnologie del gioco">
-          <li>Python</li><li>Pygame</li><li>pygbag</li><li>WebAssembly</li><li>GitHub Actions</li>
+          <li>Rust</li><li>macroquad</li><li>WebAssembly</li><li>GLSL</li><li>GitHub Actions</li>
         </ul>
       </section>
     </article>
@@ -189,7 +192,7 @@
   </footer>
 </div>
 <script>
-// Su computer il gioco si carica dentro la pagina solo quando lo chiedi (niente download inutili);
+// Su computer il gioco (in /progetti/nemici-miei/gioco/) si carica dentro la pagina solo quando lo chiedi;
 // su telefono il link apre la versione a schermo intero.
 document.getElementById('avvia').addEventListener('click', function (e) {
   if (matchMedia('(pointer: coarse)').matches) return;

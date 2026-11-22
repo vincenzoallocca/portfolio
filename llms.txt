@@ -6,7 +6,7 @@
 
 - [Profilo](https://vincenzoallocca.dev/): chi è, progetti, formazione, impegno civico e contatti
 - [Caso studio HASTE Collective](https://vincenzoallocca.dev/progetti/haste/): fondazione, ruolo e architettura tecnica della piattaforma
-- [Nemici-Miei](https://vincenzoallocca.dev/progetti/nemici-miei/): il gioco isometrico in Python e Pygame, giocabile nel browser anche da telefono
+- [Nemici-Miei](https://vincenzoallocca.dev/progetti/nemici-miei/): il gioco isometrico riscritto in Rust e WebAssembly, giocabile nel browser anche da telefono
 
 ## Profilo
 
@@ -32,7 +32,7 @@
 
 ## Progetti
 
-- [Nemici-Miei](https://vincenzoallocca.dev/progetti/nemici-miei/): gioco con vista isometrica in Python e Pygame, nato come progetto di gruppo per il PCTO 2024–2025, open source; Vincenzo ne cura il repository e ha realizzato la versione web, i comandi touch e i test; [si gioca nel browser](https://vincenzoallocca.github.io/nemici-miei/) anche da telefono (Pygame compilato in WebAssembly con pygbag); [codice](https://github.com/vincenzoallocca/nemici-miei)
+- [Nemici-Miei](https://vincenzoallocca.dev/progetti/nemici-miei/): gioco con vista isometrica nato in Python e Pygame come progetto di gruppo per il PCTO 2024–2025, open source; Vincenzo ne cura il repository, ha realizzato la versione web, i comandi touch e i test e poi l'ha riscritto in Rust (macroquad), con quattro livelli; [si gioca nel browser](https://vincenzoallocca.dev/progetti/nemici-miei/gioco/) anche da telefono (Rust compilato in WebAssembly); [codice](https://github.com/vincenzoallocca/nemici-miei)
 
 ## Articoli tecnici
 
