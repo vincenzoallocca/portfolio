@@ -989,7 +989,7 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
 
   function init3D(){
     var gl=cv.getContext('webgl',{
-      antialias:tier>=3,
+      antialias:true, // anche su telefono: senza, i bordi delle forme si vedono a gradini
       alpha:true,
       premultipliedAlpha:true,
       powerPreference:'low-power',
@@ -1147,7 +1147,9 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
         obj[6].p=[.30*w,.20*h,32];
       }
     }
-    var quality=tier<=1?.75:1.25;
+    /* Risoluzione del canvas rispetto ai pixel CSS. Su telefono era 0.75 (con schermi a 3x l'immagine
+       veniva ingrandita 4 volte: forme sgranate); 1.5 resta leggero e nitido. */
+    var quality=mobile?1.5:(tier<=1?1:1.25);
     function resize(force){
       var w=innerWidth,h=cv.clientHeight||innerHeight;
       if(!force&&W&&w===W&&(h===H||(mobile&&Math.abs(h-H)<160)))return false;
@@ -1211,11 +1213,14 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
       gl.depthMask(true);
     }
 
-    var dead=false,raf=0,tv=0,lastScroll=-1e9,lastDraw=0,lastRaf=0,ema=.016,slow=0,rs=0;
-    var minGap=tier<=1?32:14,lite=false;
+    var dead=false,raf=0,tv=0,lastDraw=0,lastRaf=0,ema=.016,slow=0,rs=0;
+    /* Animazione continua finché la pagina è visibile, a frequenza limitata: 60 fps durante le
+       interazioni su desktop, 30 fps altrimenti (e sempre su telefono). Prima si fermava 1,5 s dopo
+       l'ultimo tocco e durante lo scorrimento: su telefono sembrava bloccata. */
+    var gapActive=mobile?32:14,gapIdle=32,lite=false;
     var activeUntil=0;
 
-    function goLite(){lite=true;root.setAttribute('data-lite','');quality=mobile?.7:.9;minGap=45;resize(true)}
+    function goLite(){lite=true;root.setAttribute('data-lite','');quality=mobile?1:.9;gapActive=gapIdle=45;resize(true)}
 
     if(navigator.getBattery){
       navigator.getBattery().then(function(b){
@@ -1240,17 +1245,14 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
     function frame(now){
       if(dead){raf=0;return}
       if(tier===0){draw(6);raf=0;return}
-      if(now>activeUntil&&now>trans){raf=0;return}
       raf=requestAnimationFrame(frame);
       var rd=(now-lastRaf)/1000;lastRaf=now;
       if(rd>0&&rd<.5){ema=ema*.95+rd*.05;if(!lite){slow=ema>.028?slow+1:0;if(slow>90)goLite()}}
-      if(mobile&&now-lastScroll<100&&now>trans)return;
-      if(now-lastDraw<minGap)return;
+      if(now-lastDraw<(now<activeUntil||now<trans?gapActive:gapIdle)-1)return;
       var dt=Math.min((now-lastDraw)/1000,.05);lastDraw=now;if(dt<=0)return;
       tv+=dt;step(dt);draw(tv);
     }
 
-    addEventListener('scroll',function(){if(mobile)lastScroll=performance.now()},{passive:true,capture:true});
     resize();
     addEventListener('resize',function(){cancelAnimationFrame(rs);rs=requestAnimationFrame(function(){if(dead)return;if(resize()){if(tier===0)draw(6);else{draw(tv);wake()}}})},{passive:true});
 
