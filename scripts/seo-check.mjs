@@ -185,8 +185,8 @@ for (const p of pages) {
   }
   // risorse referenziate (link/script/img)
   for (const m of p.html.matchAll(/<(?:link|script|img)\b[^>]*\s(?:href|src)\s*=\s*"([^"]+)"/gi)) {
-    const ref = m[1];
-    if (/^(https?:|data:|mailto:)/.test(ref) || ref.startsWith('#')) continue;
+    const ref = m[1].split(/[?#]/)[0]; // "file.js?v=123" è il file "file.js"
+    if (/^(https?:|data:|mailto:)/.test(m[1]) || m[1].startsWith('#')) continue;
     const f = ref.startsWith('/') ? join(ROOT, ref.slice(1)) : join(p.file, '..', ref);
     if (!existsSync(f)) err(where, `risorsa mancante: ${ref}`);
   }

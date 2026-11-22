@@ -10,6 +10,9 @@
 <meta name="theme-color" content="#000000">
 <meta name="mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-capable" content="yes">
+<!-- il gioco e la musica iniziano a scaricarsi subito, in parallelo al resto -->
+<link rel="preload" href="nemici-miei.wasm?v=a68f43f24a4a" as="fetch" type="application/wasm" crossorigin="anonymous">
+<link rel="preload" href="assets/audio/web/soundtrack.mp3" as="fetch" crossorigin="anonymous">
 <link rel="icon" href="/assets/favicon.ico" sizes="48x48">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <style>
@@ -27,7 +30,7 @@
 <h1 class="nascosto">Nemici Miei</h1>
 <canvas id="glcanvas" tabindex="0" aria-label="Nemici Miei, il gioco"></canvas>
 <p id="ruota">Ruota il telefono in orizzontale per giocare meglio</p>
-<script src="mq_js_bundle.js"></script>
-<script>load("nemici-miei.wasm");</script>
+<script src="mq_js_bundle.js?v=f4189c03de0b"></script>
+<script>load("nemici-miei.wasm?v=a68f43f24a4a");</script>
 </body>
 </html>
