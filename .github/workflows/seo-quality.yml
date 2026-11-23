@@ -1,5 +1,5 @@
 # Controlli di qualità SEO, HTML, link e Lighthouse.
-# Non pubblica nulla: il deploy resta quello di GitHub Pages dal branch main.
+# Non pubblica nulla: il deploy lo fa pages.yml, che manda online solo i file pubblici.
 # Errori bloccanti: seo-check, validazione HTML, soglie "error" di Lighthouse.
 # Solo avvisi: freschezza della sitemap, link esterni, soglie "warn" di Lighthouse.
 name: SEO quality

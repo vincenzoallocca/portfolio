@@ -20,9 +20,9 @@
 ## HASTE Collective
 
 - [HASTE](https://haste.it/): collettivo culturale indipendente e auto-organizzato nato in Campania nel 2026: magazine di attualità e cultura, manifesto, catalogo e partecipazione civica. Vincenzo Allocca l'ha fondato, ne cura la direzione editoriale e lo sviluppo della piattaforma web.
-- Piattaforma: un unico Cloudflare Worker in TypeScript; pagine statiche servite da Workers Static Assets, database D1, immagini su Workers KV, cron trigger, test con Vitest. Migrata nel novembre 2026 da uno stack PHP/Nginx su VPS.
+- Piattaforma: Cloudflare Worker in TypeScript con database D1 e immagini su Workers KV, test con Vitest. Portata su Cloudflare nel novembre 2026.
 - Dati aperti: [dati della petizione](https://haste.it/petizione/dati) e [catalogo API](https://haste.it/.well-known/api-catalog)
-- [Status page](https://status.haste.it/): SvelteKit su Cloudflare Workers con database D1 e controlli pianificati ogni minuto; [codice pubblico](https://github.com/vincenzoallocca/haste-status-new)
+- [Status page](https://status.haste.it/): SvelteKit su Cloudflare Workers con database D1; [codice pubblico](https://github.com/vincenzoallocca/haste-status-new)
 
 ## Competenze
 

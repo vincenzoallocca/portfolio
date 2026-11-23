@@ -37,7 +37,7 @@
       "name": "HASTE Collective: caso studio tecnico",
       "description": "Fondazione, direzione e sviluppo della piattaforma di HASTE Collective, collettivo culturale indipendente nato in Campania nel 2026.",
       "inLanguage": "it-IT",
-      "dateModified": "2026-11-21T17:02:11+01:00",
+      "dateModified": "2026-11-23T18:00:00+01:00",
       "isPartOf": { "@id": "https://vincenzoallocca.dev/#website" },
       "about": { "@id": "https://haste.it/#organization" },
       "mentions": { "@type": "WebSite", "@id": "https://haste.it/#website", "name": "HASTE Collective", "url": "https://haste.it/" },
@@ -74,7 +74,7 @@
       "@type": "SoftwareSourceCode",
       "@id": "https://vincenzoallocca.dev/progetti/haste/#status-page",
       "name": "HASTE Status",
-      "description": "Status page di HASTE: monitoraggio della disponibilità dei servizi con controlli pianificati, eseguita su Cloudflare Workers con database D1.",
+      "description": "Status page di HASTE: monitoraggio della disponibilità dei servizi, eseguita su Cloudflare Workers con database D1.",
       "url": "https://status.haste.it/",
       "codeRepository": "https://github.com/vincenzoallocca/haste-status-new",
       "programmingLanguage": ["TypeScript", "Svelte"],
@@ -127,7 +127,7 @@
         <ul>
           <li><a href="https://haste.it/magazine" rel="noopener">Magazine</a>: articoli di attualità, politica e cultura.</li>
           <li><a href="https://haste.it/manifesto" rel="noopener">Manifesto</a>: i principi del collettivo.</li>
-          <li><a href="https://haste.it/catalogo" rel="noopener">Catalogo</a>: prodotti del collettivo, con tracciamento degli ordini.</li>
+          <li><a href="https://haste.it/catalogo" rel="noopener">Catalogo</a>: prodotti del collettivo.</li>
           <li><a href="https://haste.it/petizione" rel="noopener">Petizione</a> e area <a href="https://haste.it/press" rel="noopener">press</a>: partecipazione civica e rapporti con la stampa.</li>
         </ul>
       </section>
@@ -138,45 +138,30 @@
       </section>
 
       <section class="card" aria-labelledby="problema">
-        <h2 id="problema">Il problema: tante funzioni, nessun server da gestire</h2>
-        <p>Un collettivo indipendente ha bisogno di cose molto diverse sullo stesso sito: un magazine, una petizione con dati aperti, un catalogo con pagamenti e un'area interna per la redazione. Fino a novembre 2026 tutto questo girava su un server VPS con PHP, Nginx e SQLite: più di 200 file PHP, di cui oltre 140 per le API, cron di sistema e immagini salvate sul disco della macchina, con la manutenzione del server a nostro carico.</p>
-        <p>L'obiettivo era portare tutto su Cloudflare, senza server da amministrare e restando nel piano gratuito, senza perdere funzioni né dati.</p>
-
-        <h3>Come l'ho migrata</h3>
-        <ul>
-          <li><strong>Backend riscritto in TypeScript.</strong> Pagine e API PHP sono state portate in un unico Worker, organizzato in circa 95 moduli TypeScript.</li>
-          <li><strong>Database da SQLite a D1.</strong> Ho scritto un convertitore che trasforma il database SQLite in SQL importabile su D1. Il dump standard non basta: D1 rifiuta le tabelle interne dell'indice di ricerca full-text (FTS5), che vanno escluse e ricostruite dopo l'importazione, e i contatori degli ID vanno riportati a mano per non riassegnare identificativi già usati.</li>
-          <li><strong>Immagini su KV invece che su R2.</strong> R2 sarebbe stato il posto naturale per i file caricati dalla redazione, ma richiede una carta di pagamento anche nel piano gratuito; Workers KV no.</li>
-          <li><strong>Vecchio stack dismesso.</strong> Completata la migrazione, il codice PHP e la configurazione del VPS sono stati rimossi dal repository.</li>
-        </ul>
+        <h2 id="problema">La migrazione: nessun server da gestire</h2>
+        <p>Un collettivo indipendente ha bisogno di cose molto diverse sullo stesso sito: un magazine, una petizione con dati aperti e un catalogo. All'inizio la piattaforma girava su un server tradizionale, con la manutenzione a nostro carico. Nel novembre 2026 l'ho portata interamente su Cloudflare, senza perdere funzioni né dati: il backend è stato riscritto in TypeScript e il database è passato a D1.</p>
+        <p>I problemi concreti dell'importazione su D1 li ho raccontati in un <a href="https://dev.to/vincenzoallocca/moving-a-php-sqlite-site-to-one-cloudflare-worker-on-the-free-plan-what-the-d1-import-didnt-35cb" rel="noopener">articolo tecnico su DEV</a>, in inglese.</p>
       </section>
 
       <section class="card" aria-labelledby="arch">
         <h2 id="arch">Architettura e scelte tecniche</h2>
         <h3>Un solo Worker su Cloudflare</h3>
-        <p>Oggi tutto haste.it gira su un unico <strong>Cloudflare Worker</strong> scritto in TypeScript, sul piano gratuito di Cloudflare.</p>
-        <ul>
-          <li><strong>Pagine statiche servite senza Worker.</strong> CSS, JavaScript, font, immagini e le pagine che non leggono il database vengono pre-renderizzati in fase di build e serviti direttamente da Cloudflare (Workers Static Assets). Il Worker entra in gioco solo per le pagine dinamiche, così il traffico normale non consuma il limite giornaliero di richieste del piano gratuito.</li>
-          <li><strong>Dati su D1 e KV.</strong> Articoli, petizione, catalogo e area staff stanno in un database SQL D1 con migrazioni versionate; le immagini caricate dalla redazione stanno in Workers KV.</li>
-          <li><strong>Lavori pianificati.</strong> Due cron trigger sostituiscono i cron del vecchio server: ogni 30 minuti sincronizzano le notizie da ANSA, ogni notte puliscono sessioni e limiti di frequenza scaduti.</li>
-          <li><strong>Un solo indirizzo.</strong> Il sito esiste solo su haste.it: le copie su <code>*.workers.dev</code> e gli URL di anteprima sono disattivati, per non creare contenuti duplicati.</li>
-        </ul>
-        <p>Sulla stessa base sono implementati i pagamenti del catalogo con Stripe, le notifiche push e il portale interno della redazione, installabile come PWA.</p>
+        <p>Oggi haste.it gira su un <strong>Cloudflare Worker</strong> scritto in TypeScript. Le pagine che non leggono il database vengono pre-renderizzate in fase di build e servite direttamente da Cloudflare come file statici; il Worker entra in gioco solo per le pagine dinamiche. I contenuti stanno in un database SQL D1 con migrazioni versionate, le immagini in Workers KV.</p>
         <ul class="chips" aria-label="Tecnologie della piattaforma">
           <li>Cloudflare Workers</li><li>D1</li><li>KV</li><li>TypeScript</li><li>Vitest</li>
         </ul>
 
         <h3>Test e qualità</h3>
-        <p>Il codice del Worker ha test automatici con Vitest (sicurezza, validazione degli input, database) e il controllo dei tipi di TypeScript. Una pipeline di build minifica CSS e JavaScript e li versiona con un hash, così i browser possono tenerli in cache a lungo senza servire file vecchi.</p>
+        <p>Il codice ha test automatici con Vitest e il controllo dei tipi di TypeScript. La build minifica CSS e JavaScript e li versiona con un hash, così i browser possono tenerli in cache a lungo senza servire file vecchi.</p>
 
-        <h3>Sicurezza di base fatta bene</h3>
-        <p>Il sito è servito solo in HTTPS con HSTS (inclusi i sottodomini, con richiesta di preload), una Content-Security-Policy che autorizza gli script tramite un nonce generato a ogni richiesta, il blocco dell'incorporamento da siti terzi (<code>frame-ancestors</code>) e una Referrer-Policy restrittiva. Sono tutte intestazioni HTTP verificabili da chiunque.</p>
+        <h3>Sicurezza</h3>
+        <p>Il sito è servito solo in HTTPS con HSTS, una Content-Security-Policy restrittiva, il blocco dell'incorporamento da siti terzi e una Referrer-Policy restrittiva: intestazioni HTTP che chiunque può verificare.</p>
 
         <h3>Status page</h3>
-        <p>Per sapere subito se qualcosa non funziona, HASTE ha una <a href="https://status.haste.it/" rel="noopener">status page</a> separata dal sito principale. È un'applicazione SvelteKit (Svelte 5, TypeScript, Tailwind CSS) eseguita su un Cloudflare Worker con database D1: un cron trigger lancia i controlli di disponibilità ogni minuto e salva risultati e incidenti. Il codice ha test con Vitest ed è <a href="https://github.com/vincenzoallocca/haste-status-new" rel="noopener">pubblico su GitHub</a>.</p>
+        <p>Per sapere subito se qualcosa non funziona, HASTE ha una <a href="https://status.haste.it/" rel="noopener">status page</a> separata dal sito principale. È un'applicazione SvelteKit (Svelte 5, TypeScript, Tailwind CSS) eseguita su un Cloudflare Worker con database D1, che controlla periodicamente la disponibilità dei servizi e registra gli incidenti. Il codice ha test con Vitest ed è <a href="https://github.com/vincenzoallocca/haste-status-new" rel="noopener">pubblico su GitHub</a>.</p>
 
         <h3>Leggibile da motori di ricerca e assistenti AI</h3>
-        <p>haste.it pubblica un <a href="https://haste.it/.well-known/api-catalog" rel="noopener">catalogo delle API</a> nella cartella <code>/.well-known/</code>, con agent card e indice delle skill, e offre in JSON gli articoli del magazine, lo stato del catalogo e i <a href="https://haste.it/petizione/dati" rel="noopener">dati aperti della petizione</a>, che contengono solo conteggi e nessun dato personale. Così un assistente o un agente AI può leggere i contenuti in modo strutturato invece di interpretare l'HTML.</p>
+        <p>haste.it pubblica un <a href="https://haste.it/.well-known/api-catalog" rel="noopener">catalogo delle API</a> nella cartella <code>/.well-known/</code> e offre in JSON gli articoli del magazine e i <a href="https://haste.it/petizione/dati" rel="noopener">dati aperti della petizione</a>, che contengono solo conteggi e nessun dato personale. Così un assistente AI può leggere i contenuti in modo strutturato invece di interpretare l'HTML.</p>
         <p>Il <code>robots.txt</code> dichiara in modo esplicito come possono essere usati i contenuti: indicizzazione e citazione nelle risposte generative sì, addestramento dei modelli no.</p>
       </section>
 
@@ -187,8 +172,7 @@
           <a class="btn ghost" href="https://status.haste.it/" rel="noopener">Status page</a>
           <a class="btn ghost" href="https://github.com/vincenzoallocca/haste-status-new" rel="noopener">Codice su GitHub</a>
         </div>
-        <p>Ho raccontato i problemi concreti della migrazione a D1 (indice FTS5, contatori degli ID, immagini su KV) in un <a href="https://dev.to/vincenzoallocca/moving-a-php-sqlite-site-to-one-cloudflare-worker-on-the-free-plan-what-the-d1-import-didnt-35cb" rel="noopener">articolo tecnico su DEV</a>, in inglese.</p>
-        <p class="note">Intestazioni di sicurezza, file in <code>/.well-known/</code>, dati aperti e <code>robots.txt</code> sono verificabili da chiunque su haste.it; il codice della status page è pubblico. I dettagli sull'architettura interna vengono dal codice di haste.it, che non è pubblico.</p>
+        <p class="note">Intestazioni di sicurezza, file in <code>/.well-known/</code>, dati aperti e <code>robots.txt</code> sono verificabili da chiunque su haste.it; il codice della status page è pubblico.</p>
       </section>
     </article>
   </main>

@@ -4,7 +4,14 @@
 
 Il workflow [`.github/workflows/seo-quality.yml`](../../.github/workflows/seo-quality.yml) gira a
 ogni push su `main`, su ogni pull request, ogni lunedì alle 06:00 UTC e su richiesta manuale.
-Non pubblica nulla: il deploy resta quello di GitHub Pages dal branch `main`.
+Non pubblica nulla: il deploy lo fa [`.github/workflows/pages.yml`](../../.github/workflows/pages.yml).
+
+## Cosa va online
+
+Il workflow `pages.yml` pubblica su GitHub Pages solo un elenco chiuso di file: `index.html`, `404.html`,
+`CNAME`, `robots.txt`, `sitemap.xml`, `llms.txt`, la chiave IndexNow, `assets/`, `progetti/` e `.well-known/`.
+`docs/`, `PRODUCT.md`, `scripts/` e `bump/` restano nel repository e sul sito rispondono 404. Un nuovo file
+nella radice del sito va aggiunto all'elenco `PUBBLICO` del workflow, altrimenti non viene pubblicato.
 
 | Job | Cosa controlla | Esito in caso di problema |
 |---|---|---|

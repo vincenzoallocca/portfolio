@@ -4,11 +4,5 @@
 # Per questo non si aggiungono gruppi per singoli bot se non servono regole diverse.
 User-agent: *
 Allow: /
-# Documentazione interna del repository: non è contenuto per gli utenti.
-Disallow: /docs/
-Disallow: /scripts/
-Disallow: /PRODUCT.md
-# Sorgente del Worker del pulsante BUMP (gira su bump.vincenzoallocca.dev).
-Disallow: /bump/
 
 Sitemap: https://vincenzoallocca.dev/sitemap.xml

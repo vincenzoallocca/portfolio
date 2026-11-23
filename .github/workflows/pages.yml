@@ -1,0 +1,76 @@
+# Pubblica il sito su GitHub Pages.
+# Va online SOLO ciò che è nell'elenco PUBBLICO qui sotto: documentazione interna
+# (docs/, PRODUCT.md), script (scripts/), sorgente del Worker BUMP (bump/) e
+# configurazioni restano nel repository e non vengono serviti da vincenzoallocca.dev.
+# Una nuova pagina sotto progetti/ o un nuovo file in assets/ è incluso da solo;
+# un nuovo file nella radice va aggiunto all'elenco.
+# Richiede: Settings → Pages → Source = "GitHub Actions".
+name: Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  build:
+    name: Prepara i file pubblici
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v7
+
+      - name: Copia solo i file pubblici in _site
+        env:
+          PUBBLICO: >-
+            index.html
+            404.html
+            CNAME
+            robots.txt
+            sitemap.xml
+            llms.txt
+            28d9cb950fd348ee86a7fc44c1a8a886.txt
+            assets
+            progetti
+            .well-known
+        run: |
+          mkdir _site
+          for f in $PUBBLICO; do
+            test -e "$f" || { echo "::error::manca $f"; exit 1; }
+            cp -R "$f" _site/
+          done
+
+      - name: Controlla che non finisca online niente di interno
+        run: |
+          trovati=$(find _site \( -name '*.md' -o -name '*.mjs' -o -name '*.ts' -o -name 'package*.json' \
+            -o -name 'wrangler.*' -o -name '.dev.vars' -o -name '.env*' -o -path '*/node_modules*' \) -print)
+          if [ -n "$trovati" ]; then
+            echo "::error::file interni nella cartella pubblicata:"; echo "$trovati"; exit 1
+          fi
+          echo "File pubblicati: $(find _site -type f | wc -l)"
+
+      - uses: actions/configure-pages@v6
+
+      - uses: actions/upload-pages-artifact@v5
+        with:
+          path: _site
+          include-hidden-files: true # serve per .well-known/
+
+  deploy:
+    name: Pubblica
+    needs: build
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - id: deployment
+        uses: actions/deploy-pages@v5
