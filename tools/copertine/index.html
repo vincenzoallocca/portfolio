@@ -1,0 +1,395 @@
+<!DOCTYPE html>
+<html lang="it">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex,nofollow">
+<title>Creatore di copertine · Vincenzo Allocca</title>
+<!-- Strumento privato: non è nell'elenco dei file pubblicati da .github/workflows/pages.yml.
+     Si apre con un doppio clic: font e foto sono incorporati in risorse.js. -->
+<script src="risorse.js"></script>
+<style>
+  :root{--bg:#050816;--panel:#0e1432;--edge:rgba(255,255,255,.14);--text:#f4f7ff;--muted:#a6b9df;--accent:#8cc2ff}
+  *{box-sizing:border-box}
+  body{margin:0;min-height:100vh;background:radial-gradient(60rem 40rem at 50% -10%,rgba(76,110,255,.25),transparent 70%),var(--bg);color:var(--text);font:15px/1.45 system-ui,"Segoe UI",sans-serif}
+  .app{display:grid;grid-template-columns:minmax(320px,420px) 1fr;gap:24px;padding:24px;max-width:1500px;margin:0 auto}
+  @media (max-width:900px){.app{grid-template-columns:1fr}}
+  h1{font-size:20px;margin:0 0 4px}
+  .hint{color:var(--muted);font-size:13px;margin:0 0 16px}
+  form{background:var(--panel);border:1px solid var(--edge);border-radius:16px;padding:18px;display:flex;flex-direction:column;gap:14px;align-self:start}
+  fieldset{border:1px solid var(--edge);border-radius:12px;padding:12px;margin:0;display:flex;flex-direction:column;gap:10px}
+  legend{color:var(--accent);font-weight:650;padding:0 6px}
+  label{display:flex;flex-direction:column;gap:4px;font-size:13px;color:var(--muted)}
+  input,textarea,select{font:inherit;color:var(--text);background:#0a0f2a;border:1px solid var(--edge);border-radius:9px;padding:8px 10px}
+  textarea{resize:vertical;min-height:58px}
+  input:focus,textarea:focus,select:focus{outline:2px solid var(--accent);outline-offset:1px}
+  .row{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .blocco{display:grid;grid-template-columns:150px 1fr;gap:8px;align-items:end}
+  .blocco label:last-child{grid-column:1/-1}
+  .check{flex-direction:row;align-items:center;gap:8px;color:var(--text)}
+  .azioni{display:flex;gap:10px;flex-wrap:wrap}
+  button{font:inherit;font-weight:650;color:#fff;border:1px solid rgba(255,255,255,.22);border-radius:10px;padding:10px 16px;cursor:pointer;background:linear-gradient(135deg,rgba(140,194,255,.35),rgba(169,155,255,.28))}
+  button.secondario{background:rgba(255,255,255,.05)}
+  button:hover{border-color:rgba(255,255,255,.4)}
+  .anteprima{position:sticky;top:24px;align-self:start;display:flex;flex-direction:column;align-items:center;gap:10px}
+  canvas{max-width:100%;max-height:calc(100vh - 110px);height:auto;border-radius:12px;box-shadow:0 20px 60px -20px rgba(0,0,0,.8)}
+  .info{color:var(--muted);font-size:13px}
+</style>
+</head>
+<body>
+<div class="app">
+  <form id="f" autocomplete="off">
+    <div>
+      <h1>Creatore di copertine</h1>
+      <p class="hint">Nello stile di vincenzoallocca.dev: sfere, vetro, Mona Sans, viola e ciano. Scrivi a sinistra, scarica il PNG.</p>
+    </div>
+    <div class="row">
+      <label>Formato
+        <select name="formato">
+          <option value="1080x1350">LinkedIn / Instagram 4:5 · 1080×1350</option>
+          <option value="1080x1080">Quadrato · 1080×1080</option>
+          <option value="1200x627">Link LinkedIn / anteprima · 1200×627</option>
+          <option value="1080x1920">Storia · 1080×1920</option>
+        </select>
+      </label>
+      <label>Schema
+        <select name="schema">
+          <option value="flusso">Flusso: richiesta → servizio → due blocchi</option>
+          <option value="elenco">Elenco di tre blocchi</option>
+          <option value="nessuno">Solo testo</option>
+        </select>
+      </label>
+    </div>
+    <fieldset>
+      <legend>Testo</legend>
+      <label>Etichetta <input type="text" name="etichetta" maxlength="40"></label>
+      <label>Titolo <textarea name="titolo" rows="2"></textarea></label>
+      <label>Sottotitolo <textarea name="sottotitolo" rows="2"></textarea></label>
+    </fieldset>
+    <fieldset>
+      <legend>Blocchi dello schema</legend>
+      <label>Inizio del flusso <input type="text" name="inizio" maxlength="40"></label>
+      <div class="blocco"><label>Icona <select name="i1"></select></label><label>Blocco 1 <input type="text" name="t1" maxlength="24"></label><label>Descrizione <input type="text" name="d1" maxlength="60"></label></div>
+      <div class="blocco"><label>Icona <select name="i2"></select></label><label>Blocco 2 <input type="text" name="t2" maxlength="24"></label><label>Descrizione <input type="text" name="d2" maxlength="60"></label></div>
+      <div class="blocco"><label>Icona <select name="i3"></select></label><label>Blocco 3 <input type="text" name="t3" maxlength="24"></label><label>Descrizione <input type="text" name="d3" maxlength="60"></label></div>
+    </fieldset>
+    <fieldset>
+      <legend>Piede</legend>
+      <label>Frase (la parte dopo la virgola è colorata) <input type="text" name="frase" maxlength="60"></label>
+      <label>Link <input type="text" name="link" maxlength="40"></label>
+      <label class="check"><input type="checkbox" name="profilo"> Mostra foto, nome e ruolo in alto</label>
+    </fieldset>
+    <div class="azioni">
+      <button type="submit" id="scarica">Scarica PNG</button>
+      <button type="button" class="secondario" id="esempio">Carica l'esempio Cloudflare</button>
+      <button type="button" class="secondario" id="vuoto">Svuota</button>
+    </div>
+  </form>
+  <div class="anteprima">
+    <canvas id="c" role="img" aria-label="Anteprima della copertina"></canvas>
+    <p class="info" id="info"></p>
+  </div>
+</div>
+
+<script>
+(function () {
+  'use strict';
+  var NOME = 'Vincenzo Allocca', RUOLO = 'Software Developer · fondatore di HASTE';
+  var ESEMPIO = {
+    formato: '1080x1350', schema: 'flusso', etichetta: 'Cloud · Edge computing',
+    titolo: 'E se il backend non avesse più bisogno di un server?',
+    sottotitolo: 'Tre servizi Cloudflare, ognuno con un compito preciso.',
+    inizio: "Richiesta dell'utente",
+    i1: 'fulmine', t1: 'Workers', d1: 'Logica applicativa e API, senza server da gestire',
+    i2: 'database', t2: 'D1', d2: 'Database SQL basato su SQLite',
+    i3: 'scatola', t3: 'R2', d3: 'Object storage compatibile S3',
+    frase: 'Tre componenti, tre responsabilità.', link: 'vincenzoallocca.dev', profilo: true
+  };
+  /* Icone a tratto (viewBox 24×24), come nel sito */
+  var ICONE = {
+    fulmine: ['M13 2L4 14h7l-1 8 9-12h-7l1-8z'],
+    database: ['M4 5a8 3 0 1 0 16 0a8 3 0 1 0 -16 0', 'M4 5v14c0 1.7 3.6 3 8 3s8-1.3 8-3V5', 'M4 12c0 1.7 3.6 3 8 3s8-1.3 8-3'],
+    scatola: ['M3 7l9-4 9 4-9 4-9-4z', 'M3 7v10l9 4 9-4V7', 'M12 11v10'],
+    codice: ['M8 6l-6 6 6 6', 'M16 6l6 6-6 6', 'M14 4l-4 16'],
+    globo: ['M3 12a9 9 0 1 0 18 0a9 9 0 1 0 -18 0', 'M3 12h18', 'M12 3c2.5 2.7 3.8 5.7 3.8 9s-1.3 6.3-3.8 9c-2.5-2.7-3.8-5.7-3.8-9s1.3-6.3 3.8-9z'],
+    lucchetto: ['M5 11h14v10H5z', 'M8 11V7a4 4 0 0 1 8 0v4'],
+    utente: ['M8 8a4 4 0 1 0 8 0a4 4 0 1 0 -8 0', 'M4 21c0-4.4 3.6-8 8-8s8 3.6 8 8'],
+    grafico: ['M4 20V10', 'M10 20V4', 'M16 20v-7', 'M22 20H2'],
+    ingranaggio: ['M12 9a3 3 0 1 0 0 6a3 3 0 1 0 0-6z', 'M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1'],
+    nuvola: ['M7 18h10a4 4 0 0 0 .5-8A6 6 0 0 0 6 9.5 4.3 4.3 0 0 0 7 18z']
+  };
+  var NOMI_ICONE = { fulmine: 'Fulmine (calcolo)', database: 'Database', scatola: 'Scatola (archivio)', codice: 'Codice', globo: 'Globo (rete)', lucchetto: 'Lucchetto', utente: 'Persona', grafico: 'Grafico', ingranaggio: 'Ingranaggio', nuvola: 'Nuvola' };
+  /* Colori dei tre blocchi: blu, viola, ciano come le sfere del sito */
+  var TINTE = [['#4f8dff', '#2b3fd8'], ['#a78bfa', '#6d28d9'], ['#22d3ee', '#0e7490']];
+
+  var form = document.getElementById('f'), canvas = document.getElementById('c'), ctx = canvas.getContext('2d'), info = document.getElementById('info');
+  ['i1', 'i2', 'i3'].forEach(function (n) {
+    var s = form.elements[n];
+    Object.keys(ICONE).forEach(function (k) { var o = document.createElement('option'); o.value = k; o.textContent = NOMI_ICONE[k]; s.appendChild(o); });
+  });
+
+  var foto = new Image(), pronto = false;
+  var font = new FontFace('Mona Sans', 'url(' + window.RISORSE.font + ')', { weight: '400 900', stretch: '75% 125%' });
+  Promise.all([font.load().then(function (f) { document.fonts.add(f); }), new Promise(function (r) { foto.onload = r; foto.onerror = r; foto.src = window.RISORSE.foto; })])
+    .then(function () { pronto = true; disegna(); });
+
+  function leggi() {
+    var d = {};
+    Array.prototype.forEach.call(form.elements, function (el) { if (el.name) d[el.name] = el.type === 'checkbox' ? el.checked : el.value; });
+    return d;
+  }
+  function scrivi(d) {
+    Array.prototype.forEach.call(form.elements, function (el) {
+      if (!el.name || !(el.name in d)) return;
+      if (el.type === 'checkbox') el.checked = !!d[el.name];
+      /* nei menu solo le voci esistenti: un valore salvato non valido lascia quello attuale */
+      else if (el.tagName === 'SELECT') { if (Array.prototype.some.call(el.options, function (o) { return o.value === d[el.name]; })) el.value = d[el.name]; }
+      else el.value = String(d[el.name]);
+    });
+  }
+
+  /* ───────── primitive di disegno ───────── */
+  function rr(x, y, w, h, r) { ctx.beginPath(); ctx.roundRect(x, y, w, h, r); }
+  function fontDi(peso, px, largo) { ctx.font = peso + ' ' + px + 'px "Mona Sans", system-ui, sans-serif'; ctx.fontStretch = largo || 'normal'; }
+  function righe(testo, maxW) {
+    var parole = String(testo).split(/\s+/).filter(Boolean), out = [], cur = '';
+    parole.forEach(function (p) {
+      var prova = cur ? cur + ' ' + p : p;
+      if (ctx.measureText(prova).width <= maxW || !cur) cur = prova; else { out.push(cur); cur = p; }
+    });
+    if (cur) out.push(cur);
+    return out;
+  }
+  /* Cerca la dimensione più grande con cui il testo sta in maxW × maxH */
+  function adatta(testo, maxW, maxH, da, a, peso, largo, interlinea, spaziatura) {
+    for (var px = da; px >= a; px -= 2) {
+      fontDi(peso, px, largo); ctx.letterSpacing = (spaziatura || 0) * px + 'px';
+      var r = righe(testo, maxW);
+      if (r.length * px * interlinea <= maxH) return { px: px, righe: r };
+    }
+    fontDi(peso, a, largo); ctx.letterSpacing = (spaziatura || 0) * a + 'px';
+    return { px: a, righe: righe(testo, maxW) };
+  }
+  function sfera(cx, cy, r, chiaro, medio, scuro) {
+    var g = ctx.createRadialGradient(cx - r * .4, cy - r * .44, r * .05, cx, cy, r);
+    g.addColorStop(0, chiaro); g.addColorStop(.42, medio); g.addColorStop(1, scuro);
+    ctx.fillStyle = g; ctx.beginPath(); ctx.arc(cx, cy, r, 0, Math.PI * 2); ctx.fill();
+  }
+  function sfondo(W, H, u) {
+    ctx.fillStyle = '#050816'; ctx.fillRect(0, 0, W, H);
+    var g = ctx.createRadialGradient(W / 2, -H * .08, 0, W / 2, -H * .08, Math.max(W, H) * .75);
+    g.addColorStop(0, 'rgba(76,110,255,.34)'); g.addColorStop(1, 'rgba(76,110,255,0)'); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+    g = ctx.createRadialGradient(W / 2, H * 1.1, 0, W / 2, H * 1.1, Math.max(W, H) * .6);
+    g.addColorStop(0, 'rgba(34,211,238,.16)'); g.addColorStop(1, 'rgba(34,211,238,0)'); ctx.fillStyle = g; ctx.fillRect(0, 0, W, H);
+    /* griglia leggera */
+    ctx.save(); ctx.strokeStyle = 'rgba(255,255,255,.03)'; ctx.lineWidth = 1;
+    for (var x = 0; x < W; x += 54 * u) { ctx.beginPath(); ctx.moveTo(x, 0); ctx.lineTo(x, H); ctx.stroke(); }
+    for (var y = 0; y < H; y += 54 * u) { ctx.beginPath(); ctx.moveTo(0, y); ctx.lineTo(W, y); ctx.stroke(); }
+    ctx.restore();
+    /* sfere e anello */
+    var m = Math.min(W, H);
+    sfera(W * .02, H * .27, m * .24, '#9ad0ff', '#4f8dff', '#2b3fd8');
+    sfera(W * .86, H * .13, m * .07, '#ffc2ea', '#f472b6', '#9d2a73');
+    ctx.save(); ctx.strokeStyle = 'rgba(169,155,255,.55)'; ctx.lineWidth = 6 * u; ctx.beginPath(); ctx.arc(W * 1.0, H * .38, m * .2, 0, Math.PI * 2); ctx.stroke(); ctx.restore();
+    sfera(W * 1.02, H * .64, m * .26, '#d3a8ff', '#8b5cf6', '#4c1fb8');
+    sfera(W * .02, H + m * .07, m * .21, '#a5f3fc', '#22d3ee', '#0e7490');
+  }
+  /* Vetro: sfondo sfocato dentro la forma, velo chiaro, bordo e riflesso in alto */
+  function vetro(x, y, w, h, r, sfocato, forte) {
+    ctx.save(); rr(x, y, w, h, r); ctx.clip();
+    ctx.filter = 'blur(' + Math.round(18 * (w / 900 + .4)) + 'px)'; ctx.drawImage(sfocato, 0, 0); ctx.filter = 'none';
+    ctx.fillStyle = forte ? 'rgba(10,15,42,.62)' : 'rgba(10,15,42,.55)'; ctx.fillRect(x, y, w, h);
+    var g = ctx.createLinearGradient(x, y, x + w, y + h);
+    g.addColorStop(0, 'rgba(255,255,255,.14)'); g.addColorStop(.42, 'rgba(255,255,255,.05)'); g.addColorStop(.62, 'rgba(255,255,255,.03)'); g.addColorStop(1, 'rgba(255,255,255,.08)');
+    ctx.fillStyle = g; ctx.fillRect(x, y, w, h);
+    ctx.restore();
+    ctx.save(); rr(x + .75, y + .75, w - 1.5, h - 1.5, r); ctx.strokeStyle = 'rgba(255,255,255,.18)'; ctx.lineWidth = 1.5; ctx.stroke();
+    var hl = ctx.createLinearGradient(x, y, x + w, y); hl.addColorStop(0, 'rgba(255,255,255,0)'); hl.addColorStop(.5, 'rgba(255,255,255,.4)'); hl.addColorStop(1, 'rgba(255,255,255,0)');
+    ctx.beginPath(); ctx.moveTo(x + r, y + 1.5); ctx.lineTo(x + w - r, y + 1.5); ctx.strokeStyle = hl; ctx.lineWidth = 1.5; ctx.stroke();
+    ctx.restore();
+  }
+  function ombra(x, y, w, h, r, u) {
+    ctx.save(); ctx.shadowColor = 'rgba(0,0,0,.55)'; ctx.shadowBlur = 60 * u; ctx.shadowOffsetY = 24 * u;
+    rr(x, y, w, h, r); ctx.fillStyle = 'rgba(5,8,22,.01)'; ctx.fill(); ctx.restore();
+  }
+  function icona(nome, x, y, lato, tinta) {
+    var g = ctx.createLinearGradient(x, y, x + lato, y + lato); g.addColorStop(0, tinta[0]); g.addColorStop(1, tinta[1]);
+    rr(x, y, lato, lato, lato * .3); ctx.fillStyle = g; ctx.fill();
+    ctx.strokeStyle = 'rgba(255,255,255,.25)'; ctx.lineWidth = 1; ctx.stroke();
+    ctx.save(); var k = lato * .55 / 24; ctx.translate(x + lato * .225, y + lato * .225); ctx.scale(k, k);
+    ctx.strokeStyle = '#fff'; ctx.lineWidth = 2; ctx.lineCap = 'round'; ctx.lineJoin = 'round';
+    (ICONE[nome] || ICONE.fulmine).forEach(function (p) { ctx.stroke(new Path2D(p)); });
+    ctx.restore();
+  }
+  /* Blocco con icona, titolo e descrizione; restituisce l'altezza usata */
+  function blocco(x, y, w, b, tinta, u, sfocato, misura) {
+    var pad = 22 * u, lato = 60 * u, gap = 18 * u, tw = w - pad * 2 - lato - gap;
+    fontDi(800, 30 * u, 'semi-expanded'); ctx.letterSpacing = '0px';
+    var t = adatta(b.titolo, tw, 40 * u, 30 * u, 22 * u, 800, 'semi-expanded', 1.15);
+    var dd = adatta(b.desc, tw, 3 * 20 * u * 1.3, 20 * u, 15 * u, 560, 'normal', 1.3);
+    var h = Math.max(lato + pad * 2, pad * 2 + t.px * 1.15 * t.righe.length + 6 * u + dd.px * 1.3 * dd.righe.length);
+    if (misura) return h;
+    ombra(x, y, w, h, 26 * u, u); vetro(x, y, w, h, 26 * u, sfocato);
+    icona(b.icona, x + pad, y + (h - lato) / 2, lato, tinta);
+    var tx = x + pad + lato + gap, ty = y + (h - (t.px * 1.15 * t.righe.length + 6 * u + dd.px * 1.3 * dd.righe.length)) / 2;
+    ctx.textBaseline = 'top'; ctx.fillStyle = '#f4f7ff'; fontDi(800, t.px, 'semi-expanded'); ctx.letterSpacing = '0px';
+    t.righe.forEach(function (r, i) { ctx.fillText(r, tx, ty + i * t.px * 1.15); });
+    ty += t.px * 1.15 * t.righe.length + 6 * u; ctx.fillStyle = '#bfe0ff'; fontDi(560, dd.px);
+    dd.righe.forEach(function (r, i) { ctx.fillText(r, tx, ty + i * dd.px * 1.3); });
+    return h;
+  }
+  function pillola(testo, cx, y, u, sfocato) {
+    fontDi(650, 21 * u); ctx.letterSpacing = '0px';
+    var w = ctx.measureText(testo).width + 70 * u, h = 48 * u, x = cx - w / 2;
+    vetro(x, y, w, h, h / 2, sfocato);
+    ctx.fillStyle = '#22d3ee'; ctx.beginPath(); ctx.arc(x + 26 * u, y + h / 2, 6 * u, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = 'rgba(34,211,238,.25)'; ctx.beginPath(); ctx.arc(x + 26 * u, y + h / 2, 11 * u, 0, Math.PI * 2); ctx.fill();
+    ctx.fillStyle = '#e2ecff'; ctx.textBaseline = 'middle'; ctx.fillText(testo, x + 44 * u, y + h / 2 + 1);
+    return h;
+  }
+  function curva(x1, y1, x2, y2, c1, c2, u, tratteggio) {
+    var g = ctx.createLinearGradient(0, y1, 0, y2); g.addColorStop(0, c1); g.addColorStop(1, c2);
+    ctx.save(); ctx.strokeStyle = g; ctx.lineWidth = 4 * u; ctx.lineCap = 'round';
+    if (tratteggio) ctx.setLineDash([2 * u, 10 * u]);
+    var my = (y1 + y2) / 2; ctx.beginPath(); ctx.moveTo(x1, y1); ctx.bezierCurveTo(x1, my, x2, my, x2, y2); ctx.stroke(); ctx.restore();
+  }
+
+  /* Schema nel riquadro x,y,w,h; restituisce false se nemmeno rimpicciolito entra nella scheda */
+  function schema(d, x, y, w, h, u0, sfocato) {
+    var b = [1, 2, 3].map(function (i) { return { icona: d['i' + i], titolo: d['t' + i] || '', desc: d['d' + i] || '' }; }).filter(function (v) { return v.titolo; });
+    if (d.schema === 'nessuno' || !b.length) return true;
+    /* Misura lo schema con l'unità u: se non entra nel riquadro, lo rimpicciolisce (fino al 50%),
+       poi prova l'elenco, che è più compatto; se non entra comunque non lo disegna */
+    var tipo = d.schema === 'elenco' ? 'elenco' : 'flusso';
+    function misura(u) {
+      if (tipo === 'elenco') {
+        var gap = 18 * u, hs = b.map(function (v, i) { return blocco(0, 0, w, v, TINTE[i], u, sfocato, true); });
+        return { u: u, hs: hs, gap: gap, tot: hs.reduce(function (a, c) { return a + c; }, 0) + gap * (b.length - 1) };
+      }
+      var cx = x + w / 2, ph = 0;
+      if (d.inizio) { fontDi(650, 21 * u); ctx.letterSpacing = '0px'; ph = 48 * u; }
+      var mw = Math.min(w, 560 * u), mh = blocco(0, 0, mw, b[0], TINTE[0], u, sfocato, true);
+      var figli = b.slice(1), cw = figli.length === 2 ? (w - 24 * u) / 2 : Math.min(w, 520 * u);
+      var fh = figli.length ? Math.max.apply(null, figli.map(function (v, i) { return blocco(0, 0, cw, v, TINTE[i + 1], u, sfocato, true); })) : 0;
+      var tra = figli.length ? 90 * u : 0;
+      return { u: u, cx: cx, ph: ph, mw: mw, mh: mh, figli: figli, cw: cw, fh: fh, tra: tra, tot: (ph ? ph + 46 * u : 0) + mh + tra + fh };
+    }
+    /* nei formati alti (storia) lo schema può crescere fino al 135% per riempire lo spazio */
+    var k0 = h > w * 1.25 ? 1.35 : 1, m = misura(u0 * k0);
+    for (var k = k0 - .05; m.tot > h && k >= .5; k -= .05) m = misura(u0 * k);
+    if (m.tot > h && tipo === 'flusso') { tipo = 'elenco'; m = misura(u0); for (k = .95; m.tot > h && k >= .5; k -= .05) m = misura(u0 * k); }
+    if (m.tot > h) return false;
+    var u = m.u, top = y + Math.max(0, (h - m.tot) / 2);
+    if (tipo === 'elenco') {
+      b.forEach(function (v, i) { blocco(x, top, w, v, TINTE[i], u, sfocato); top += m.hs[i] + m.gap; });
+      return true;
+    }
+    /* flusso: pillola in alto → blocco principale → due blocchi sotto */
+    var cx = m.cx, ph = m.ph ? pillola(d.inizio, cx, top, u, sfocato) : 0;
+    var my = top + (ph ? ph + 46 * u : 0), fy = my + m.mh + m.tra, figli = m.figli, cw = m.cw, mw = m.mw;
+    if (ph) curva(cx, top + ph, cx, my, '#22d3ee', '#8cc2ff', u, true);
+    var centri = figli.length === 2 ? [x + cw / 2, x + w - cw / 2] : figli.length ? [cx] : [];
+    var colori = ['#a78bfa', '#22d3ee'];
+    centri.forEach(function (fx, i) {
+      var sx = figli.length === 2 ? cx + (i ? 1 : -1) * mw * .16 : cx;
+      curva(sx, my + m.mh, fx, fy, '#8cc2ff', colori[i], u);
+      ctx.fillStyle = colori[i]; ctx.beginPath(); ctx.arc(fx, fy, 7 * u, 0, Math.PI * 2); ctx.fill();
+    });
+    blocco(cx - mw / 2, my, mw, b[0], TINTE[0], u, sfocato);
+    figli.forEach(function (v, i) { blocco(figli.length === 2 ? (i ? x + w - cw : x) : cx - cw / 2, fy, cw, v, TINTE[i + 1], u, sfocato); });
+    return true;
+  }
+
+  function disegna() {
+    if (!pronto) return;
+    var d = leggi(), dim = d.formato.split('x').map(Number), W = dim[0], H = dim[1], S = 2;
+    canvas.width = W * S; canvas.height = H * S;
+    ctx.setTransform(S, 0, 0, S, 0, 0);
+    var u = Math.min(W, H) / 1080, orizzontale = W / H > 1.3, pad = (orizzontale ? 56 : 78) * u;
+    sfondo(W, H, u);
+    /* copia sfocabile dello sfondo per l'effetto vetro */
+    var sf = document.createElement('canvas'); sf.width = W; sf.height = H;
+    sf.getContext('2d').drawImage(canvas, 0, 0, W, H);
+
+    var y = pad + (orizzontale ? 0 : 8 * u);
+    if (d.profilo) {
+      fontDi(780, 30 * u, 'semi-expanded'); ctx.letterSpacing = '0px'; var nw = ctx.measureText(NOME).width;
+      fontDi(600, 21 * u); var rw = ctx.measureText(RUOLO).width;
+      var ph = 104 * u, pw = ph + 22 * u + Math.max(nw, rw) + 40 * u;
+      ombra(pad, y, pw, ph, ph / 2, u); vetro(pad, y, pw, ph, ph / 2, sf);
+      var fr = 38 * u, fx = pad + 14 * u + fr, fy = y + ph / 2;
+      ctx.save(); ctx.beginPath(); ctx.arc(fx, fy, fr + 3 * u, 0, Math.PI * 2); ctx.fillStyle = '#8cc2ff'; ctx.fill();
+      ctx.beginPath(); ctx.arc(fx, fy, fr, 0, Math.PI * 2); ctx.clip(); ctx.drawImage(foto, fx - fr, fy - fr, fr * 2, fr * 2); ctx.restore();
+      ctx.textBaseline = 'alphabetic'; ctx.fillStyle = '#f4f7ff'; fontDi(780, 30 * u, 'semi-expanded'); ctx.fillText(NOME, pad + ph + 8 * u, y + ph / 2 - 4 * u);
+      ctx.fillStyle = '#bfe0ff'; fontDi(600, 21 * u); ctx.fillText(RUOLO, pad + ph + 8 * u, y + ph / 2 + 26 * u);
+      y += ph + (orizzontale ? 28 : 42) * u;
+    }
+    var piede = (d.frase || d.link) ? 64 * u : 0;
+    var cx = pad, cw = W - pad * 2, ch = H - y - pad - piede, cr = 44 * u, ip = (orizzontale ? 44 : 58) * u;
+    ombra(cx, y, cw, ch, cr, u); vetro(cx, y, cw, ch, cr, sf, true);
+
+    /* area testo e area schema */
+    var conSchema = d.schema !== 'nessuno' && (d.t1 || d.t2 || d.t3);
+    var tx = cx + ip, ty = y + ip, tw = cw - ip * 2, th = ch - ip * 2, sx, sy, sw, sh;
+    if (orizzontale && conSchema) { sw = tw * .5; tw = tw * .46; sx = cx + cw - ip - sw; sy = ty; sh = th; }
+    var t = ty;
+    ctx.textBaseline = 'top';
+    if (d.etichetta) {
+      fontDi(750, 21 * u); ctx.letterSpacing = 4.6 * u + 'px'; ctx.fillStyle = '#8cc2ff';
+      ctx.fillText(d.etichetta.toUpperCase(), tx, t); t += 21 * u + 20 * u; ctx.letterSpacing = '0px';
+    }
+    var alto = H / W > 1.5, spazioTitolo = conSchema && !orizzontale ? Math.min(th * .32, (alto ? 520 : 330) * u) : th * .55;
+    var tit = adatta(d.titolo || '', tw, spazioTitolo, (orizzontale ? 64 : alto ? 104 : 84) * u, 34 * u, 860, 'expanded', 1.0, -.035);
+    var gr = ctx.createLinearGradient(tx, t, tx + tw, t + tit.px * tit.righe.length);
+    gr.addColorStop(0, '#ffffff'); gr.addColorStop(.4, '#dfe8ff'); gr.addColorStop(.75, '#c9b8ff'); gr.addColorStop(1, '#f0c4ff');
+    ctx.fillStyle = gr; fontDi(860, tit.px, 'expanded'); ctx.letterSpacing = -.035 * tit.px + 'px';
+    tit.righe.forEach(function (r, i) { ctx.fillText(r, tx, t + i * tit.px * 1.0); });
+    t += tit.px * tit.righe.length + 24 * u; ctx.letterSpacing = '0px';
+    if (d.sottotitolo) {
+      var sot = adatta(d.sottotitolo, tw, 3 * 28 * u * 1.38, 28 * u, 18 * u, 480, 'normal', 1.38);
+      ctx.fillStyle = '#d0dbf4'; fontDi(480, sot.px);
+      sot.righe.forEach(function (r, i) { ctx.fillText(r, tx, t + i * sot.px * 1.38); });
+      t += sot.px * 1.38 * sot.righe.length;
+    }
+    if (conSchema) {
+      if (!orizzontale) { sx = tx; sw = tw; sy = t + 46 * u; sh = y + ch - ip - sy; }
+      var entra = schema(d, sx, sy, sw, sh, u, sf);
+    }
+    /* piede */
+    if (piede) {
+      var py = H - pad - 4 * u; ctx.textBaseline = 'alphabetic';
+      if (d.frase) {
+        var parti = d.frase.split(','), a = parti[0] + (parti.length > 1 ? ',' : ''), b = parti.slice(1).join(',');
+        fontDi(700, 26 * u, 'semi-expanded'); ctx.fillStyle = '#ffffff'; ctx.fillText(a, pad, py);
+        if (b) { var aw = ctx.measureText(a).width; ctx.fillStyle = '#8cc2ff'; ctx.fillText(b, pad + aw, py); }
+      }
+      if (d.link) { fontDi(600, 22 * u); ctx.fillStyle = '#bfe0ff'; ctx.textAlign = 'right'; ctx.fillText(d.link, W - pad, py); ctx.textAlign = 'left'; }
+    }
+    info.textContent = W + ' × ' + H + ' px · esportato a ' + W * S + ' × ' + H * S + ' px per restare nitido' +
+      (entra === false ? ' · Lo schema non entra con questo testo: accorcia titolo, sottotitolo o descrizioni.' : '');
+    try { localStorage.setItem('copertina', JSON.stringify(d)); } catch (e) {}
+  }
+
+  function slug(s) { return String(s || 'copertina').toLowerCase().normalize('NFD').replace(/[̀-ͯ]/g, '').replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 50) || 'copertina'; }
+  form.addEventListener('submit', function (ev) {
+    ev.preventDefault();
+    var d = leggi();
+    canvas.toBlob(function (blob) {
+      var a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'copertina-' + slug(d.titolo) + '-' + d.formato + '.png';
+      document.body.appendChild(a); a.click(); a.remove(); setTimeout(function () { URL.revokeObjectURL(a.href); }, 2000);
+    }, 'image/png');
+  });
+  document.getElementById('esempio').addEventListener('click', function () { scrivi(ESEMPIO); disegna(); });
+  document.getElementById('vuoto').addEventListener('click', function () {
+    scrivi({ etichetta: '', titolo: '', sottotitolo: '', inizio: '', t1: '', d1: '', t2: '', d2: '', t3: '', d3: '', frase: '', link: 'vincenzoallocca.dev' }); disegna();
+  });
+  form.addEventListener('input', disegna);
+  form.addEventListener('change', disegna);
+
+  var salvato = null; try { salvato = JSON.parse(localStorage.getItem('copertina')); } catch (e) {}
+  scrivi(salvato || ESEMPIO);
+  window.__copertina = { scrivi: scrivi, disegna: disegna, esempio: ESEMPIO };
+})();
+</script>
+</body>
+</html>

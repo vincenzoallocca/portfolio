@@ -16,6 +16,8 @@ import { fileURLToPath } from 'node:url';
 const ROOT = fileURLToPath(new URL('..', import.meta.url));
 const ORIGIN = 'https://vincenzoallocca.dev';
 const SKIP_DIRS = new Set(['.git', '.github', 'node_modules', 'docs', 'scripts']);
+// Solo in radice: strumenti privati e report temporanei di Lighthouse CI, non pubblicati (vedi pages.yml)
+const SKIP_ROOT_DIRS = new Set(['tools', '.lighthouseci']);
 // Immagini da dichiarare nella sitemap (estensione image di Google), per percorso.
 const SITEMAP_IMAGES = { '/': ['/assets/profilo.webp'] };
 const LIMITS = { titleMax: 60, titleHard: 70, descMin: 70, descMax: 160 };
@@ -30,7 +32,7 @@ function walk(dir, out = []) {
   for (const name of readdirSync(dir)) {
     const full = join(dir, name);
     if (statSync(full).isDirectory()) {
-      if (!SKIP_DIRS.has(name)) walk(full, out);
+      if (!SKIP_DIRS.has(name) && !(relative(ROOT, full) === name && SKIP_ROOT_DIRS.has(name))) walk(full, out);
     } else if (name.endsWith('.html')) out.push(full);
   }
   return out;
