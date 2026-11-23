@@ -32,7 +32,7 @@
 
 ## Progetti
 
-- [Nemici-Miei](https://vincenzoallocca.dev/progetti/nemici-miei/): gioco con vista isometrica nato in Python e Pygame come progetto di gruppo per il PCTO 2024–2025, open source; Vincenzo ne cura il repository, ha realizzato la versione web, i comandi touch e i test e poi l'ha riscritto in Rust (macroquad), con quattro livelli; [si gioca nel browser](https://vincenzoallocca.dev/progetti/nemici-miei/gioco/) anche da telefono (Rust compilato in WebAssembly); [codice](https://github.com/vincenzoallocca/nemici-miei)
+- [Nemici-Miei](https://vincenzoallocca.dev/progetti/nemici-miei/): gioco con vista isometrica nato in Python e Pygame come progetto di gruppo per il PCTO 2024–2025, open source; Vincenzo ne cura il repository, ha realizzato la versione web, i comandi touch e i test e poi l'ha riscritto in Rust (macroquad), con quattro livelli; [si gioca nel browser](https://vincenzoallocca.dev/progetti/nemici-miei/gioco/) anche da telefono (Rust compilato in WebAssembly) e [su itch.io](https://vincenzoallocca.itch.io/nemici-miei); [codice](https://github.com/vincenzoallocca/nemici-miei)
 
 ## Articoli tecnici
 
@@ -55,6 +55,6 @@
 - [ORCID](https://orcid.org/0009-0002-3926-1948): identificativo personale 0009-0002-3926-1948
 - [LinkedIn](https://www.linkedin.com/in/vincenzocristianoallocca/): profilo professionale
 - [Bluesky](https://bsky.app/profile/vincenzoallocca.dev): @vincenzoallocca.dev (handle verificato sul dominio del sito)
-- [DEV](https://dev.to/vincenzoallocca), [Hashnode](https://hashnode.com/@vincenzoallocca), [Peerlist](https://peerlist.io/vincenzoallocca), [Gravatar](https://gravatar.com/vincenzoallocca07), [Threads](https://www.threads.com/@vincenzooallocca)
+- [DEV](https://dev.to/vincenzoallocca), [Hashnode](https://hashnode.com/@vincenzoallocca), [Peerlist](https://peerlist.io/vincenzoallocca), [itch.io](https://vincenzoallocca.itch.io), [Gravatar](https://gravatar.com/vincenzoallocca07), [Threads](https://www.threads.com/@vincenzooallocca)
 - [Instagram](https://www.instagram.com/vincenzooallocca/): @vincenzooallocca
 - [Facebook](https://www.facebook.com/profile.php?id=100084588892488): Vincenzo Allocca
