@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Nemici Miei: gioca nel browser | Vincenzo Allocca</title>
-<meta name="description" content="Nemici Miei, gioco d'avventura isometrico nato per il PCTO 2024–2025 e riscritto in Rust: quattro livelli da giocare nel browser, anche da telefono.">
+<title>Nemici Miei: gioco isometrico in Rust | Vincenzo Allocca</title>
+<meta name="description" content="Nemici Miei: gioco isometrico nato in Python e Pygame, portato nel browser con pygbag e riscritto in Rust e WebAssembly. Gioca online e scopri lo sviluppo.">
 <meta name="theme-color" content="#050816">
 <meta name="color-scheme" content="dark">
 <meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
@@ -13,7 +13,7 @@
 <meta property="og:type" content="website">
 <meta property="og:locale" content="it_IT">
 <meta property="og:site_name" content="Vincenzo Allocca">
-<meta property="og:title" content="Nemici Miei: gioca nel browser">
+<meta property="og:title" content="Nemici Miei: gioco isometrico in Rust e WebAssembly">
 <meta property="og:description" content="Gioco d'avventura isometrico in Rust e WebAssembly: parla con Ugo, attraversa spiaggia e rovine e sconfiggi il boss. Si gioca anche da telefono.">
 <meta property="og:url" content="https://vincenzoallocca.dev/progetti/nemici-miei/">
 <meta property="og:image" content="https://vincenzoallocca.dev/assets/og-nemici-miei.jpg">
@@ -22,7 +22,7 @@
 <meta property="og:image:height" content="630">
 <meta property="og:image:alt" content="Nemici Miei: l'eroe con il mantello rosso accanto al mago Ugo, su un'isola isometrica sospesa nel cielo">
 <meta name="twitter:card" content="summary_large_image">
-<meta name="twitter:title" content="Nemici Miei: gioca nel browser">
+<meta name="twitter:title" content="Nemici Miei: gioco isometrico in Rust e WebAssembly">
 <meta name="twitter:description" content="Gioco d'avventura isometrico in Rust e WebAssembly, giocabile nel browser anche da telefono.">
 <meta name="twitter:image" content="https://vincenzoallocca.dev/assets/og-nemici-miei.jpg">
 <meta name="twitter:image:alt" content="Nemici Miei: l'eroe con il mantello rosso accanto al mago Ugo, su un'isola isometrica sospesa nel cielo">
@@ -34,10 +34,10 @@
       "@type": "WebPage",
       "@id": "https://vincenzoallocca.dev/progetti/nemici-miei/#webpage",
       "url": "https://vincenzoallocca.dev/progetti/nemici-miei/",
-      "name": "Nemici Miei: gioca nel browser",
-      "description": "Nemici Miei, gioco d'avventura isometrico nato per il PCTO 2024–2025 e riscritto in Rust, giocabile nel browser anche da telefono.",
+      "name": "Nemici Miei: gioco isometrico in Rust e WebAssembly",
+      "description": "Nemici Miei: gioco isometrico nato in Python e Pygame, portato nel browser con pygbag e riscritto in Rust e WebAssembly, giocabile anche da telefono.",
       "inLanguage": "it-IT",
-      "dateModified": "2026-11-23T19:50:45+01:00",
+      "dateModified": "2026-11-23T23:25:46+01:00",
       "isPartOf": { "@id": "https://vincenzoallocca.dev/#website" },
       "about": { "@id": "https://vincenzoallocca.dev/progetti/nemici-miei/#gioco" },
       "author": { "@id": "https://vincenzoallocca.dev/#person" },
@@ -165,7 +165,7 @@
         <h2 id="tecnica">Come è fatto</h2>
         <h3>Isometria e profondità</h3>
         <p>La mappa è una griglia di tile convertita in coordinate isometriche. Personaggi e oggetti vengono ordinati in base alla posizione sullo schermo prima di essere disegnati, così chi sta davanti copre chi sta dietro.</p>
-        <h3>Da Python a Rust</h3>
+        <h3>Da Python e Pygame a Rust e WebAssembly</h3>
         <p>La prima versione web eseguiva Python e Pygame nel browser con <a href="https://pypi.org/project/pygbag/" rel="noopener">pygbag</a> (l'ho raccontato in un <a href="https://vincenzoallocca.hashnode.dev/portare-un-gioco-pygame-nel-browser-e-sul-telefono-con-pygbag-cosa-ho-imparato-con-nemici-miei" rel="noopener">articolo su Hashnode</a>). Ora il gioco è scritto in Rust con <a href="https://macroquad.rs" rel="noopener">macroquad</a> e compilato direttamente in WebAssembly: niente interprete da scaricare, un file da meno di 1 MB, avvio in pochi istanti e la stessa base di codice per PC e browser.</p>
         <h3>Logica separata dal disegno</h3>
         <p>La logica gira a 60 passi al secondo fissi, indipendenti dalla frequenza del monitor, e non dipende né dalla grafica né dall'audio: i suoni sono comandi messi in coda. Per questo i test simulano una partita completa, dal menu ai titoli di coda, senza aprire una finestra.</p>
