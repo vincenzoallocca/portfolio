@@ -11,3 +11,6 @@ bump/node_modules/
 bump/.wrangler/
 .wrangler/
 bump/.dev.vars
+
+# Sessioni locali di Playwright CLI
+.playwright-cli/

@@ -20,7 +20,14 @@ body{
   display:grid;place-items:center;padding:1.5rem;color:#f4f7ff;text-align:center;
   font-family:"Mona Sans",ui-sans-serif,system-ui,-apple-system,"Segoe UI",sans-serif;
   background:radial-gradient(50rem 30rem at 50% -10%,rgba(76,110,255,.28),transparent 70%),#050816;
+  isolation:isolate;
 }
+body::before,body::after{content:"";position:fixed;z-index:-1;border-radius:50%;pointer-events:none}
+body::before{width:min(26rem,70vw);aspect-ratio:1;left:calc(50% - 34rem);top:8%;background:radial-gradient(circle at 30% 28%,#9ad0ff 0,#4f8dff 38%,#2b3fd8 100%)}
+body::after{width:min(28rem,74vw);aspect-ratio:1;right:calc(50% - 36rem);bottom:-6rem;background:radial-gradient(circle at 32% 30%,#d3a8ff 0,#8b5cf6 42%,#4c1fb8 100%)}
+@media (max-width:900px){body::before{left:-10rem;top:-6rem;opacity:.7}body::after{right:-12rem;bottom:-10rem;opacity:.7}}
+@media (prefers-contrast:more){body::before,body::after{display:none}}
+@media (prefers-reduced-transparency:reduce){main{background:rgba(14,20,50,.96)}}
 main{
   max-width:24rem;padding:2rem 1.5rem;border-radius:1.5rem;
   background:rgba(10,15,42,.6);border:1px solid rgba(255,255,255,.14);
