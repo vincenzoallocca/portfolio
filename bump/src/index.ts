@@ -29,7 +29,44 @@ export interface Env extends BumpEnv {}
 
 type Ctx = { waitUntil(p: Promise<unknown>): void };
 
-const JSON_HEADERS = { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store' };
+/** Intestazioni di sicurezza per ogni risposta: è un'API JSON, non deve mai essere interpretata
+ *  come pagina, incorporata in un frame o letta da un altro sito. */
+const SECURITY_HEADERS = {
+  'X-Content-Type-Options': 'nosniff',
+  'Referrer-Policy': 'no-referrer',
+  'Cross-Origin-Resource-Policy': 'same-site',
+  'Content-Security-Policy': "default-src 'none'; frame-ancestors 'none'",
+};
+const JSON_HEADERS = { 'Content-Type': 'application/json; charset=utf-8', 'Cache-Control': 'no-store', ...SECURITY_HEADERS };
+/** Corpo massimo di una POST: il token occupa meno di 100 byte. */
+const MAX_BODY = 512;
+/** Pulizia di conservazione su una GET ogni ~20: basta a garantire i 30 giorni senza scrivere a ogni visita. */
+const GET_CLEANUP_RATE = 0.05;
+
+/** Legge il corpo fermandosi oltre `max` byte, anche senza Content-Length (richieste chunked). */
+async function readCapped(req: Request, max: number): Promise<string | null> {
+  if (!req.body) return '';
+  const reader = req.body.getReader();
+  const chunks: Uint8Array[] = [];
+  let size = 0;
+  for (;;) {
+    const { done, value } = await reader.read();
+    if (done) break;
+    size += value.byteLength;
+    if (size > max) {
+      await reader.cancel();
+      return null;
+    }
+    chunks.push(value);
+  }
+  const all = new Uint8Array(size);
+  let off = 0;
+  for (const c of chunks) {
+    all.set(c, off);
+    off += c.byteLength;
+  }
+  return new TextDecoder().decode(all);
+}
 
 function allowedOrigin(env: Env, origin: string | null): string | null {
   if (!origin) return null;
@@ -55,10 +92,11 @@ export async function handle(req: Request, env: Env, ctx: Ctx, nowMs = Date.now(
   if (url.pathname !== '/v1/bump') return json({ status: 'not_found' }, 404, origin);
 
   if (req.method === 'OPTIONS') {
-    if (!origin) return new Response(null, { status: 403 });
+    if (!origin) return new Response(null, { status: 403, headers: SECURITY_HEADERS });
     return new Response(null, {
       status: 204,
       headers: {
+        ...SECURITY_HEADERS,
         ...cors(origin),
         'Access-Control-Allow-Methods': 'GET, POST',
         'Access-Control-Allow-Headers': 'Content-Type',
@@ -88,7 +126,7 @@ export async function handle(req: Request, env: Env, ctx: Ctx, nowMs = Date.now(
         id = randomId();
         headers['Set-Cookie'] = deviceCookie(await signDevice(secret, id));
       }
-      ctx.waitUntil(cleanup(env.DB, nowSec).catch(() => {}));
+      if (Math.random() < GET_CLEANUP_RATE) ctx.waitUntil(cleanup(env.DB, nowSec).catch(() => {}));
       const deviceHash = await hmac(secret, 'dev|' + id);
       const [n, bumped] = await Promise.all([total(env.DB), deviceId ? hasBumped(env.DB, deviceHash) : Promise.resolve(false)]);
       return json({ status: 'ok', total: n, bumped, token: await issueToken(secret, id, nowMs) }, 200, origin, headers);
@@ -108,10 +146,12 @@ export async function handle(req: Request, env: Env, ctx: Ctx, nowMs = Date.now(
       return json({ status: 'invalid_device' }, 400, origin, { 'Set-Cookie': deviceCookie(await signDevice(secret, id)) });
     }
     const len = Number(req.headers.get('Content-Length') || '0');
-    if (len > 512) return json({ status: 'bad_request' }, 413, origin);
+    if (len > MAX_BODY) return json({ status: 'bad_request' }, 413, origin);
+    const raw = await readCapped(req, MAX_BODY);
+    if (raw === null) return json({ status: 'bad_request' }, 413, origin);
     let body: unknown;
     try {
-      body = await req.json();
+      body = JSON.parse(raw);
     } catch {
       return json({ status: 'bad_request' }, 400, origin);
     }

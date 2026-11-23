@@ -276,3 +276,29 @@ test('CORS: preflight solo dall\'origine del portfolio', async () => {
   const ko = await handle(new Request('https://bump.vincenzoallocca.dev/v1/bump', { method: 'OPTIONS', headers: { Origin: 'https://evil.example' } }), env(), ctx);
   assert.equal(ko.status, 403);
 });
+
+test('Sicurezza: corpo oltre 512 byte rifiutato anche senza Content-Length, intestazioni di sicurezza', async () => {
+  const e = env();
+  const d = device(e);
+  const g = await d.get();
+  for (const h of ['X-Content-Type-Options', 'Referrer-Policy', 'Cross-Origin-Resource-Policy', 'Content-Security-Policy']) {
+    assert.ok(g.res.headers.get(h), `manca ${h}`);
+  }
+  assert.equal(g.res.headers.get('X-Content-Type-Options'), 'nosniff');
+  d.advance(1500);
+  // corpo grande inviato come stream (nessun Content-Length): deve fermarsi a 512 byte
+  const big = JSON.stringify({ token: g.body.token, pad: 'x'.repeat(5000) });
+  const stream = new ReadableStream({ start(c) { c.enqueue(new TextEncoder().encode(big)); c.close(); } });
+  const res = await handle(new Request('https://bump.vincenzoallocca.dev/v1/bump', { method: 'POST', duplex: 'half', body: stream, headers: { Origin: ORIGIN, 'Content-Type': 'application/json', 'CF-Connecting-IP': '203.0.113.10', 'User-Agent': UA, Cookie: `${COOKIE}=${d.cookie}` } }), e, ctx, Date.UTC(2026, 10, 22, 12, 0, 2));
+  assert.equal(res.headers.get('Content-Length'), null);
+  assert.equal(res.status, 413);
+  assert.equal(count(e), 0);
+  // JSON malformato
+  const bad = await handle(new Request('https://bump.vincenzoallocca.dev/v1/bump', { method: 'POST', body: '{"token":', headers: { Origin: ORIGIN, 'Content-Type': 'application/json', 'CF-Connecting-IP': '203.0.113.10', Cookie: `${COOKIE}=${d.cookie}` } }), e, ctx, Date.UTC(2026, 10, 22, 12, 0, 2));
+  assert.equal(bad.status, 400);
+  // il preflight rifiutato porta comunque le intestazioni di sicurezza
+  const ko = await handle(new Request('https://bump.vincenzoallocca.dev/v1/bump', { method: 'OPTIONS', headers: { Origin: 'https://evil.example' } }), e, ctx);
+  assert.equal(ko.headers.get('X-Content-Type-Options'), 'nosniff');
+  // dopo tutto questo il dispositivo può ancora votare normalmente
+  assert.equal((await d.post(g.body.token)).body.status, 'ok');
+});

@@ -170,6 +170,9 @@
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
 html,body{overscroll-behavior-x:none}
 .scroll.end{-webkit-mask-image:none;mask-image:none}
+/* Dopo il primo scorrimento sfuma anche il bordo alto: si capisce che c'è altro sopra */
+.scroll.scrolled{-webkit-mask-image:linear-gradient(transparent,#000 1.75rem,#000 calc(100% - 2.5rem),transparent);mask-image:linear-gradient(transparent,#000 1.75rem,#000 calc(100% - 2.5rem),transparent)}
+.scroll.scrolled.end{-webkit-mask-image:linear-gradient(transparent,#000 1.75rem);mask-image:linear-gradient(transparent,#000 1.75rem)}
 html{background:var(--bg);-webkit-text-size-adjust:100%;-webkit-tap-highlight-color:transparent;color-scheme:dark}
 body{
   min-height:100vh;min-height:100dvh;
@@ -335,6 +338,21 @@ nav a:active{transform:scale(.98)}
 .status .s2{display:block;margin-top:.1rem;font-size:.7rem;color:var(--text-secondary)}
 
 /* ───────── CONTENUTO PRINCIPALE ───────── */
+/* Indicatore "c'è altro" della card con scroll interno (solo desktop): compare finché resta contenuto
+   sotto, scorre di una schermata al clic, sparisce alla fine. */
+.scroll-cue{
+  position:absolute;z-index:3;left:50%;bottom:.75rem;transform:translateX(-50%);
+  display:inline-flex;align-items:center;gap:.3rem;min-height:2rem;padding:.25rem .75rem .25rem .85rem;border-radius:99px;
+  font-family:var(--font-body);font-size:.75rem;font-weight:600;letter-spacing:.01em;color:var(--accent-hi);
+  background:rgba(10,15,42,.78);border:1px solid rgba(255,255,255,.18);
+  box-shadow:inset 0 1px 0 rgba(255,255,255,.2),0 8px 18px -8px rgba(0,0,0,.6);
+  transition:opacity .25s var(--ease),transform .25s var(--ease),color .2s,border-color .2s;
+}
+.scroll-cue .ic{width:.95rem;height:.95rem}
+.scroll-cue::after{content:"";position:absolute;inset:-.4rem -.3rem} /* area di tocco 44px senza ingrandire la pillola */
+.scroll-cue:hover{color:#fff;border-color:rgba(255,255,255,.34)}
+.scroll-cue:active{transform:translateX(-50%) scale(.96)}
+.scroll-cue.off{opacity:0;pointer-events:none;transform:translate(-50%,.4rem)}
 main{--tint:.62;width:26rem;max-width:100%;height:min(34rem,calc(100dvh - 2.5rem));outline:none}
 .scroll{
   position:relative;z-index:1;height:100%;border-radius:inherit;
@@ -448,6 +466,8 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
 @media (prefers-reduced-motion:no-preference){
   .share-panel:not([hidden]){animation:sp-in .18s var(--ease)}
   .bump-btn.pop{animation:bump-pop .42s var(--ease)}
+  .scroll-cue.nudge .ic{animation:cue-nudge 1.4s var(--ease) .9s 2}
+  @keyframes cue-nudge{0%,100%{transform:none}45%{transform:translateY(3px)}}
   .bump-btn.pop .bump-ic{animation:bump-ic .6s var(--ease)}
   @keyframes bump-pop{0%{transform:scale(1)}35%{transform:scale(1.06)}100%{transform:scale(1)}}
   @keyframes bump-ic{0%{transform:none}40%{transform:translateY(-5px) rotate(-12deg)}100%{transform:none}}
@@ -488,6 +508,7 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
   .share-panel{grid-template-columns:repeat(3,1fr)}
   main{width:100%;height:auto;max-height:none;scroll-margin-top:calc(env(safe-area-inset-top,0px) + .75rem)}
   .scroll{height:auto;overflow:visible;-webkit-mask-image:none;mask-image:none}
+  .scroll-cue{display:none}
   [data-active=about] aside{display:none}
   aside{flex-direction:row;gap:1rem}
   .tile{flex:1;width:auto;min-height:8rem;font-size:.82rem}
@@ -745,6 +766,8 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
         </section>
       </div>
     </div>
+    <!-- Solo per il puntatore: la tastiera raggiunge già ogni link della card, e le frecce scorrono la card -->
+    <button class="scroll-cue off" id="scroll-cue" type="button" tabindex="-1" aria-hidden="true"><span>Continua</span><svg class="ic" viewBox="0 0 24 24" aria-hidden="true"><path d="M6 9l6 6 6-6"/></svg></button>
   </main>
 
   <aside>
@@ -812,10 +835,35 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
   addEventListener('hashchange',function(){var h=fromHash();if(names.indexOf(h)>=0)show(h,false)});
   show(fromHash(),false);
   if(scroller){
-    var endChk=function(){scroller.classList.toggle('end',scroller.scrollTop+scroller.clientHeight>=scroller.scrollHeight-4)};
-    scroller.addEventListener('scroll',endChk,{passive:true});
+    /* Card con scroll interno (desktop): sfumature in alto/in basso e indicatore "Continua" */
+    var cue=document.getElementById('scroll-cue');
+    var inner=function(){return getComputedStyle(scroller).overflowY!=='visible'&&scroller.scrollHeight>scroller.clientHeight+8};
+    var endChk=function(){
+      var left=scroller.scrollHeight-scroller.clientHeight-scroller.scrollTop;
+      scroller.classList.toggle('end',left<=4);
+      scroller.classList.toggle('scrolled',scroller.scrollTop>4);
+      if(cue)cue.classList.toggle('off',!inner()||left<=48);
+    };
+    scroller.addEventListener('scroll',function(){endChk();if(cue)cue.classList.remove('nudge')},{passive:true});
     addEventListener('sectionchange',function(){requestAnimationFrame(endChk)});
     addEventListener('load',endChk);
+    addEventListener('resize',function(){requestAnimationFrame(endChk)},{passive:true});
+    endChk();
+    if(cue){
+      cue.classList.add('nudge');
+      cue.addEventListener('click',function(){scroller.scrollBy({top:Math.round(scroller.clientHeight*.8),behavior:reduce?'auto':'smooth'})});
+    }
+    /* Tastiera: con il focus sulla card (o sulla pagina) frecce su/giù, PagSu/PagGiù, spazio, Home e Fine scorrono la card */
+    addEventListener('keydown',function(e){
+      if(e.altKey||e.ctrlKey||e.metaKey||!inner())return;
+      var t=e.target;if(t!==document.body&&t!==main&&!(t.classList&&t.classList.contains('panel')))return;
+      var h=scroller.clientHeight,d=null;
+      if(e.key==='ArrowDown')d=48;else if(e.key==='ArrowUp')d=-48;
+      else if(e.key==='PageDown'||(e.key===' '&&!e.shiftKey))d=h*.85;else if(e.key==='PageUp'||(e.key===' '&&e.shiftKey))d=-h*.85;
+      else if(e.key==='Home')d=-scroller.scrollTop;else if(e.key==='End')d=scroller.scrollHeight;
+      if(d===null)return;
+      e.preventDefault();scroller.scrollBy({top:d,behavior:reduce?'auto':'smooth'});
+    });
   }
 
   /* Frecce direzionali e swipe laterale per navigare tra schede */
