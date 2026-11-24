@@ -206,9 +206,26 @@ for (const p of pages) {
       if (!n['@type']) err(where, `nodo JSON-LD senza @type (${n['@id'] || '?'})`);
       // Google (ProfilePage, Article) vuole un DateTime ISO 8601: una data sola dà
       // "Invalid datetime value". Il fuso orario evita ambiguità.
-      for (const k of ['dateModified', 'datePublished']) {
+      for (const k of ['dateCreated', 'dateModified', 'datePublished']) {
         if (n[k] !== undefined && !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2})?([+-]\d{2}:\d{2}|Z)$/.test(n[k])) {
           err(where, `JSON-LD ${k} non è un DateTime ISO 8601 con fuso orario: ${n[k]}`);
+        }
+      }
+      if (n.dateModified && n.datePublished && Date.parse(n.dateModified) < Date.parse(n.datePublished)) {
+        err(where, `JSON-LD dateModified (${n.dateModified}) precede datePublished (${n.datePublished})`);
+      }
+      if (n.dateModified && n.dateCreated && Date.parse(n.dateModified) < Date.parse(n.dateCreated)) {
+        err(where, `JSON-LD dateModified (${n.dateModified}) precede dateCreated (${n.dateCreated})`);
+      }
+      if (n['@type'] === 'BreadcrumbList') {
+        const items = n.itemListElement;
+        if (!Array.isArray(items) || items.length === 0) err(where, 'BreadcrumbList senza itemListElement');
+        else {
+          items.forEach((it, idx) => {
+            if (it.position !== idx + 1) err(where, `BreadcrumbList position non sequenziale: atteso ${idx + 1}, trovato ${it.position}`);
+            if (!it.name) err(where, `BreadcrumbList ListItem ${idx + 1} senza name`);
+            if (!it.item || !/^https:\/\//.test(it.item)) warn(where, `BreadcrumbList ListItem ${idx + 1} senza item assoluto HTTPS`);
+          });
         }
       }
       graphNodes.push({ node: n, page: p });
