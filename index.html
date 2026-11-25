@@ -97,14 +97,14 @@
           "@type": "OrganizationRole",
           "roleName": "Componente del Direttivo di circolo",
           "memberOf": { "@type": "Organization", "name": "Partito Democratico – Circolo di Marigliano" },
-          "subjectOf": { "@type": "NewsArticle", "headline": "Marigliano, il Pd ha eletto nuovo segretario e Direttivo", "url": "https://www.laprovinciaonline.info/marigliano-il-pd-ha-eletto-nuovo-segretario-e-direttivo/", "datePublished": "2026-02-19T17:50:04+00:00", "publisher": { "@type": "Organization", "name": "La Provincia Online", "url": "https://www.laprovinciaonline.info/" } }
+          "subjectOf": { "@type": "WebPage", "name": "Marigliano, il Pd ha eletto nuovo segretario e Direttivo", "url": "https://www.laprovinciaonline.info/marigliano-il-pd-ha-eletto-nuovo-segretario-e-direttivo/", "datePublished": "2026-02-19T17:50:04+00:00", "publisher": { "@type": "Organization", "name": "La Provincia Online", "url": "https://www.laprovinciaonline.info/" } }
         },
         {
           "@type": "OrganizationRole",
           "roleName": "Delegato",
           "startDate": "2024",
           "memberOf": { "@type": "Organization", "name": "Model European Parliament" },
-          "subjectOf": { "@type": "NewsArticle", "headline": "Somma Vesuviana, gli studenti dell'ITI “E. Majorana” alla XX Sessione Regionale MEP Campania", "url": "https://www.ilmediano.com/somma-vesuviana-76/", "datePublished": "2024-04-15", "publisher": { "@type": "Organization", "name": "ilMediano", "url": "https://www.ilmediano.com/" } }
+          "subjectOf": { "@type": "WebPage", "name": "Somma Vesuviana, gli studenti dell'ITI “E. Majorana” alla XX Sessione Regionale MEP Campania", "url": "https://www.ilmediano.com/somma-vesuviana-76/", "datePublished": "2024-04-15", "publisher": { "@type": "Organization", "name": "ilMediano", "url": "https://www.ilmediano.com/" } }
         }
       ],
       "sameAs": [
@@ -859,18 +859,25 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
   if(scroller){
     /* Card con scroll interno (desktop): sfumature in alto/in basso e indicatore "Continua" */
     var cue=document.getElementById('scroll-cue');
-    var inner=function(){return getComputedStyle(scroller).overflowY!=='visible'&&scroller.scrollHeight>scroller.clientHeight+8};
+    var hasInner=function(sh,ch,ov){return ov!=='visible'&&sh>ch+8};
+    var inner=function(){return hasInner(scroller.scrollHeight,scroller.clientHeight,getComputedStyle(scroller).overflowY)};
+    var chkRaf=0;
     var endChk=function(){
-      var left=scroller.scrollHeight-scroller.clientHeight-scroller.scrollTop;
+      chkRaf=0;
+      var sh=scroller.scrollHeight,ch=scroller.clientHeight,st=scroller.scrollTop;
+      var ov=getComputedStyle(scroller).overflowY;
+      var left=sh-ch-st;
+      var off=!hasInner(sh,ch,ov)||left<=48;
       scroller.classList.toggle('end',left<=4);
-      scroller.classList.toggle('scrolled',scroller.scrollTop>4);
-      if(cue)cue.classList.toggle('off',!inner()||left<=48);
+      scroller.classList.toggle('scrolled',st>4);
+      if(cue)cue.classList.toggle('off',off);
     };
-    scroller.addEventListener('scroll',function(){endChk();if(cue)cue.classList.remove('nudge')},{passive:true});
-    addEventListener('sectionchange',function(){requestAnimationFrame(endChk)});
-    addEventListener('load',endChk);
-    addEventListener('resize',function(){requestAnimationFrame(endChk)},{passive:true});
-    endChk();
+    var scheduleChk=function(){if(!chkRaf)chkRaf=requestAnimationFrame(endChk)};
+    scroller.addEventListener('scroll',function(){scheduleChk();if(cue&&cue.classList.contains('nudge'))cue.classList.remove('nudge')},{passive:true});
+    addEventListener('sectionchange',scheduleChk);
+    addEventListener('load',scheduleChk);
+    addEventListener('resize',scheduleChk,{passive:true});
+    scheduleChk();
     if(cue){
       cue.classList.add('nudge');
       cue.addEventListener('click',function(){scroller.scrollBy({top:Math.round(scroller.clientHeight*.8),behavior:reduce?'auto':'smooth'})});
@@ -947,7 +954,7 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
     if(open&&panel.scrollIntoView)setTimeout(function(){panel.scrollIntoView({block:'nearest',behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'auto':'smooth'})},200);
   }
 
-  var B={total:null,bumped:false,token:null,tokenAt:0,busy:false};
+  var B={total:null,bumped:false,token:null,tokenAt:0,busy:false,inflight:null};
   function fmt(n){return n.toLocaleString('it-IT')}
   function render(){
     if(!bumpBtn)return;
@@ -964,21 +971,38 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
       .then(function(r){return r.json().catch(function(){return {}}).then(function(j){j.httpStatus=r.status;return j})});
   }
   function refresh(){
-    return api('GET').then(function(j){
-      if(j.httpStatus!==200)return j;
+    if(B.inflight)return B.inflight;
+    B.inflight=api('GET').then(function(j){
+      B.inflight=null;
+      if(j.httpStatus!==200||typeof j.token!=='string'||!j.token){
+        B.token=null;B.tokenAt=0;
+        var st=j.httpStatus===429?'rate_limited':(j.status&&j.status!=='ok'?j.status:'error');
+        var err={status:st,httpStatus:j.httpStatus};
+        if(typeof j.total==='number')err.total=j.total;
+        return Promise.reject(err);
+      }
       B.total=j.total;B.bumped=!!j.bumped;B.token=j.token;B.tokenAt=Date.now();render();return j;
+    },function(err){
+      B.inflight=null;
+      throw err;
     });
+    return B.inflight;
   }
   function wait(ms){return new Promise(function(r){setTimeout(r,ms)})}
   function postBump(retried){
-    var ready=B.token&&Date.now()-B.tokenAt<25*60*1000?Promise.resolve():refresh();
+    var hasToken=typeof B.token==='string'&&B.token&&Date.now()-B.tokenAt<25*60*1000;
+    var ready=hasToken?Promise.resolve():refresh();
     return ready.then(function(){
       if(B.bumped)return {status:'already',total:B.total};
+      if(typeof B.token!=='string'||!B.token)return {status:'error',total:B.total};
       var age=Date.now()-B.tokenAt;
       return (age<1100?wait(1100-age):Promise.resolve()).then(function(){return api('POST',{token:B.token})});
+    },function(err){
+      if(err&&typeof err.httpStatus==='number')return {status:err.status||(err.httpStatus===429?'rate_limited':'error'),total:err.total};
+      throw err;
     }).then(function(j){
       if(!retried&&(j.status==='invalid_device'||j.status==='invalid_token'||j.status==='too_soon')){
-        B.token=null;
+        B.token=null;B.tokenAt=0;
         return (j.status==='too_soon'?wait(1100):Promise.resolve()).then(function(){return postBump(true)});
       }
       return j;
@@ -1001,9 +1025,23 @@ a.tile:active{background-color:rgba(60,80,170,.55)}
     panel.querySelector('[data-share="linkedin"]').href='https://www.linkedin.com/sharing/share-offsite/?url='+e(link('linkedin'));
     var nat=panel.querySelector('[data-share="native"]');
     if(navigator.share)nat.hidden=false;
-    /* Totale e stato del dispositivo dopo il caricamento, senza pesare sul primo rendering */
-    var boot=function(){refresh().catch(function(){})};
-    if('requestIdleCallback' in window)requestIdleCallback(boot,{timeout:2500});else setTimeout(boot,800);
+    /* Totale e stato del dispositivo differiti alla prima interazione o dopo il caricamento (come WebGL),
+       senza pesare sul percorso di rendering iniziale; al clic postBump() recupera il token anche a freddo. */
+    var bumpBooted=false,bumpTimer=0,bumpEvs=['pointerdown','pointermove','touchstart','scroll','keydown'];
+    function startBump(){
+      if(bumpBooted)return;
+      bumpBooted=true;
+      clearTimeout(bumpTimer);
+      bumpEvs.forEach(function(ev){removeEventListener(ev,startBump,{passive:true})});
+      if(scroller)scroller.removeEventListener('scroll',startBump,{passive:true});
+      refresh().catch(function(){});
+    }
+    bumpEvs.forEach(function(ev){addEventListener(ev,startBump,{passive:true,once:true})});
+    if(scroller)scroller.addEventListener('scroll',startBump,{passive:true,once:true});
+    bumpTimer=setTimeout(function(){
+      if('requestIdleCallback' in window)requestIdleCallback(startBump,{timeout:3000});
+      else setTimeout(startBump,500);
+    },5000);
 
     bumpBtn.addEventListener('click',function(){
       if(B.busy)return;

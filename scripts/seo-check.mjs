@@ -198,25 +198,45 @@ for (const p of pages) {
     try { new Function(m[1]); } catch (e) { err(where, `script inline non valido: ${e.message}`); }
   }
 
-  // JSON-LD
+  // JSON-LD (nodi di primo livello e annidati)
+  const ISO_DATETIME = /^(\d{4})-(\d{2})-(\d{2})T(\d{2}):(\d{2})(?::(\d{2}))?(?:[+-](\d{2}):(\d{2})|Z)$/;
+  const ISO_DATE = /^(\d{4})(?:-(\d{2})(?:-(\d{2}))?)?$/;
+  const ARTICLE_TYPES = new Set(['Article', 'NewsArticle', 'BlogPosting', 'TechArticle']);
+  const PAGE_TYPES = new Set(['WebPage', 'ProfilePage', 'CollectionPage', 'AboutPage', 'ContactPage']);
+  const isRealYmd = (y, m, d) => {
+    if (m < 1 || m > 12 || d < 1 || d > 31) return false;
+    const dt = new Date(Date.UTC(y, m - 1, d));
+    return dt.getUTCFullYear() === y && dt.getUTCMonth() === m - 1 && dt.getUTCDate() === d;
+  };
+  const isValidTemporal = (v, requireDateTime) => {
+    if (typeof v !== 'string') return false;
+    const dtm = ISO_DATETIME.exec(v);
+    if (dtm) {
+      const [, y, m, d, hh, mm, ss = '0', tzh = '0', tzm = '0'] = dtm;
+      return isRealYmd(+y, +m, +d) && +hh <= 23 && +mm <= 59 && +ss <= 59 && +tzh <= 23 && +tzm <= 59 && !Number.isNaN(Date.parse(v));
+    }
+    if (requireDateTime) return false;
+    const dm = ISO_DATE.exec(v);
+    if (!dm) return false;
+    if (dm[3]) return isRealYmd(+dm[1], +dm[2], +dm[3]);
+    if (dm[2]) return +dm[2] >= 1 && +dm[2] <= 12;
+    return true;
+  };
+  const walkJsonLd = (v, visit) => {
+    if (Array.isArray(v)) { v.forEach((x) => walkJsonLd(x, visit)); return; }
+    if (!v || typeof v !== 'object') return;
+    const keys = Object.keys(v);
+    if (keys.length === 1 && v['@id']) return; // riferimento a @id
+    visit(v);
+    for (const [k, x] of Object.entries(v)) {
+      if (k !== '@context') walkJsonLd(x, visit);
+    }
+  };
+
   for (const block of p.jsonld) {
     if (block['@context'] !== 'https://schema.org') err(where, `JSON-LD con @context "${block['@context']}" (atteso https://schema.org)`);
     const nodes = block['@graph'] || [block];
     for (const n of nodes) {
-      if (!n['@type']) err(where, `nodo JSON-LD senza @type (${n['@id'] || '?'})`);
-      // Google (ProfilePage, Article) vuole un DateTime ISO 8601: una data sola dà
-      // "Invalid datetime value". Il fuso orario evita ambiguità.
-      for (const k of ['dateCreated', 'dateModified', 'datePublished']) {
-        if (n[k] !== undefined && !/^\d{4}-\d{2}-\d{2}T\d{2}:\d{2}(:\d{2})?([+-]\d{2}:\d{2}|Z)$/.test(n[k])) {
-          err(where, `JSON-LD ${k} non è un DateTime ISO 8601 con fuso orario: ${n[k]}`);
-        }
-      }
-      if (n.dateModified && n.datePublished && Date.parse(n.dateModified) < Date.parse(n.datePublished)) {
-        err(where, `JSON-LD dateModified (${n.dateModified}) precede datePublished (${n.datePublished})`);
-      }
-      if (n.dateModified && n.dateCreated && Date.parse(n.dateModified) < Date.parse(n.dateCreated)) {
-        err(where, `JSON-LD dateModified (${n.dateModified}) precede dateCreated (${n.dateCreated})`);
-      }
       if (n['@type'] === 'BreadcrumbList') {
         const items = n.itemListElement;
         if (!Array.isArray(items) || items.length === 0) err(where, 'BreadcrumbList senza itemListElement');
@@ -230,6 +250,33 @@ for (const p of pages) {
       }
       graphNodes.push({ node: n, page: p });
     }
+    walkJsonLd(nodes, (obj) => {
+      if (!obj['@type']) { err(where, `nodo JSON-LD senza @type (${obj['@id'] || '?'})`); return; }
+      const types = Array.isArray(obj['@type']) ? obj['@type'] : [obj['@type']];
+      const isExternal = typeof obj.url === 'string' && /^https?:\/\//.test(obj.url) && !obj.url.startsWith(ORIGIN + '/') && obj.url !== ORIGIN;
+      if (isExternal && types.some((t) => ARTICLE_TYPES.has(t))) {
+        err(where, `JSON-LD: citazione esterna modellata come ${types.join('/')} (${obj.url}); usa WebPage o CreativeWork`);
+      }
+      // Google (ProfilePage, WebPage propria, Article) richiede DateTime ISO 8601 con fuso orario;
+      // citazioni esterne e credenziali ammettono date ISO 8601 senza orario.
+      const requireDateTime = types.some((t) => ARTICLE_TYPES.has(t) || (PAGE_TYPES.has(t) && !isExternal));
+      for (const k of ['dateCreated', 'dateModified', 'datePublished']) {
+        if (obj[k] !== undefined && !isValidTemporal(obj[k], requireDateTime)) {
+          err(where, `JSON-LD ${k} non valido (${requireDateTime ? 'atteso DateTime ISO 8601 con fuso' : 'attesa data ISO 8601'}): ${obj[k]}`);
+        }
+      }
+      for (const k of ['startDate', 'endDate', 'foundingDate']) {
+        if (obj[k] !== undefined && !isValidTemporal(obj[k], false)) {
+          err(where, `JSON-LD ${k} non è una data ISO 8601 valida: ${obj[k]}`);
+        }
+      }
+      if (obj.dateModified && obj.datePublished && Date.parse(obj.dateModified) < Date.parse(obj.datePublished)) {
+        err(where, `JSON-LD dateModified (${obj.dateModified}) precede datePublished (${obj.datePublished})`);
+      }
+      if (obj.dateModified && obj.dateCreated && Date.parse(obj.dateModified) < Date.parse(obj.dateCreated)) {
+        err(where, `JSON-LD dateModified (${obj.dateModified}) precede dateCreated (${obj.dateCreated})`);
+      }
+    });
   }
 }
 
