@@ -52,14 +52,15 @@ jobs:
       - uses: lycheeverse/lychee-action@v2.9.0
         with:
           fail: true
-          # Instagram, Facebook e WhatsApp bloccano i client automatici: falsi positivi garantiti.
+          # Instagram, Facebook, WhatsApp e i percorsi LinkedIn (/in/vincenzocristianoallocca e /sharing/share-offsite)
+          # bloccano i client automatici (HTTP 999/403): falsi positivi garantiti.
           # --root-dir: i link che iniziano con "/" (es. /assets/…, /progetti/haste/) vanno
           # risolti rispetto alla radice del repository, che corrisponde alla radice del sito.
           args: >-
             --no-progress
             --max-retries 2
             --root-dir '${{ github.workspace }}'
-            --exclude 'instagram\.com|facebook\.com|wa\.me|^mailto:'
+            --exclude 'instagram\.com|facebook\.com|wa\.me|linkedin\.com/(?:in/vincenzocristianoallocca|sharing/share-offsite)|^mailto:'
             --exclude-path 'docs|scripts'
             './**/*.html' llms.txt
 
