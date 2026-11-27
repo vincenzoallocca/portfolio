@@ -33,7 +33,7 @@ jobs:
       - name: Controlli SEO (metadata, canonical, H1, alt, JSON-LD, sitemap, robots, link interni)
         run: node scripts/seo-check.mjs
       - name: Validazione HTML
-        run: npx --yes html-validate@11.21.1 --config .github/htmlvalidate.json index.html 404.html "progetti/**/*.html" "idee/**/*.html"
+        run: npx --yes html-validate@11.21.1 --config .github/htmlvalidate.json index.html 404.html "progetti/**/*.html"
       - name: Sitemap aggiornata (avviso)
         continue-on-error: true
         run: |
@@ -60,7 +60,7 @@ jobs:
             --no-progress
             --max-retries 2
             --root-dir '${{ github.workspace }}'
-            --exclude 'instagram\.com|facebook\.com|wa\.me|linkedin\.com/(?:in/vincenzocristianoallocca|sharing/share-offsite)|^mailto:|vincenzoallocca\.dev/idee/?'
+            --exclude 'instagram\.com|facebook\.com|wa\.me|linkedin\.com/(?:in/vincenzocristianoallocca|sharing/share-offsite)|^mailto:'
             --exclude-path 'docs|scripts'
             './**/*.html' llms.txt
 
