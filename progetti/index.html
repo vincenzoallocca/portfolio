@@ -3,21 +3,70 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<title>Progetti software | Vincenzo Allocca</title>
-<meta name="description" content="Elenco dei progetti di Vincenzo Allocca: HASTE Collective, il gioco Nemici-Miei e i progetti open source pubblicati su GitHub.">
+<title>Progetti software di Vincenzo Allocca</title>
+<meta name="description" content="Progetti software di Vincenzo Allocca: HASTE su Cloudflare Workers e D1, Nemici Miei in Rust e WebAssembly, codice e articoli tecnici.">
 <meta name="theme-color" content="#050816">
 <meta name="color-scheme" content="dark">
-<!-- Pagina di navigazione: esiste perché /progetti/ è il genitore di /progetti/haste/ e /progetti/nemici-miei/.
-     Ha poco contenuto proprio (i progetti sono già descritti in home), quindi resta fuori
-     dall'indice ma lascia seguire i link. Diventerà indicizzabile quando ci saranno più casi studio. -->
-<meta name="robots" content="noindex,follow">
+<meta name="robots" content="index,follow,max-image-preview:large,max-snippet:-1">
 <link rel="canonical" href="https://vincenzoallocca.dev/progetti/">
+<meta name="author" content="Vincenzo Allocca">
+<meta property="og:type" content="website">
+<meta property="og:locale" content="it_IT">
+<meta property="og:site_name" content="Vincenzo Allocca">
+<meta property="og:title" content="Progetti software di Vincenzo Allocca">
+<meta property="og:description" content="Progetti reali di sviluppo web, infrastruttura cloud e videogiochi: HASTE e Nemici Miei.">
+<meta property="og:url" content="https://vincenzoallocca.dev/progetti/">
+<meta property="og:image" content="https://vincenzoallocca.dev/assets/og-home.jpg">
+<meta property="og:image:width" content="1200">
+<meta property="og:image:height" content="630">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="Progetti software di Vincenzo Allocca">
+<meta name="twitter:description" content="HASTE su Cloudflare Workers e D1, Nemici Miei in Rust e WebAssembly.">
+<meta name="twitter:image" content="https://vincenzoallocca.dev/assets/og-home.jpg">
 <link rel="icon" href="/assets/favicon.ico" sizes="48x48">
 <link rel="icon" href="/assets/favicon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="/assets/apple-touch-icon.png">
 <link rel="manifest" href="/assets/site.webmanifest">
 <link rel="preload" href="/assets/fonts/mona-sans.woff2" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="/assets/css/pagina.css">
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@graph": [
+    {
+      "@type": "CollectionPage",
+      "@id": "https://vincenzoallocca.dev/progetti/#webpage",
+      "url": "https://vincenzoallocca.dev/progetti/",
+      "name": "Progetti software di Vincenzo Allocca",
+      "description": "Raccolta di progetti software realizzati da Vincenzo Allocca.",
+      "inLanguage": "it-IT",
+      "isPartOf": { "@id": "https://vincenzoallocca.dev/#website" },
+      "about": { "@id": "https://vincenzoallocca.dev/#person" },
+      "breadcrumb": { "@id": "https://vincenzoallocca.dev/progetti/#breadcrumb" },
+      "mainEntity": { "@id": "https://vincenzoallocca.dev/progetti/#projects" }
+    },
+    {
+      "@type": "BreadcrumbList",
+      "@id": "https://vincenzoallocca.dev/progetti/#breadcrumb",
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "name": "Home", "item": "https://vincenzoallocca.dev/" },
+        { "@type": "ListItem", "position": 2, "name": "Progetti", "item": "https://vincenzoallocca.dev/progetti/" }
+      ]
+    },
+    {
+      "@type": "ItemList",
+      "@id": "https://vincenzoallocca.dev/progetti/#projects",
+      "name": "Progetti software",
+      "itemListOrder": "https://schema.org/ItemListOrderAscending",
+      "numberOfItems": 2,
+      "itemListElement": [
+        { "@type": "ListItem", "position": 1, "item": { "@type": "CreativeWork", "name": "HASTE Collective", "url": "https://vincenzoallocca.dev/progetti/haste/" } },
+        { "@type": "ListItem", "position": 2, "item": { "@type": "VideoGame", "name": "Nemici Miei", "url": "https://vincenzoallocca.dev/progetti/nemici-miei/" } }
+      ]
+    }
+  ]
+}
+</script>
 </head>
 <body>
 <a class="skip" href="#contenuto">Vai al contenuto principale</a>
@@ -35,15 +84,41 @@
 
   <main id="contenuto" tabindex="-1">
     <section class="card hero" aria-labelledby="titolo">
-      <h1 id="titolo">Progetti</h1>
-      <p class="lead">I progetti a cui lavoro, dal principale a quelli open source.</p>
+      <h1 id="titolo">Progetti software</h1>
+      <p class="lead">Sono Vincenzo Allocca, software developer e studente di Ingegneria Informatica alla Federico II. Qui raccolgo i progetti che ho costruito, le scelte tecniche e i risultati che puoi esplorare direttamente.</p>
+      <p>Mi interessa sviluppare software che funzioni davvero: piattaforme web in produzione, infrastrutture cloud e videogiochi. Ogni caso studio distingue il lavoro svolto personalmente da quello realizzato in gruppo e rimanda, quando disponibile, al codice o a una demo.</p>
     </section>
 
     <section class="card" aria-labelledby="elenco">
-      <h2 id="elenco">Elenco</h2>
+      <h2 id="elenco">Progetti</h2>
       <ul class="list">
-        <li><a href="/progetti/haste/"><b>HASTE Collective: caso studio</b><span>Collettivo culturale indipendente nato in Campania nel 2026. Fondazione, direzione editoriale e sviluppo della piattaforma su Cloudflare.</span></a></li>
-        <li><a href="/progetti/nemici-miei/"><b>Nemici-Miei: gioca nel browser</b><span>Gioco con vista isometrica nato in Python per il PCTO 2024–2025 e riscritto in Rust e WebAssembly. Si gioca online, anche da telefono.</span></a></li>
+        <li>
+          <a href="/progetti/haste/">
+            <b>HASTE Collective — piattaforma web e infrastruttura</b>
+            <span>Ho fondato HASTE, un collettivo culturale indipendente nato in Campania, e ne seguo la direzione editoriale e lo sviluppo della piattaforma. Il caso studio racconta la migrazione da PHP e server tradizionale a TypeScript su Cloudflare Workers, con D1, KV, test automatici e dati aperti.</span>
+          </a>
+        </li>
+        <li>
+          <a href="/progetti/nemici-miei/">
+            <b>Nemici Miei — gioco isometrico in Rust e WebAssembly</b>
+            <span>Un gioco nato come progetto di gruppo per il PCTO 2024–2025 con Python e Pygame. Ho poi curato il repository, portato il gioco nel browser e riscritto la versione web in Rust: il caso studio include gameplay, controlli per telefono, architettura e codice.</span>
+          </a>
+        </li>
+      </ul>
+    </section>
+
+    <section class="card" aria-labelledby="approccio">
+      <h2 id="approccio">Cosa troverai nei casi studio</h2>
+      <p>Non sono soltanto schermate o liste di tecnologie. Descrivo il problema, il mio ruolo, le decisioni architetturali e ciò che è verificabile nel progetto. Per HASTE trovi il contesto di una piattaforma reale; per Nemici Miei puoi vedere il percorso da un prototipo scolastico a un gioco eseguibile nel browser.</p>
+      <p>Sto aggiungendo altri progetti man mano che raggiungono una fase documentabile. Non presento idee ancora in sviluppo come prodotti già realizzati.</p>
+    </section>
+
+    <section class="card" aria-labelledby="approfondimenti">
+      <h2 id="approfondimenti">Articoli e codice</h2>
+      <ul class="list">
+        <li><a href="https://github.com/vincenzoallocca"><b>GitHub</b><span>Repository e cronologia del codice.</span></a></li>
+        <li><a href="https://dev.to/vincenzoallocca/moving-a-php-sqlite-site-to-one-cloudflare-worker-on-the-free-plan-what-the-d1-import-didnt-35cb"><b>Da PHP e SQLite a Cloudflare Workers</b><span>Articolo tecnico su DEV: migrazione di HASTE e problemi incontrati nell'importazione su D1.</span></a></li>
+        <li><a href="https://vincenzoallocca.hashnode.dev/portare-un-gioco-pygame-nel-browser-e-sul-telefono-con-pygbag-cosa-ho-imparato-con-nemici-miei"><b>Portare un gioco Pygame nel browser e sul telefono</b><span>Articolo su Hashnode sul passaggio di Nemici Miei al browser con pygbag.</span></a></li>
       </ul>
     </section>
   </main>
