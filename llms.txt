@@ -11,6 +11,13 @@
 - [Innovazione digitale e civic tech](https://vincenzoallocca.dev/progetti/innovazione-digitale/): piattaforme web, dati aperti e strumenti digitali per informazione e partecipazione civica
 
 
+## Articoli su tecnologia e pragmatismo civico
+
+- [La civic tech non è un'app: è un servizio che risolve un problema](https://vincenzoallocca.dev/articoli/civic-tech-partire-dai-problemi/): metodo pratico per partire dai bisogni, progettare servizi accessibili e misurare risultati.
+- [Dati aperti e privacy: la trasparenza non è pubblicare tutto](https://vincenzoallocca.dev/articoli/dati-aperti-privacy-partecipazione/): minimizzazione, dati aggregati e trasparenza nelle iniziative civiche.
+- [Mobilità quotidiana: trasformare un disservizio in una richiesta verificabile](https://vincenzoallocca.dev/articoli/mobilita-partecipazione-dati/): come collegare fonti, testimonianze e richieste pubbliche.
+- [Tutti gli articoli](https://vincenzoallocca.dev/articoli/): raccolta editoriale.
+
 ## Profilo
 
 - Nome: Vincenzo Allocca (username GitHub: vincenzoallocca)
