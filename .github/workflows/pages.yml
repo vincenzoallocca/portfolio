@@ -40,6 +40,7 @@ jobs:
             28d9cb950fd348ee86a7fc44c1a8a886.txt
             assets
             progetti
+            idee
             .well-known
         run: |
           mkdir _site
